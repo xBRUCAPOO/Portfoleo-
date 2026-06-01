@@ -5,246 +5,206 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>x BRUCAP.O.O. — Portfolio</title>
 
-  <!-- Fuente futurista desde Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" rel="stylesheet"/>
 
-  <!-- Iconos Material Symbols de Google Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
-
-  <!-- CSS externo -->
   <link rel="stylesheet" href="styles.css"/>
-
 </head>
 <body>
 
-  <!-- =============================================
-       CANVAS DE CÓDIGO (fondo animado)
-       Dibuja fragmentos de código de programación
-       cayendo en columnas, estilo matrix pero con
-       código real (JS, Python, HTML, etc.)
-  ============================================= -->
   <canvas id="matrix-canvas"></canvas>
-
-  <!-- =============================================
-       EFECTO DE SCANLINES (líneas horizontales)
-       Capa decorativa que simula monitor CRT
-  ============================================= -->
   <div class="scanlines"></div>
 
-  <!-- NOTA: Cursor personalizado eliminado —
-       Se usa el cursor nativo del sistema operativo -->
-
-  <!-- =============================================
-       BARRA DE NAVEGACIÓN SUPERIOR
-       Fija en pantalla, con logo y links de sección
-  ============================================= -->
+  <!-- NAVBAR -->
   <nav class="navbar" id="navbar">
-    <!-- Logo / nombre del nav -->
     <div class="nav-logo">
-      <span class="nav-logo-bracket">[</span>
       <span class="nav-logo-text">x BRUCA<span class="nav-poo">P.O.O.</span></span>
-      <span class="nav-logo-bracket">]</span>
+      <span class="nav-logo-text"> | </span>
+      <span class="nav-logo-text-small">PORTFOLIO</span>
     </div>
-
-    <!-- Botón hamburguesa para mobile -->
     <button class="nav-toggle" id="nav-toggle" aria-label="Menú">
-      <span></span><span></span><span></span>
+      <span class="material-symbols-outlined">menu</span>
     </button>
-
-    <!-- Links de navegación -->
     <ul class="nav-links" id="nav-links">
-      <li><a href="#inicio" class="nav-link" data-text="INICIO">INICIO</a></li>
-      <li><a href="#habilidades" class="nav-link" data-text="HABILIDADES">HABILIDADES</a></li>
-      <li><a href="#proyectos" class="nav-link" data-text="PROYECTOS">PROYECTOS</a></li>
-      <li><a href="#sobre-mi" class="nav-link" data-text="SOBRE MÍ">SOBRE MÍ</a></li>
-      <li><a href="#contacto" class="nav-link" data-text="CONTACTO">CONTACTO</a></li>
+      <li><a href="#inicio"      class="nav-link">INICIO</a></li>
+      <li><a href="#habilidades" class="nav-link">HABILIDADES</a></li>
+      <li><a href="#proyectos"   class="nav-link">PROYECTOS</a></li>
+      <li><a href="#sobre-mi"    class="nav-link">SOBRE MÍ</a></li>
+      <li><a href="#contacto"    class="nav-link">CONTACTO</a></li>
     </ul>
   </nav>
 
-  <!-- =============================================
-       SECCIÓN INICIO (HERO)
-       Nombre, rol, código rotante y CTA.
-       Los textos tienen clase "mw2-reveal" para la
-       animación estilo Call of Duty MW2 2009.
-  ============================================= -->
+  <!-- HERO -->
   <section class="section hero" id="inicio">
-
-    <!-- Decoración: líneas de esquina estilo HUD -->
     <div class="hud-corner hud-tl"></div>
     <div class="hud-corner hud-tr"></div>
     <div class="hud-corner hud-bl"></div>
     <div class="hud-corner hud-br"></div>
 
-    <!-- Nombre pequeño con efecto glitch y animación MW2 -->
     <p class="hero-subname glitch-text mw2-reveal mw2-delay-1" data-text="BRUNO VALAROLO">BRUNO VALAROLO</p>
 
-    <!-- Nombre grande principal con animación MW2 -->
-    <h1 class="hero-name mw2-reveal mw2-delay-2">
+    <!-- ⚠ NO tiene clase mw2-reveal porque contiene spans hijos con color propio -->
+    <h1 class="hero-name hero-name-animate">
       <span class="hero-x">x BRUCA</span><span class="hero-poo">P.O.O.</span>
     </h1>
 
-    <!-- Rol con efecto de typing y animación MW2 -->
     <p class="hero-role mw2-reveal mw2-delay-3">
       <span class="role-prefix">&gt;&gt;</span>
       <span class="typing-text" id="typing-role">Frontend Developer</span>
       <span class="cursor-blink">_</span>
     </p>
 
-    <!-- Código decorativo grande que rota cada 5 segundos -->
     <div class="code-rotator mw2-reveal mw2-delay-4" id="code-rotator">
       <pre class="code-block" id="code-display"></pre>
     </div>
 
-    <!-- Botón CTA con animación MW2 -->
     <a href="#proyectos" class="btn-primary glitch-btn mw2-reveal mw2-delay-5" data-text="[ EXPLORAR PROYECTOS ]">
       [ EXPLORAR PROYECTOS ]
     </a>
 
-    <!-- Indicador de scroll -->
     <div class="scroll-indicator">
       <span class="material-symbols-outlined">keyboard_double_arrow_down</span>
     </div>
   </section>
 
-  <!-- =============================================
-       SECCIÓN HABILIDADES
-       Cards con iconos, barra de progreso y nivel.
-       Cada card tiene clase "mw2-reveal" para la
-       animación de aparición estilo MW2.
-  ============================================= -->
+  <!-- HABILIDADES -->
   <section class="section" id="habilidades">
-
-    <!-- Encabezado de sección -->
     <div class="section-header">
       <span class="section-tag mw2-reveal">// SYSTEM_SKILLS</span>
       <h2 class="section-title mw2-reveal mw2-delay-1">HABILIDADES</h2>
       <div class="section-line mw2-reveal mw2-delay-2"></div>
     </div>
 
-    <!-- Grid de habilidades -->
     <div class="skills-grid">
 
-      <!-- ——— Habilidad: Git ——— -->
-      <!-- Modificá "percent" para cambiar la barra; "level" para el texto -->
-      <div class="skill-card mw2-reveal" data-percent="75" data-level="Intermediate">
+      <!-- Git -->
+      <div class="skill-card mw2-reveal" data-percent="60" data-level="Intermediate">
         <div class="skill-icon-wrap">
-          <!-- Icono SVG de Git -->
-          <svg class="skill-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M23.546 10.93L13.067.452a1.55 1.55 0 0 0-2.188 0L8.708 2.627l2.76 2.76a1.838 1.838 0 0 1 2.327 2.341l2.658 2.66a1.838 1.838 0 1 1-1.1 1.051l-2.48-2.48v6.511a1.84 1.84 0 1 1-1.515-.016V9.34a1.84 1.84 0 0 1-.999-2.416L7.614 4.215 .45 11.378a1.55 1.55 0 0 0 0 2.188l10.48 10.478a1.55 1.55 0 0 0 2.186 0l10.43-10.43a1.55 1.55 0 0 0 0-2.184"/>
-          </svg>
+          <img class="leguaje_img" src="https://cdn.jsdelivr.net/npm/devicon@2.16.0/icons/git/git-plain.svg" alt="Git">
         </div>
         <p class="skill-name">Git</p>
         <div class="skill-bar-wrap">
           <div class="skill-bar"><div class="skill-fill"></div></div>
-          <span class="skill-percent-label">75%</span>
+          <span class="skill-percent-label">60%</span>
         </div>
         <span class="skill-level">Intermediate</span>
       </div>
 
-      <!-- ——— Habilidad: HTML ——— -->
-      <div class="skill-card mw2-reveal" data-percent="90" data-level="Advanced">
+      <!-- HTML -->
+      <div class="skill-card mw2-reveal" data-percent="50" data-level="Intermediate">
         <div class="skill-icon-wrap">
-          <svg class="skill-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/>
-          </svg>
+          <img class="leguaje_img" src="https://cdn.jsdelivr.net/npm/devicon@2.16.0/icons/html5/html5-plain.svg" alt="HTML5">
         </div>
         <p class="skill-name">HTML</p>
         <div class="skill-bar-wrap">
           <div class="skill-bar"><div class="skill-fill"></div></div>
-          <span class="skill-percent-label">90%</span>
+          <span class="skill-percent-label">50%</span>
         </div>
-        <span class="skill-level">Advanced</span>
+        <span class="skill-level">Intermediate</span>
       </div>
 
-      <!-- ——— Habilidad: CSS ——— -->
-      <div class="skill-card mw2-reveal" data-percent="85" data-level="Advanced">
+      <!-- CSS -->
+      <div class="skill-card mw2-reveal" data-percent="50" data-level="Intermediate">
         <div class="skill-icon-wrap">
-          <svg class="skill-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/>
-          </svg>
+          <img class="leguaje_img" src="https://cdn.jsdelivr.net/npm/devicon@2.16.0/icons/css3/css3-plain.svg" alt="CSS3">
         </div>
         <p class="skill-name">CSS</p>
         <div class="skill-bar-wrap">
           <div class="skill-bar"><div class="skill-fill"></div></div>
-          <span class="skill-percent-label">85%</span>
+          <span class="skill-percent-label">50%</span>
         </div>
-        <span class="skill-level">Advanced</span>
+        <span class="skill-level">Intermediate</span>
       </div>
 
-      <!-- ——— Habilidad: JavaScript ——— -->
-      <div class="skill-card mw2-reveal" data-percent="70" data-level="Junior">
+      <!-- JavaScript -->
+      <div class="skill-card mw2-reveal" data-percent="30" data-level="Junior">
         <div class="skill-icon-wrap">
-          <svg class="skill-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/>
-          </svg>
+          <img class="leguaje_img" src="https://cdn.jsdelivr.net/npm/devicon@2.16.0/icons/javascript/javascript-plain.svg" alt="JavaScript">
         </div>
         <p class="skill-name">JavaScript</p>
         <div class="skill-bar-wrap">
           <div class="skill-bar"><div class="skill-fill"></div></div>
-          <span class="skill-percent-label">70%</span>
+          <span class="skill-percent-label">30%</span>
         </div>
         <span class="skill-level">Junior</span>
       </div>
 
-      <!-- ——— Habilidad: Python ——— -->
-      <div class="skill-card mw2-reveal" data-percent="60" data-level="Junior">
+      <!-- Python -->
+      <div class="skill-card mw2-reveal" data-percent="60" data-level="Intermediate">
         <div class="skill-icon-wrap">
-          <svg class="skill-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05L0 11.97l.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/>
-          </svg>
+          <img class="leguaje_img" src="https://cdn.jsdelivr.net/npm/devicon@2.16.0/icons/python/python-plain.svg" alt="Python">
         </div>
         <p class="skill-name">Python</p>
         <div class="skill-bar-wrap">
           <div class="skill-bar"><div class="skill-fill"></div></div>
           <span class="skill-percent-label">60%</span>
         </div>
-        <span class="skill-level">Junior</span>
+        <span class="skill-level">Intermediate</span>
       </div>
 
-      <!-- ——— Habilidad: CapCut ——— -->
-      <div class="skill-card mw2-reveal" data-percent="80" data-level="Intermediate">
+      <!-- SQL -->
+      <div class="skill-card mw2-reveal" data-percent="60" data-level="Intermediated">
         <div class="skill-icon-wrap">
-          <!-- Icono genérico de edición de video (material symbol) -->
-          <span class="material-symbols-outlined skill-mat-icon">movie_edit</span>
+          <span class="material-symbols-outlined skill-ms-icon">database</span>
         </div>
-        <p class="skill-name">CapCut</p>
+        <p class="skill-name">SQL</p>
         <div class="skill-bar-wrap">
           <div class="skill-bar"><div class="skill-fill"></div></div>
-          <span class="skill-percent-label">80%</span>
+          <span class="skill-percent-label">60%</span>
         </div>
         <span class="skill-level">Intermediate</span>
       </div>
 
-    </div><!-- /skills-grid -->
+      <!-- Mermaid -->
+      <div class="skill-card mw2-reveal" data-percent="80" data-level="Expert">
+        <div class="skill-icon-wrap">
+          <!-- Mermaid no tiene ícono en devicon; usamos un SVG inline representativo -->
+          <img class="leguaje_img" src="https://raw.githubusercontent.com/mermaid-js/mermaid/develop/docs/public/favicon.svg" alt="Mermaid">
+        </div>
+        <p class="skill-name">Mermaid</p>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-fill"></div></div>
+          <span class="skill-percent-label">80%</span>
+        </div>
+        <span class="skill-level">Expert</span>
+      </div>
+
+      <!-- CapCut -->
+      <div class="skill-card mw2-reveal" data-percent="90" data-level="Expert">
+        <div class="skill-icon-wrap">
+          <!-- CapCut no está en devicon; usamos ícono de edición de Material Symbols como fallback SVG -->
+          <img class="leguaje_img" src="https://play-lh.googleusercontent.com/M78HyakHaxKrjoeqYx41E9DXfVYYtx67nvc7Ks4G4zFQeaAJdGCi8gzzGSrHIwlrmnJS6zD9S4fAXqdEwfuHQAQ=w240-h480-rw" alt="">
+        </div>
+        <p class="skill-name">CapCut</p>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-fill"></div></div>
+          <span class="skill-percent-label">90%</span>
+        </div>
+        <span class="skill-level">Expert</span>
+      </div>
+
+    </div>
   </section>
 
-  <!-- =============================================
-       SECCIÓN PROYECTOS
-       Cards con efecto flip (frente/reverso)
-  ============================================= -->
+  <!-- PROYECTOS -->
   <section class="section" id="proyectos">
-
     <div class="section-header">
       <span class="section-tag mw2-reveal">// PROJECT_LOG</span>
       <h2 class="section-title mw2-reveal mw2-delay-1">PROYECTOS</h2>
       <div class="section-line mw2-reveal mw2-delay-2"></div>
     </div>
 
-    <!-- Grid de flip-cards -->
     <div class="projects-grid">
 
-      <!-- ——— Proyecto 1 ——— Cambiá los textos a tu gusto -->
       <div class="flip-card mw2-reveal">
         <div class="flip-inner">
-          <!-- Frente de la card -->
           <div class="flip-front">
             <span class="material-symbols-outlined project-icon">terminal</span>
             <h3 class="project-title">PROJECT_01</h3>
             <p class="project-tag">[ Web App ]</p>
           </div>
-          <!-- Reverso de la card -->
           <div class="flip-back">
             <h3 class="project-back-title">PROJECT_01</h3>
             <p class="project-desc">Descripción del proyecto. Tecnologías usadas, objetivo y resultado.</p>
@@ -258,11 +218,10 @@
         </div>
       </div>
 
-      <!-- ——— Proyecto 2 ——— -->
       <div class="flip-card mw2-reveal">
         <div class="flip-inner">
           <div class="flip-front">
-            <span class="material-symbols-outlined project-icon">code</span>
+            <span class="material-symbols-outlined project-icon">integration_instructions</span>
             <h3 class="project-title">PROJECT_02</h3>
             <p class="project-tag">[ Script ]</p>
           </div>
@@ -278,7 +237,6 @@
         </div>
       </div>
 
-      <!-- ——— Proyecto 3 ——— -->
       <div class="flip-card mw2-reveal">
         <div class="flip-inner">
           <div class="flip-front">
@@ -298,7 +256,6 @@
         </div>
       </div>
 
-      <!-- ——— Proyecto 4 ——— -->
       <div class="flip-card mw2-reveal">
         <div class="flip-inner">
           <div class="flip-front">
@@ -317,15 +274,11 @@
         </div>
       </div>
 
-    </div><!-- /projects-grid -->
+    </div>
   </section>
 
-  <!-- =============================================
-       SECCIÓN SOBRE MÍ
-       Texto de presentación + stats decorativos
-  ============================================= -->
+  <!-- SOBRE MÍ -->
   <section class="section" id="sobre-mi">
-
     <div class="section-header">
       <span class="section-tag mw2-reveal">// INFORMACIÓN</span>
       <h2 class="section-title mw2-reveal mw2-delay-1">SOBRE MÍ</h2>
@@ -333,138 +286,117 @@
     </div>
 
     <div class="about-wrap mw2-reveal">
-
-      <!-- Panel izquierdo: avatar / HUD circular -->
       <div class="about-avatar-wrap">
         <div class="avatar-ring-outer">
           <div class="avatar-ring-inner">
-            <!-- Iniciales o foto -->
             <div class="avatar-initials">xB</div>
           </div>
         </div>
-        <!-- Datos decorativos tipo HUD -->
         <div class="avatar-stats">
-          <div class="stat-row"><span class="stat-label">ID:</span><span class="stat-val">1 0 5</span></div>
-          <div class="stat-row"><span class="stat-label">ROL:</span><span class="stat-val">Programador   -   Editor</span></div>
-          <div class="stat-row"><span class="stat-label">ESTADO:</span><span class="stat-val blink-green">Activo</span></div>
+          <div class="stat-row">
+            <span class="material-symbols-outlined stat-icon">badge</span>
+            <span class="stat-label">ID:</span>
+            <span class="stat-val">105</span>
+          </div>
+          <div class="stat-row">
+            <span class="material-symbols-outlined stat-icon">manage_accounts</span>
+            <span class="stat-label">ROL:</span>
+            <span class="stat-val">Programador — Editor</span>
+          </div>
+          <div class="stat-row">
+            <span class="material-symbols-outlined stat-icon">radio_button_checked</span>
+            <span class="stat-label">ESTADO:</span>
+            <span class="stat-val blink-green">Activo</span>
+          </div>
         </div>
       </div>
 
-      <!-- Panel derecho: texto -->
       <div class="about-text-wrap">
         <p class="about-paragraph">
           &gt;&gt; Inicializando perfil de usuario...<br><br>
-          Soy <strong>Bruca</strong> , un joven programador que busca hacer tus ideas realidad.
-          aaaa
+          Soy <strong>Bruca</strong>, un joven programador que busca hacer tus ideas realidad.
         </p>
         <p class="about-paragraph">
           Me gusta aprender cosas nuevas y editar videos. Me encanta experimentar.
         </p>
-        <!-- Línea de código decorativa -->
         <p class="about-code-line">
           <span class="code-kw">const</span> status = <span class="code-str">"disponible para proyectos"</span>;
         </p>
       </div>
-
     </div>
   </section>
 
-  <!-- =============================================
-       SECCIÓN CONTACTO
-       Formulario futurista de contacto
-  ============================================= -->
+  <!-- CONTACTO -->
   <section class="section" id="contacto">
-
     <div class="section-header">
-      <span class="section-tag mw2-reveal">// OPEN_CHANNEL</span>
+      <span class="section-tag mw2-reveal">// CONTÁCTAME</span>
       <h2 class="section-title mw2-reveal mw2-delay-1">CONTACTO</h2>
       <div class="section-line mw2-reveal mw2-delay-2"></div>
     </div>
 
-    <!-- Formulario de contacto (acción a configurar) -->
     <div class="contact-wrap">
       <div class="contact-form-box mw2-reveal">
         <div class="form-row">
-          <label class="form-label">// IDENTIFICADOR</label>
+          <label class="form-label">
+            <span class="material-symbols-outlined form-icon">person</span>
+            // TU_NOMBRE
+          </label>
           <input class="form-input" type="text" placeholder="Tu nombre" />
         </div>
         <div class="form-row">
-          <label class="form-label">// CANAL_RETORNO</label>
+          <label class="form-label">
+            <span class="material-symbols-outlined form-icon">alternate_email</span>
+            // TU_CORREO
+          </label>
           <input class="form-input" type="email" placeholder="Tu email" />
         </div>
         <div class="form-row">
-          <label class="form-label">// MENSAJE</label>
+          <label class="form-label">
+            <span class="material-symbols-outlined form-icon">chat_bubble</span>
+            // MENSAJE
+          </label>
           <textarea class="form-textarea" placeholder="Escribe tu mensaje..."></textarea>
         </div>
-        <button class="btn-primary glitch-btn" data-text="[ TRANSMITIR ]">
-          [ TRANSMITIR ]
+        <button class="btn-primary glitch-btn" data-text="[ ENVIAR ]"> 
+          [ ENVIAR ]
+          <span class="material-symbols-outlined btn-icon">send</span>
         </button>
       </div>
     </div>
   </section>
 
-  <!-- =============================================
-       PIE DE PÁGINA (FOOTER)
-       4 botones: GitHub, Steam, YouTube, Gmail
-       *** REEMPLAZÁ LOS href="#" CON TUS LINKS ***
-  ============================================= -->
+  <!-- FOOTER -->
   <footer class="footer">
-
-    <!-- Línea decorativa superior -->
     <div class="footer-line"></div>
-
-    <!-- Texto de copyright -->
     <p class="footer-copy">
       <span class="footer-bracket">// </span>x BRUCA<span class="footer-poo">P.O.O.</span>
       <span class="footer-bracket"> — </span>2026
     </p>
-
-    <!-- Botones de redes sociales -->
     <div class="footer-socials">
-
-      <!-- GitHub — CAMBIÁ el href por tu perfil -->
       <a href="https://github.com/xBRUCAPOO" target="_blank" rel="noopener" class="social-btn" aria-label="GitHub" title="GitHub">
-        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-        </svg>
+        <span class="material-symbols-outlined social-icon-ms">code_blocks</span>
         <span>GitHub</span>
       </a>
-
-      <!-- Steam — CAMBIÁ el href por tu perfil -->
       <a href="https://steamcommunity.com/id/xBRUCAPOO-AG-105/" target="_blank" rel="noopener" class="social-btn" aria-label="Steam" title="Steam">
-        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.252 0-2.265-1.014-2.265-2.265z"/>
-        </svg>
+        <span class="material-symbols-outlined social-icon-ms">sports_esports</span>
         <span>Steam</span>
       </a>
-
-      <!-- YouTube — CAMBIÁ el href por tu canal -->
       <a href="https://www.youtube.com/@xbrucapoo106" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube" title="YouTube">
-        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
-        </svg>
+        <span class="material-symbols-outlined social-icon-ms">play_circle</span>
         <span>YouTube</span>
       </a>
-
-      <!-- Gmail — CAMBIÁ el href por tu mailto -->
-      <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSHxThnBxRPTzCBGMtxXMzLGDQfGxpccJFjtfmvhhqMnfqFQvqMwwPlfVdGKDPFkjhgJHxvb" class="social-btn" aria-label="Gmail" title="Gmail">
-        <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
-        </svg>
+      <a href="https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcSHxThnBxRPTzCBGMtxXMzLGDQfGxpccJFjtfmvhhqMnfqFQvqMwwPlfVdGKDPFkjhgJHxvb"
+         class="social-btn" aria-label="Gmail" title="Gmail">
+        <span class="material-symbols-outlined social-icon-ms">mail</span>
         <span>Gmail</span>
       </a>
-
-    </div><!-- /footer-socials -->
-
-    <!-- Texto inferior -->
+    </div>
     <p class="footer-bottom">
       <span class="material-symbols-outlined footer-icon">memory</span>
       SYSTEM_ONLINE — V 1.0.1
     </p>
-
   </footer>
-    <!-- JS externo -->
-  <script src="script.js"></script>
 
+  <script src="script.js"></script>
 </body>
 </html>

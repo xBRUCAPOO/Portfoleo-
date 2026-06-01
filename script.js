@@ -1,126 +1,81 @@
 /* =============================================
    script.js — Portfolio x BRUCAP.O.O.
-   Contiene: fondo de código de programación,
-   navbar, rotador de código, barras de habilidades,
-   animación MW2-style al scroll, typing effect,
-   glitch esporádico y partículas flotantes.
 
-   CAMBIOS RESPECTO A LA VERSIÓN ANTERIOR:
-   - Eliminado el cursor personalizado (dot + ring)
-     Se usa el cursor nativo del sistema operativo.
-   - Fondo reemplazado: ya no usa caracteres chinos/japoneses;
-     ahora cae código de programación real (JS, Python,
-     HTML, CSS, bash, etc.) para que se entienda
-     claramente que son fragmentos de código.
-   - Animación de aparición estilo MW2 (Call of Duty
-     Modern Warfare 2, 2009): flash blanco → color,
-     con slide desde abajo, reemplaza el antiguo
-     IntersectionObserver + clase "fade-in-up".
+   FIXES EN ESTA VERSIÓN:
+   1. El texto ya no es visible antes de la animación:
+      El CSS usa visibility:hidden (no solo opacity:0),
+      y JS activa mw2-active en el mismo frame que
+      inicia el observer, sin delay previo que dejara
+      el elemento renderizado sin ocultar.
+   2. El P.O.O. ya no pierde su color rojo:
+      El <h1.hero-name> fue sacado del sistema mw2-reveal
+      en el HTML y usa una animación CSS pura. Por lo tanto
+      decipherText() nunca se ejecuta en él y los spans
+      .hero-x / .hero-poo conservan sus colores.
+   3. Íconos: reemplazados en el HTML por devicon vía CDN.
 ============================================= */
 
 
 /* ——————————————————————————————————————————
-   CANVAS DE CÓDIGO (reemplaza el matrix chino)
-   ——————————————————————————————————————————
-   Dibuja fragmentos de código de programación
-   (JavaScript, Python, HTML, CSS, bash, etc.)
-   cayendo en columnas verticales.
-   Los tokens están en inglés y son reconocibles
-   como código real para cualquier desarrollador.
+   CANVAS DE CÓDIGO (fondo)
+   Tokens de programación cayendo en columnas.
 —————————————————————————————————————————— */
 const canvas = document.getElementById('matrix-canvas');
 const ctx    = canvas.getContext('2d');
 
-/* Fragmentos de código de programación reconocibles.
-   Se mezclan tokens de varios lenguajes para darle
-   variedad visual y semántica al fondo. */
 const CODE_TOKENS = [
-  // JavaScript / TypeScript
   'const', 'let', 'var', 'function', 'return', 'async', 'await',
   'import', 'export', 'default', 'class', 'new', 'this', 'if',
-  'else', 'for', 'while', 'try', 'catch', 'throw', 'null', 'true',
-  'false', 'undefined', '=>', '===', '!==', '&&', '||', '...', '?.', '??',
-  // Python
-  'def', 'self', 'print()', 'range()', 'None', 'True', 'False',
-  'import', 'from', 'as', 'with', 'lambda', 'yield', 'pass',
-  'isinstance()', 'len()', 'str()', 'int()', 'list()',
-  // HTML / CSS
-  '<div>', '</div>', '<span>', '<a>', 'href=', 'class=', 'id=',
-  ':root', 'var(--', 'flex', 'grid', 'px', 'rem', 'rgba(',
-  // Operadores y símbolos de código
-  '{', '}', '()', '=>', '->', '::', '[]', '//!', '/*', '*/',
-  '0x', '0b', 'NaN', 'Infinity', '#!', '$_', '__',
-  // Git / bash
-  'git', 'push', 'pull', 'commit', 'merge', 'branch',
-  'npm', 'pip', 'node', 'python3', 'ls -la', 'cd ..',
-  // Valores y patrones comunes
-  '404', '200', 'null', '{}', '[]', '""', "''",
-  'callback', 'promise', 'resolve', 'reject', 'fetch()',
+  'else', 'for', 'while', 'try', 'catch', 'null', 'true', 'false',
+  '=>', '===', '!==', '&&', '||', '...', '?.', '??',
+  'def', 'self', 'None', 'True', 'False', 'lambda', 'yield', 'pass',
+  'len()', 'str()', 'int()', 'list()', 'dict()',
+  '<div>', '</div>', '<span>', 'href=', 'class=', 'id=',
+  ':root', 'var(--', 'flex', 'grid', 'rem', 'rgba(',
+  '{', '}', '()', '->', '::', '[]', '/*', '*/',
+  '0x', 'NaN', 'Infinity', '$_', '__init__',
+  'git', 'push', 'pull', 'commit', 'merge',
+  'npm', 'pip', 'node', 'python3', 'cd ..',
+  '404', '200', '{}', '[]', 'fetch()', 'resolve', 'reject',
+  'SELECT', 'FROM', 'WHERE', 'JOIN', 'INSERT',
 ];
 
-const FONT_SIZE = 13; /* tamaño en px de cada token */
-let columns;          /* número de columnas del canvas */
-let drops;            /* posición Y de cada columna */
+const FONT_SIZE = 13;
+let columns, drops;
 
-/* Redimensiona el canvas al tamaño de la ventana
-   y reinicia el array de posiciones */
 function resizeCanvas() {
   canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
-  columns = Math.floor(canvas.width / (FONT_SIZE * 6)); /* columnas más separadas para texto largo */
+  columns = Math.floor(canvas.width / (FONT_SIZE * 6));
   drops   = new Array(columns).fill(0);
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-/* Dibuja un frame del fondo de código cada 80ms.
-   Usa un fondo semitransparente para crear la
-   "estela" que deja cada columna al caer. */
 function drawCodeBackground() {
-  /* Fondo semitransparente para efecto de estela */
   ctx.fillStyle = 'rgba(0,0,0,0.05)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
   ctx.font = FONT_SIZE + 'px Share Tech Mono';
 
   drops.forEach((y, i) => {
-    /* Selecciona un token aleatorio del array de código */
     const token = CODE_TOKENS[Math.floor(Math.random() * CODE_TOKENS.length)];
-    const x     = i * (FONT_SIZE * 6); /* espaciado horizontal entre columnas */
-
-    /* Primer carácter de la gota: destello blanco brillante */
-    if (Math.random() > 0.97) {
-      ctx.fillStyle = '#ffffff'; /* destello blanco ocasional */
-    } else {
-      ctx.fillStyle = '#e60012'; /* rojo principal del portfolio */
-    }
-
+    const x     = i * (FONT_SIZE * 6);
+    ctx.fillStyle = Math.random() > 0.97 ? '#ffffff' : '#e60012';
     ctx.fillText(token, x, y * FONT_SIZE);
-
-    /* Reinicia la columna aleatoriamente cuando llega al fondo */
-    if (y * FONT_SIZE > canvas.height && Math.random() > 0.975) {
-      drops[i] = 0;
-    }
+    if (y * FONT_SIZE > canvas.height && Math.random() > 0.975) drops[i] = 0;
     drops[i]++;
   });
 }
-
-/* Ejecuta un frame cada 80ms (~12fps, suficiente para el efecto visual) */
 setInterval(drawCodeBackground, 80);
 
 
 /* ——————————————————————————————————————————
-   NAVBAR — Scroll y Hamburguesa
-   ——————————————————————————————————————————
-   Agrega sombra roja al navbar al hacer scroll,
-   y alterna el menú mobile con el botón hamburguesa.
+   NAVBAR — scroll y hamburguesa
 —————————————————————————————————————————— */
 const navbar    = document.getElementById('navbar');
 const navToggle = document.getElementById('nav-toggle');
 const navLinks  = document.getElementById('nav-links');
 
-/* Cambia el estilo del navbar al hacer scroll para
-   que quede más prominente sobre el contenido */
 window.addEventListener('scroll', () => {
   if (window.scrollY > 50) {
     navbar.style.borderBottomColor = 'var(--red)';
@@ -131,28 +86,149 @@ window.addEventListener('scroll', () => {
   }
 });
 
-/* Abre/cierra el menú mobile al hacer click en la hamburguesa */
-navToggle.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-});
-
-/* Cierra el menú mobile al hacer click en cualquier link */
+navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
 navLinks.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => navLinks.classList.remove('open'));
 });
 
 
 /* ——————————————————————————————————————————
-   ROTADOR DE CÓDIGO (Hero)
+   ANIMACIÓN MW2 — DESCIFRADO DE TEXTO
    ——————————————————————————————————————————
-   Alterna entre 4 bloques de código cada 5 segundos.
-   Modifica el array CODE_BLOCKS para cambiar los textos.
-   Los bloques muestran código comentado en español
-   y código funcional en JS/Python para mantener
-   la coherencia con el fondo de código del canvas.
+   Inspirada en Call of Duty: Modern Warfare 2 (2009).
+
+   FIX 1 — Texto visible antes de animarse:
+   El CSS ahora usa visibility:hidden en .mw2-reveal,
+   no solo opacity:0. Esto garantiza que el texto
+   NO se renderice visible en ningún frame antes de
+   que JS llame a classList.add('mw2-active').
+
+   FIX 2 — P.O.O. pierde color rojo:
+   El <h1 class="hero-name"> fue removido de mw2-reveal
+   en el HTML. Usa la clase hero-name-animate que aplica
+   una animación CSS pura (keyframe). Por lo tanto esta
+   función nunca procesa ese elemento y los <span> hijos
+   .hero-x / .hero-poo conservan sus colores CSS.
+
+   Regla general: decipherText() SOLO se llama en
+   elementos de texto simple (sin hijos con clases
+   de color propias). Si un elemento tiene hijos con
+   estilos de color, debe usar animación CSS directa.
+—————————————————————————————————————————— */
+
+const SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#@|01%$&~';
+const SCRAMBLE_DURATION = 380;
+const CHAR_DELAY = 38;
+
+/**
+ * decipherText(element)
+ *
+ * Efecto de "descifrado" letra por letra.
+ * IMPORTANTE: Solo llamar en elementos con texto plano directo,
+ * sin hijos con estilos de color propios.
+ * Si el elemento tiene hijos complejos (como <span class="hero-poo">),
+ * el innerHTML se destruiría y los colores se perderían.
+ */
+function decipherText(element) {
+  const originalText = element.textContent.trim();
+  if (!originalText || originalText.length === 0) return;
+
+  /* GUARD: si el elemento tiene hijos con clases propias de estilo,
+     no ejecutar el descifrado para no destruir sus estilos.
+     Esto es la segunda línea de defensa; la primera es no usar
+     mw2-reveal en el <h1> del hero directamente en el HTML. */
+  if (element.querySelectorAll('[class]').length > 0) return;
+
+  const finalText = originalText;
+  const chars = finalText.split('');
+  let html = '';
+  chars.forEach((ch, i) => {
+    if (ch === ' ') {
+      html += `<span class="decipher-done"> </span>`;
+    } else {
+      html += `<span class="decipher-char" data-index="${i}" data-final="${ch}" style="opacity:0">${ch}</span>`;
+    }
+  });
+  element.innerHTML = html;
+
+  chars.forEach((ch, i) => {
+    if (ch === ' ') return;
+
+    const span = element.querySelector(`[data-index="${i}"]`);
+    if (!span) return;
+
+    const startDelay = i * CHAR_DELAY;
+    const finalChar  = ch;
+
+    setTimeout(() => {
+      span.style.opacity = '1';
+      span.classList.add('decipher-char');
+
+      const scrambleInterval = setInterval(() => {
+        span.textContent = SCRAMBLE_CHARS[
+          Math.floor(Math.random() * SCRAMBLE_CHARS.length)
+        ];
+      }, 40);
+
+      setTimeout(() => {
+        clearInterval(scrambleInterval);
+        span.textContent = finalChar;
+        span.classList.remove('decipher-char');
+        span.classList.add('decipher-done');
+      }, SCRAMBLE_DURATION);
+
+    }, startDelay);
+  });
+}
+
+/* IntersectionObserver: activa la animación al entrar en viewport */
+const mw2Observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    const el = entry.target;
+
+    /* Activar visibilidad (CSS transition de opacity + visibility) */
+    el.classList.add('mw2-active');
+
+    const isTextElement = (
+      el.tagName === 'P'    ||
+      el.tagName === 'H1'   ||
+      el.tagName === 'H2'   ||
+      el.tagName === 'H3'   ||
+      el.tagName === 'SPAN' ||
+      el.tagName === 'A'    ||
+      el.tagName === 'BUTTON'
+    );
+
+    const cssDelay = parseFloat(
+      getComputedStyle(el).transitionDelay || '0'
+    ) * 1000;
+
+    if (isTextElement && el.textContent.trim().length > 0) {
+      setTimeout(() => decipherText(el), cssDelay + 60);
+    }
+
+    /* Animar barra de progreso si es skill card */
+    if (el.classList.contains('skill-card')) {
+      const fill    = el.querySelector('.skill-fill');
+      const percent = el.dataset.percent;
+      if (fill && percent) {
+        setTimeout(() => { fill.style.width = percent + '%'; }, cssDelay + 420);
+      }
+    }
+
+    mw2Observer.unobserve(el);
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.mw2-reveal').forEach(el => mw2Observer.observe(el));
+
+
+/* ——————————————————————————————————————————
+   ROTADOR DE CÓDIGO (Hero)
 —————————————————————————————————————————— */
 const CODE_BLOCKS = [
-  /* Bloque 1: inicialización del sistema (JS orientado a objetos) */
   `// SISTEMA x BRUCAP.O.O. — INICIALIZANDO
 > Cargando módulos de interfaz...
 > Compilando assets visuales... [OK]
@@ -168,23 +244,19 @@ class Portfolio {
 const app = new Portfolio('BRUCA');
 app.render(); // >> OPERACIONAL`,
 
-  /* Bloque 2: análisis de habilidades (objeto JS con datos reales) */
   `/* ANÁLISIS DE NÚCLEO — HABILIDADES */
 const skills = {
-  HTML:       { level: 90, rank: 'ADVANCED'  },
-  CSS:        { level: 85, rank: 'ADVANCED'  },
-  JavaScript: { level: 70, rank: 'JUNIOR'    },
-  Python:     { level: 60, rank: 'JUNIOR'    },
-  Git:        { level: 75, rank: 'INTER.'    },
-  CapCut:     { level: 80, rank: 'INTER.'    },
+  HTML:       { level: 50, rank: 'INTER.'    },
+  CSS:        { level: 50, rank: 'INTER.'    },
+  JavaScript: { level: 30, rank: 'JUNIOR'    },
+  Python:     { level: 60, rank: 'INTER.'    },
+  Git:        { level: 60, rank: 'INTER.'    },
+  SQL:        { level: 60, rank: 'INTER.'    },
+  Mermaid:    { level: 80, rank: 'EXPERT'    },
+  CapCut:     { level: 90, rank: 'EXPERT'    },
 };
+// >> Todos los módulos operativos <<`,
 
-const best = Object.entries(skills)
-  .sort((a,b) => b[1].level - a[1].level)
-  .map(([k]) => k);
-// >> best[0] === 'HTML' — CONFIRMADO <<`,
-
-  /* Bloque 3: protocolo de contacto (async/await) */
   `/* PROTOCOLO_DE_CONTACTO — ABIERTO */
 // Escaneando canales disponibles...
 
@@ -200,7 +272,6 @@ async function openComms(config) {
 }
 // >> LISTO PARA RECIBIR TRANSMISIÓN <<`,
 
-  /* Bloque 4: identidad Absolute Solver (Python + comentarios) */
   `# ABSOLUTE_SOLVER — INSTANCIA ACTIVA
 # WARNING: Acceso no autorizado detectado.
 
@@ -210,11 +281,9 @@ def identify(entity: dict) -> str:
     threat = 'NULA' if entity['friendly'] else 'ALTA'
     return f"[{alias}] {role} — threat={threat}"
 
-agent = {
-    'alias': 'x BRUCAP.O.O.',
-    'role': 'Frontend Dev',
-    'friendly': True,
-}
+agent = { 'alias': 'x BRUCAP.O.O.',
+          'role': 'Programador — Editor',
+          'friendly': True }
 print(identify(agent))
 # >> FIN_DE_TRANSMISIÓN`,
 ];
@@ -222,123 +291,44 @@ print(identify(agent))
 const codeDisplay = document.getElementById('code-display');
 let codeIndex = 0;
 
-/* Muestra el bloque de código con la animación de fade-in */
 function showCode(index) {
   codeDisplay.style.animation = 'none';
-  void codeDisplay.offsetWidth; /* fuerza reflow para reiniciar la animación */
+  void codeDisplay.offsetWidth;
   codeDisplay.textContent    = CODE_BLOCKS[index];
   codeDisplay.style.animation = 'code-fade-in 0.6s ease';
 }
-
-/* Inicializa con el primer bloque */
 showCode(0);
-
-/* Rota al siguiente bloque cada 5 segundos */
-setInterval(() => {
-  codeIndex = (codeIndex + 1) % CODE_BLOCKS.length;
-  showCode(codeIndex);
-}, 5000);
+setInterval(() => { codeIndex = (codeIndex + 1) % CODE_BLOCKS.length; showCode(codeIndex); }, 5000);
 
 
 /* ——————————————————————————————————————————
    SONIDO DE GLITCH EN HOVER
-   ——————————————————————————————————————————
-   Genera un clic/glitch sintético con Web Audio API
-   al pasar el mouse sobre botones, links y cards.
-   El contexto de audio se inicializa al primer hover
-   para cumplir con la política de autoplay del navegador.
 —————————————————————————————————————————— */
 let audioCtx = null;
 
-/* Genera un buffer de ruido blanco corto (~40ms) filtrado */
 function playGlitch() {
   try {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-    const bufferSize = audioCtx.sampleRate * 0.04; /* 40ms */
+    const bufferSize = audioCtx.sampleRate * 0.04;
     const buffer     = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
     const data       = buffer.getChannelData(0);
-
-    /* Rellena con ruido aleatorio de baja amplitud */
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * 0.08;
-    }
-
+    for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.08;
     const source = audioCtx.createBufferSource();
     source.buffer = buffer;
-
-    /* Filtro de paso alto para que suene a "clic electrónico" */
-    const filter       = audioCtx.createBiquadFilter();
-    filter.type        = 'highpass';
-    filter.frequency.value = 1800;
-
-    source.connect(filter);
-    filter.connect(audioCtx.destination);
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'highpass'; filter.frequency.value = 1800;
+    source.connect(filter); filter.connect(audioCtx.destination);
     source.start();
-  } catch (e) {
-    /* Silencioso si el navegador no soporta Web Audio */
-  }
+  } catch (e) { /* navegador sin Web Audio */ }
 }
 
-/* Asigna el sonido a todos los elementos interactivos */
 document.querySelectorAll('a, button, .flip-card').forEach(el => {
   el.addEventListener('mouseenter', playGlitch);
 });
 
 
 /* ——————————————————————————————————————————
-   ANIMACIÓN ESTILO MW2 (Call of Duty MW2 2009)
-   ——————————————————————————————————————————
-   Reemplaza el antiguo sistema "fade-in-up".
-   Al entrar en el viewport, agrega la clase
-   "mw2-active" a los elementos con "mw2-reveal".
-   El CSS maneja el flash blanco, slide y transición.
-
-   Los delays escalonados (mw2-delay-1, etc.) ya
-   están en el HTML para que los títulos aparezcan
-   en secuencia, como los intertítulos de briefing
-   del MW2 original.
-—————————————————————————————————————————— */
-
-/* Opciones del observer: activa cuando el 12% del elemento
-   es visible en el viewport */
-const mw2Observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      /* Agrega la clase que dispara la animación MW2 */
-      entry.target.classList.add('mw2-active');
-
-      /* Si es una skill card, anima también la barra de progreso.
-         Se espera un pequeño delay para que se vea el flash primero. */
-      if (entry.target.classList.contains('skill-card')) {
-        const fill    = entry.target.querySelector('.skill-fill');
-        const percent = entry.target.dataset.percent;
-        if (fill && percent) {
-          setTimeout(() => {
-            fill.style.width = percent + '%';
-          }, 400); /* delay para que la barra empiece después del flash */
-        }
-      }
-
-      /* Deja de observar una vez que ya fue animado */
-      mw2Observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
-
-/* Observa todos los elementos con la clase "mw2-reveal"
-   (se asigna en el HTML directamente a cada elemento) */
-document.querySelectorAll('.mw2-reveal').forEach(el => {
-  mw2Observer.observe(el);
-});
-
-
-/* ——————————————————————————————————————————
-   TYPING EFFECT (Rol en el Hero)
-   ——————————————————————————————————————————
-   Escribe y borra el texto del rol ciclicamente
-   con velocidades distintas (más lento al escribir,
-   más rápido al borrar).
+   TYPING EFFECT (rol en el Hero)
 —————————————————————————————————————————— */
 const ROLES = [
   'Frontend Developer',
@@ -354,84 +344,49 @@ let isDeleting = false;
 
 function typeRole() {
   const currentRole = ROLES[roleIndex];
-
   if (!isDeleting) {
-    /* Escribe el siguiente carácter */
     typingEl.textContent = currentRole.slice(0, charIndex + 1);
     charIndex++;
     if (charIndex === currentRole.length) {
-      /* Terminó de escribir: pausa antes de borrar */
       isDeleting = true;
       setTimeout(typeRole, 1800);
       return;
     }
   } else {
-    /* Borra el último carácter */
     typingEl.textContent = currentRole.slice(0, charIndex - 1);
     charIndex--;
     if (charIndex === 0) {
-      /* Terminó de borrar: pasa al siguiente rol */
       isDeleting = false;
       roleIndex  = (roleIndex + 1) % ROLES.length;
     }
   }
-
-  /* Velocidad: borrado más rápido que escritura */
-  const speed = isDeleting ? 60 : 110;
-  setTimeout(typeRole, speed);
+  setTimeout(typeRole, isDeleting ? 60 : 110);
 }
-
-/* Inicia el efecto de typing con un delay para que
-   la animación MW2 del hero termine primero */
 setTimeout(typeRole, 1000);
 
 
 /* ——————————————————————————————————————————
-   GLITCH ESPORÁDICO EN EL HERO-NAME
-   ——————————————————————————————————————————
-   Cada cierto tiempo aplica un pequeño glitch
-   visual al "P.O.O." del título principal,
-   desplazándolo y saturando el color brevemente.
+   GLITCH ESPORÁDICO en "P.O.O."
 —————————————————————————————————————————— */
 const heroPoo = document.querySelector('.hero-poo');
 
 function randomGlitch() {
   if (!heroPoo) return;
-
-  /* Desplaza el elemento algunos píxeles y altera el color */
   heroPoo.style.transform = `translateX(${(Math.random() - 0.5) * 6}px)`;
   heroPoo.style.filter    = 'brightness(1.5) hue-rotate(10deg)';
-
-  /* Restaura después de 100ms */
-  setTimeout(() => {
-    heroPoo.style.transform = '';
-    heroPoo.style.filter    = '';
-  }, 100);
-
-  /* Próximo glitch en un intervalo aleatorio entre 2 y 7 segundos */
+  setTimeout(() => { heroPoo.style.transform = ''; heroPoo.style.filter = ''; }, 100);
   setTimeout(randomGlitch, 2000 + Math.random() * 5000);
 }
-/* Inicia el glitch esporádico después de 3 segundos */
 setTimeout(randomGlitch, 3000);
 
 
 /* ——————————————————————————————————————————
-   PARTÍCULAS FLOTANTES (decoración de fondo)
-   ——————————————————————————————————————————
-   Crea puntos rojos flotantes en el fondo
-   para dar más profundidad y atmósfera al diseño.
-   Se generan 25 partículas con posición, tamaño
-   y velocidad aleatoria.
+   PARTÍCULAS FLOTANTES
 —————————————————————————————————————————— */
 function createParticles() {
-  const container = document.body;
-  const count     = 25; /* cantidad de partículas */
-
-  for (let i = 0; i < count; i++) {
-    const particle = document.createElement('div');
-
-    /* Estilo inline de cada partícula */
-    Object.assign(particle.style, {
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    Object.assign(p.style, {
       position:       'fixed',
       width:          Math.random() * 3 + 1 + 'px',
       height:         Math.random() * 3 + 1 + 'px',
@@ -445,20 +400,18 @@ function createParticles() {
       animation:      `float-particle ${6 + Math.random() * 10}s ease-in-out infinite`,
       animationDelay: `-${Math.random() * 10}s`,
     });
-
-    container.appendChild(particle);
+    document.body.appendChild(p);
   }
 }
 
-/* Inyecta los keyframes de las partículas flotantes al <head> */
 const particleStyle = document.createElement('style');
 particleStyle.textContent = `
   @keyframes float-particle {
-    0%   { transform: translateY(0px)    translateX(0px);   opacity: 0.3; }
-    25%  { transform: translateY(-30px)  translateX(10px);  opacity: 0.8; }
-    50%  { transform: translateY(-60px)  translateX(-10px); opacity: 0.5; }
-    75%  { transform: translateY(-30px)  translateX(15px);  opacity: 0.9; }
-    100% { transform: translateY(0px)    translateX(0px);   opacity: 0.3; }
+    0%   { transform: translateY(0px)   translateX(0px);   opacity: 0.3; }
+    25%  { transform: translateY(-30px) translateX(10px);  opacity: 0.8; }
+    50%  { transform: translateY(-60px) translateX(-10px); opacity: 0.5; }
+    75%  { transform: translateY(-30px) translateX(15px);  opacity: 0.9; }
+    100% { transform: translateY(0px)   translateX(0px);   opacity: 0.3; }
   }
 `;
 document.head.appendChild(particleStyle);
@@ -466,27 +419,18 @@ createParticles();
 
 
 /* ——————————————————————————————————————————
-   LÍNEA DE ESCANEO (HUD effect)
-   ——————————————————————————————————————————
-   Una línea roja semitransparente que recorre
-   la pantalla de arriba a abajo continuamente,
-   reforzando la sensación de monitor HUD militar.
+   LÍNEA DE ESCANEO
 —————————————————————————————————————————— */
 const scanLine = document.createElement('div');
 Object.assign(scanLine.style, {
-  position:      'fixed',
-  top:           '0',
-  left:          '0',
-  width:         '100%',
-  height:        '2px',
+  position:      'fixed', top: '0', left: '0',
+  width:         '100%',  height: '2px',
   background:    'linear-gradient(to right, transparent, rgba(230,0,18,0.4), transparent)',
-  zIndex:        '5',
-  pointerEvents: 'none',
+  zIndex:        '5', pointerEvents: 'none',
   animation:     'scan-line 6s linear infinite',
 });
 document.body.appendChild(scanLine);
 
-/* Keyframes de la línea de escaneo descendente */
 const scanStyle = document.createElement('style');
 scanStyle.textContent = `
   @keyframes scan-line {

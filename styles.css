@@ -3,45 +3,33 @@
    Temática: futurista roja / BO3 / Absolute Solver
 ============================================= */
 
-
 /* =============================================
-   ██████  PALETA DE COLORES CENTRAL ██████
-   ——————————————————————————————————————————
-   TODOS los colores del sitio se definen aquí.
-   Para cambiar la estética completa, solo
-   modificá estas variables y se propaga solo.
+   PALETA DE COLORES CENTRAL
 ============================================= */
 :root {
-  /* — ROJOS (color principal de acento) — */
-  --red:         #e60012;          /* rojo principal de UI */
-  --red-bright:  #ff1a2e;          /* rojo neón para glows y highlights */
-  --red-dim:     #8b0000;          /* rojo oscuro para bordes y fondos sutiles */
-  --red-glow:    rgba(230,0,18,0.35); /* halo/glow rojo semitransparente */
+  --red:         #e60012;
+  --red-bright:  #ff1a2e;
+  --red-dim:     #8b0000;
+  --red-glow:    rgba(230,0,18,0.35);
 
-  /* — NEGROS Y GRISES (fondos y superficies) — */
-  --black:       #000000;          /* negro puro */
-  --black-1:     #0a0a0a;          /* negro casi puro (fondo del body) */
-  --black-2:     #111111;          /* negro muy oscuro (cards) */
-  --black-3:     #1a1a1a;          /* negro oscuro (gradientes) */
-  --black-4:     #222222;          /* negro medio (fondos secundarios) */
-  --grey:        #333333;          /* gris oscuro (bordes inactivos) */
-  --grey-light:  #666666;          /* gris claro (texto secundario) */
+  --black:       #000000;
+  --black-1:     #0a0a0a;
+  --black-2:     #111111;
+  --black-3:     #1a1a1a;
+  --black-4:     #222222;
+  --grey:        #333333;
+  --grey-light:  #666666;
 
-  /* — BLANCOS (texto principal) — */
-  --white:       #f0f0f0;          /* blanco suave para texto */
+  --white:       #f0f0f0;
 
-  /* — COLORES SEMÁNTICOS DE CÓDIGO (sección sobre mí) — */
-  --code-keyword: #ff79c6;         /* palabras clave: rosa (const, let, etc.) */
-  --code-string:  #f1fa8c;         /* strings: amarillo */
-  --code-comment: var(--red);      /* comentarios: rojo (para el fondo matrix) */
+  --code-keyword: #ff79c6;
+  --code-string:  #f1fa8c;
 
-  /* — ESTADO ONLINE — */
-  --online-green: #00ff88;         /* verde para indicador "ONLINE" */
+  --online-green: #00ff88;
 
-  /* — TIPOGRAFÍAS — */
-  --font-mono:   'Share Tech Mono', monospace;  /* monospace para código */
-  --font-hud:    'Orbitron', sans-serif;         /* futurista para títulos/HUD */
-  --font-body:   'Rajdhani', sans-serif;         /* cuerpo de texto */
+  --font-mono:   'Share Tech Mono', monospace;
+  --font-hud:    'Orbitron', sans-serif;
+  --font-body:   'Rajdhani', sans-serif;
 }
 
 
@@ -52,40 +40,30 @@
   padding: 0;
 }
 
-/* Scroll suave entre secciones */
 html {
   scroll-behavior: smooth;
   font-size: 16px;
 }
 
-/* Fondo negro, texto blanco, fuente body por defecto.
-   NOTA: cursor nativo del sistema (sin cursor personalizado) */
 body {
   background-color: var(--black-1);
   color: var(--white);
   font-family: var(--font-body);
   overflow-x: hidden;
-  /* cursor: default — se usa el cursor original del sistema operativo */
 }
 
 
-/* ——— CANVAS DE CÓDIGO (fondo) ———
-   Canvas fijo en toda la pantalla, detrás de todo
-   el contenido. Dibuja código de programación
-   cayendo en columnas (JS, Python, HTML, etc.) */
+/* ——— CANVAS DE CÓDIGO (fondo) ——— */
 #matrix-canvas {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   z-index: 0;
-  opacity: 0.13;     /* muy sutil para no tapar el contenido */
+  opacity: 0.13;
   pointer-events: none;
 }
 
-
-/* ——— SCANLINES (efecto CRT) ———
-   Capa de líneas horizontales semitransparentes
-   que simulan el monitor de tubo de rayos catódicos */
+/* ——— SCANLINES ——— */
 .scanlines {
   position: fixed;
   top: 0; left: 0;
@@ -103,81 +81,99 @@ body {
 
 
 /* =============================================
-   ANIMACIÓN MW2-STYLE
+   MATERIAL SYMBOLS OUTLINED
+============================================= */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+  user-select: none;
+  align-content: end;
+  
+}
+
+
+/* =============================================
+   ANIMACIÓN MW2-STYLE (descifrado de caracteres)
    ——————————————————————————————————————————
-   Efecto de aparición futurista inspirado en
-   Call of Duty: Modern Warfare 2 (2009).
-   El texto aparece con un flash blanco, desplazado
-   hacia arriba desde abajo, con un leve destello
-   de color y una línea de barrido lateral.
-   JS agrega la clase "mw2-active" al entrar en
-   el viewport (via IntersectionObserver).
+   FIX: Se usa visibility:hidden + opacity:0 para
+   evitar que el texto sea visible antes de que JS
+   active la animación. Solo opacity:0 no era
+   suficiente porque el elemento seguía ocupando
+   espacio con el texto renderizado visiblemente
+   durante el primer frame de carga.
 ============================================= */
 
-/* Estado inicial: invisible, desplazado abajo */
+/* Estado inicial: COMPLETAMENTE INVISIBLE
+   visibility:hidden oculta el contenido del elemento
+   sin afectar el layout (el espacio se preserva).
+   Esto elimina el flash de texto antes de la animación. */
 .mw2-reveal {
   opacity: 0;
-  transform: translateY(18px);
-  filter: blur(2px);
-  /* La transición se activa al agregar "mw2-active" */
-  transition:
-    opacity 0.35s ease,
-    transform 0.35s ease,
-    filter 0.35s ease;
+  visibility: hidden;
+  transform: translateY(14px);
+  /* La transición de visibility debe ser instantánea
+     para que al activar mw2-active se muestre de inmediato
+     y luego se aplique la transición de opacity/transform */
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
 }
 
-/* Estado final: visible y en posición */
+/* Al activar: primero visibility:visible (instantáneo),
+   luego fade-in de opacity y slide de transform */
 .mw2-reveal.mw2-active {
   opacity: 1;
+  visibility: visible;
   transform: translateY(0);
-  filter: blur(0);
-  /* Dispara el flash blanco al aparecer */
-  animation: mw2-flash 0.5s ease forwards;
+  /* visibility se activa sin delay para que la transición
+     de opacity sea visible desde el principio */
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0s;
 }
 
-/* Delays escalonados para animar elementos en secuencia
-   (similar a cómo los títulos de MW2 aparecen uno a uno) */
-.mw2-delay-1 { transition-delay: 0.1s; animation-delay: 0.1s; }
-.mw2-delay-2 { transition-delay: 0.2s; animation-delay: 0.2s; }
-.mw2-delay-3 { transition-delay: 0.3s; animation-delay: 0.3s; }
-.mw2-delay-4 { transition-delay: 0.45s; animation-delay: 0.45s; }
-.mw2-delay-5 { transition-delay: 0.6s; animation-delay: 0.6s; }
+/* Delays escalonados para cascade en el hero */
+.mw2-delay-1 { transition-delay: 0.08s; }
+.mw2-delay-2 { transition-delay: 0.18s; }
+.mw2-delay-3 { transition-delay: 0.30s; }
+.mw2-delay-4 { transition-delay: 0.44s; }
+.mw2-delay-5 { transition-delay: 0.58s; }
 
-/* Flash blanco → color normal, estilo intel/briefing de MW2 */
-@keyframes mw2-flash {
-  0%   {
-    text-shadow: 0 0 30px var(--white), 0 0 60px var(--white);
-    color: var(--white);
+/* Carácter "ruido" durante el descifrado — rojo brillante */
+.decipher-char {
+  color: var(--red-bright);
+  opacity: 0.85;
+}
+
+/* Carácter ya descifrado — hereda color del padre */
+.decipher-done {
+  color: inherit;
+}
+
+
+/* ——— ANIMACIÓN ESPECIAL para el H1 del hero ———
+   El <h1> NO usa mw2-reveal porque contiene spans
+   hijos con colores propios (.hero-x, .hero-poo).
+   En su lugar usa una animación CSS pura de fade+slide
+   para evitar que decipherText() destruya los spans internos
+   y pierda los colores (el bug del P.O.O. blanco). */
+.hero-name-animate {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: heroNameReveal 0.4s ease 0.13s forwards;
+}
+
+@keyframes heroNameReveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
   }
-  40%  {
-    text-shadow: 0 0 15px var(--red-bright), 0 0 30px var(--red-glow);
-  }
-  100% {
-    text-shadow: none;
-    /* el color final lo define la clase propia del elemento */
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Variante para elementos que no son texto (cards, bloques) —
-   solo usa fade + slide sin cambio de color */
-.flip-card.mw2-reveal.mw2-active,
-.skill-card.mw2-reveal.mw2-active,
-.about-wrap.mw2-reveal.mw2-active,
-.contact-form-box.mw2-reveal.mw2-active,
-.footer-socials.mw2-reveal.mw2-active {
-  animation: mw2-slide-in 0.4s ease forwards;
-}
 
-/* Slide-in sin flash de color para elementos de bloque */
-@keyframes mw2-slide-in {
-  0%   { box-shadow: 0 0 20px rgba(230,0,18,0.4); }
-  100% { box-shadow: none; }
-}
-
-
-/* ——— NAVBAR ———
-   Fija en la parte superior, fondo negro semitransparente
-   con línea roja inferior. backdrop-filter para el blur. */
+/* ——— NAVBAR ——— */
 .navbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -192,24 +188,28 @@ body {
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Logo del navbar */
 .nav-logo {
   font-family: var(--font-hud);
   font-size: 1rem;
   letter-spacing: 0.1em;
   color: var(--white);
+  text-align: justify;
 }
 .nav-logo-bracket { color: var(--red); }
 .nav-poo          { color: var(--red-bright); }
+.nav-logo-text-small {
+  color: var(--red-bright);
+  font-size: 0.5rem;
+  letter-spacing: 1em;
+  vertical-align: middle;
+}
 
-/* Lista de links horizontales */
 .nav-links {
   list-style: none;
   display: flex;
   gap: 2rem;
 }
 
-/* Link individual: color gris, se vuelve rojo al hover */
 .nav-link {
   font-family: var(--font-hud);
   font-size: 0.7rem;
@@ -219,7 +219,6 @@ body {
   position: relative;
   transition: color 0.3s;
 }
-/* Línea roja bajo el link al hover — crece desde izquierda */
 .nav-link::after {
   content: '';
   position: absolute;
@@ -232,26 +231,27 @@ body {
 .nav-link:hover { color: var(--red-bright); }
 .nav-link:hover::after { width: 100%; }
 
-/* Botón hamburguesa — solo visible en mobile */
 .nav-toggle {
   display: none;
-  flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  justify-content: center;
   background: none;
-  border: none;
+  border: 1px solid var(--red-dim);
+  color: var(--red);
   cursor: pointer;
-  padding: 4px;
+  padding: 4px 6px;
+  transition: border-color 0.3s, color 0.3s;
 }
-.nav-toggle span {
-  display: block;
-  width: 24px; height: 2px;
-  background: var(--red);
-  transition: transform 0.3s;
+.nav-toggle:hover {
+  border-color: var(--red-bright);
+  color: var(--red-bright);
+}
+.nav-toggle .material-symbols-outlined {
+  font-size: 1.4rem;
 }
 
 
-/* ——— SECCIONES GENERALES ———
-   z-index: 2 para estar sobre el canvas del fondo */
+/* ——— SECCIONES ——— */
 .section {
   position: relative;
   z-index: 2;
@@ -261,14 +261,23 @@ body {
   margin: 0 auto;
 }
 
-
 /* ——— ENCABEZADO DE SECCIÓN ——— */
+.leguaje_img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Íconos de devicon que son coloridos por defecto —
+   se filtran a blanco para mantener la estética monocromática */
+.skill-img-white {
+  filter: brightness(0) invert(1);
+}
+
 .section-header {
   margin-bottom: 3rem;
   text-align: center;
 }
 
-/* Etiqueta tipo comentario de código */
 .section-tag {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -278,7 +287,6 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* Título grande de sección con glow rojo */
 .section-title {
   font-family: var(--font-hud);
   font-size: clamp(2rem, 5vw, 3.5rem);
@@ -289,7 +297,6 @@ body {
   display: inline-block;
 }
 
-/* Línea decorativa roja bajo el título */
 .section-line {
   width: 100px;
   height: 2px;
@@ -300,7 +307,7 @@ body {
 
 
 /* =============================================
-   SECCIÓN HERO
+   HERO
 ============================================= */
 .hero {
   display: flex;
@@ -311,7 +318,6 @@ body {
   min-height: 100vh;
 }
 
-/* Nombre pequeño con efecto glitch */
 .hero-subname {
   font-family: var(--font-mono);
   font-size: 0.9rem;
@@ -321,7 +327,6 @@ body {
   position: relative;
 }
 
-/* Nombre grande principal */
 .hero-name {
   font-family: var(--font-hud);
   font-size: clamp(2.5rem, 9vw, 7rem);
@@ -330,10 +335,7 @@ body {
   margin-bottom: 1.2rem;
 }
 
-/* "x BRUCA" en blanco */
-.hero-x { color: var(--white); }
-
-/* "P.O.O." en rojo brillante con glow parpadeante */
+.hero-x   { color: var(--white); }
 .hero-poo {
   color: var(--red-bright);
   text-shadow:
@@ -343,7 +345,6 @@ body {
   animation: flicker 4s infinite;
 }
 
-/* Línea de rol con prefijo >> */
 .hero-role {
   font-family: var(--font-mono);
   font-size: 1.1rem;
@@ -355,22 +356,15 @@ body {
 }
 .role-prefix { color: var(--red); }
 
-/* Cursor parpadeante después del texto del rol */
 .cursor-blink {
   color: var(--red-bright);
   animation: blink 1s step-end infinite;
 }
 
-
-/* ——— CÓDIGO ROTANTE (Hero) ———
-   Bloque grande de código decorativo que cambia
-   cada 5 segundos. Usa fuente monospace y borde
-   rojo lateral como si fuera un editor de código. */
 .code-rotator {
   width: 100%;
   max-width: 700px;
   margin-bottom: 2.5rem;
-  position: relative;
 }
 
 .code-block {
@@ -387,16 +381,12 @@ body {
   max-height: 220px;
 }
 
-/* Fade del bloque de código al cambiar */
 @keyframes code-fade-in {
   from { opacity: 0; transform: translateY(-8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-
-/* ——— BOTÓN PRIMARIO GLITCH ———
-   Botón principal con capa de color rojo que sube
-   desde abajo al hacer hover, y efecto glitch visual */
+/* Botón primario / glitch */
 .glitch-btn {
   position: relative;
   font-family: var(--font-hud);
@@ -405,27 +395,27 @@ body {
   color: var(--white);
   background: transparent;
   border: 1px solid var(--red);
-  padding: 0.9rem 2rem;
+  padding: 0.75rem 1.8rem;
   cursor: pointer;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   overflow: hidden;
   transition: color 0.3s, border-color 0.3s;
 }
-/* Relleno rojo que sube desde abajo al hover */
 .glitch-btn::before {
   content: '';
   position: absolute;
   bottom: 0; left: 0;
   width: 100%; height: 0;
   background: var(--red);
-  z-index: -1;
+  z-index: 0;
   transition: height 0.3s ease;
 }
+.glitch-btn > * { position: relative; z-index: 1; }
 .glitch-btn:hover::before { height: 100%; }
 .glitch-btn:hover { color: var(--black); border-color: var(--red-bright); }
-
-/* Capa de texto desplazada para el efecto glitch en hover */
 .glitch-btn::after {
   content: attr(data-text);
   position: absolute;
@@ -436,16 +426,13 @@ body {
   justify-content: center;
   color: var(--red-bright);
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-  transition: clip-path 0.1s;
 }
 .glitch-btn:hover::after {
   animation: glitch-clip 0.4s steps(1) infinite;
 }
 
+.btn-icon { font-size: 1rem; }
 
-/* ——— INDICADOR DE SCROLL ———
-   Flecha que rebota en la parte inferior del hero
-   para indicar que hay más contenido abajo */
 .scroll-indicator {
   position: absolute;
   bottom: 2rem;
@@ -453,35 +440,24 @@ body {
   transform: translateX(-50%);
   color: var(--red);
   animation: bounce 2s infinite;
+}
+.scroll-indicator .material-symbols-outlined {
   font-size: 2rem;
 }
 
-
-/* ——— ESQUINAS HUD ———
-   Decoración tipo interfaz militar HUD en las
-   esquinas del hero. Líneas en L con color rojo. */
 .hud-corner {
   position: absolute;
   width: 40px; height: 40px;
   pointer-events: none;
   z-index: 1;
 }
-.hud-tl { top: 5rem;  left: 1rem;  border-top: 2px solid var(--red); border-left: 2px solid var(--red); }
-.hud-tr { top: 5rem;  right: 1rem; border-top: 2px solid var(--red); border-right: 2px solid var(--red); }
+.hud-tl { top: 5rem;    left: 1rem;  border-top: 2px solid var(--red); border-left: 2px solid var(--red); }
+.hud-tr { top: 5rem;    right: 1rem; border-top: 2px solid var(--red); border-right: 2px solid var(--red); }
 .hud-bl { bottom: 1rem; left: 1rem;  border-bottom: 2px solid var(--red); border-left: 2px solid var(--red); }
 .hud-br { bottom: 1rem; right: 1rem; border-bottom: 2px solid var(--red); border-right: 2px solid var(--red); }
 
-
-/* =============================================
-   GLITCH TEXT
-   Texto con doble capa desplazada para el efecto
-   glitch rojo. Se activa solo (sin hover).
-============================================= */
-.glitch-text {
-  position: relative;
-  display: inline-block;
-}
-/* Capa delantera — desplazada a la izquierda, roja brillante */
+/* ——— GLITCH TEXT ——— */
+.glitch-text { position: relative; display: inline-block; }
 .glitch-text::before {
   content: attr(data-text);
   position: absolute;
@@ -491,7 +467,6 @@ body {
   animation: glitch-a 3s infinite steps(1);
   opacity: 0.7;
 }
-/* Capa trasera — desplazada a la derecha, rojo oscuro */
 .glitch-text::after {
   content: attr(data-text);
   position: absolute;
@@ -506,14 +481,12 @@ body {
 /* =============================================
    HABILIDADES — SKILL CARDS
 ============================================= */
-/* Grid responsivo de cards de habilidades */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 1.5rem;
 }
 
-/* Card individual: fondo degradado negro, borde gris */
 .skill-card {
   background: linear-gradient(135deg, var(--black-2), var(--black-3));
   border: 1px solid var(--grey);
@@ -527,7 +500,6 @@ body {
   transition: border-color 0.3s, transform 0.3s;
   cursor: default;
 }
-/* Línea roja superior que aparece al hover (crece desde la izquierda) */
 .skill-card::before {
   content: '';
   position: absolute;
@@ -545,7 +517,6 @@ body {
   transform: translateY(-4px);
 }
 
-/* Contenedor cuadrado del icono */
 .skill-icon-wrap {
   width: 64px; height: 64px;
   display: flex;
@@ -553,30 +524,21 @@ body {
   justify-content: center;
   border: 1px solid var(--grey);
   background: var(--black-1);
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 .skill-card:hover .skill-icon-wrap {
   border-color: var(--red);
   box-shadow: 0 0 12px var(--red-glow);
 }
 
-/* SVG del icono de habilidad */
-.skill-svg {
-  width: 36px; height: 36px;
-  fill: var(--grey-light);
-  transition: fill 0.3s;
-}
-.skill-card:hover .skill-svg { fill: var(--red-bright); }
-
-/* Icono Material Symbol (CapCut) */
-.skill-mat-icon {
-  font-size: 2.2rem;
+/* Ícono Material Symbols usado como fallback (CapCut) */
+.skill-ms-icon {
+  font-size: 2rem;
   color: var(--grey-light);
   transition: color 0.3s;
 }
-.skill-card:hover .skill-mat-icon { color: var(--red-bright); }
+.skill-card:hover .skill-ms-icon { color: var(--red-bright); }
 
-/* Nombre de la habilidad */
 .skill-name {
   font-family: var(--font-hud);
   font-size: 0.75rem;
@@ -584,7 +546,6 @@ body {
   color: var(--white);
 }
 
-/* Contenedor de barra de progreso + porcentaje */
 .skill-bar-wrap {
   width: 100%;
   display: flex;
@@ -592,17 +553,13 @@ body {
   gap: 0.5rem;
 }
 
-/* Fondo gris de la barra */
 .skill-bar {
   flex: 1;
   height: 4px;
   background: var(--grey);
-  border-radius: 0;
   overflow: hidden;
 }
 
-/* Relleno de la barra — se anima desde JS al entrar al viewport
-   (width se setea con data-percent del HTML) */
 .skill-fill {
   height: 100%;
   width: 0;
@@ -611,7 +568,6 @@ body {
   transition: width 1.2s ease;
 }
 
-/* Etiqueta de porcentaje junto a la barra */
 .skill-percent-label {
   font-family: var(--font-mono);
   font-size: 0.65rem;
@@ -620,7 +576,6 @@ body {
   text-align: right;
 }
 
-/* Nivel de la habilidad (Junior, Intermediate, Advanced) */
 .skill-level {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -636,24 +591,19 @@ body {
 
 /* =============================================
    PROYECTOS — FLIP CARDS
-   Cards con rotación 3D al hacer hover,
-   mostrando descripción y tecnologías al reverso.
 ============================================= */
-/* Grid de proyectos */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 2rem;
 }
 
-/* Contenedor de la flip card — necesita perspectiva para el 3D */
 .flip-card {
   perspective: 1000px;
   height: 260px;
   cursor: pointer;
 }
 
-/* Elemento interno que rota sobre el eje Y */
 .flip-inner {
   position: relative;
   width: 100%; height: 100%;
@@ -661,12 +611,8 @@ body {
   transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
-/* Rota 180° al hover */
-.flip-card:hover .flip-inner {
-  transform: rotateY(180deg);
-}
+.flip-card:hover .flip-inner { transform: rotateY(180deg); }
 
-/* Frente y reverso comparten estilos base */
 .flip-front,
 .flip-back {
   position: absolute;
@@ -683,28 +629,27 @@ body {
   background: linear-gradient(135deg, var(--black-2), var(--black-3));
 }
 
-/* Frente: borde superior rojo + icono */
-.flip-front {
-  border-top: 2px solid var(--red);
-}
+.flip-front { border-top: 2px solid var(--red); }
+
 .project-icon {
   font-size: 3rem;
   color: var(--red);
   filter: drop-shadow(0 0 8px var(--red-glow));
 }
+
 .project-title {
   font-family: var(--font-hud);
   font-size: 1rem;
   letter-spacing: 0.2em;
   color: var(--white);
 }
+
 .project-tag {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--grey-light);
 }
 
-/* Reverso: fondo ligeramente distinto, empieza girado 180° */
 .flip-back {
   background: linear-gradient(135deg, var(--black-3), var(--black-4));
   border-top: 2px solid var(--red-bright);
@@ -712,25 +657,27 @@ body {
   text-align: center;
   gap: 0.8rem;
 }
+
 .project-back-title {
   font-family: var(--font-hud);
   font-size: 0.85rem;
   letter-spacing: 0.2em;
   color: var(--red-bright);
 }
+
 .project-desc {
   font-size: 0.85rem;
   color: var(--grey-light);
   line-height: 1.4;
 }
 
-/* Tags de tecnologías en el reverso */
 .project-techs {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
   justify-content: center;
 }
+
 .tech-tag {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -740,7 +687,6 @@ body {
   letter-spacing: 0.1em;
 }
 
-/* Botón pequeño en el reverso de la card */
 .btn-small {
   font-family: var(--font-hud);
   font-size: 0.65rem;
@@ -761,7 +707,6 @@ body {
 /* =============================================
    SOBRE MÍ
 ============================================= */
-/* Layout en dos columnas: avatar izquierda / texto derecha */
 .about-wrap {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -769,7 +714,6 @@ body {
   align-items: start;
 }
 
-/* Anillo exterior del avatar — gira lentamente con un punto rojo */
 .avatar-ring-outer {
   width: 180px; height: 180px;
   border: 2px solid var(--red-dim);
@@ -781,7 +725,6 @@ body {
   animation: spin-slow 12s linear infinite;
   position: relative;
 }
-/* Punto rojo que orbita sobre el anillo externo */
 .avatar-ring-outer::before {
   content: '';
   position: absolute;
@@ -793,7 +736,6 @@ body {
   transform: translateX(-50%);
 }
 
-/* Anillo interior estático */
 .avatar-ring-inner {
   width: 140px; height: 140px;
   border: 1px solid var(--grey);
@@ -804,7 +746,6 @@ body {
   background: var(--black-2);
 }
 
-/* Iniciales en el centro del avatar */
 .avatar-initials {
   font-family: var(--font-hud);
   font-size: 2.5rem;
@@ -812,30 +753,36 @@ body {
   text-shadow: 0 0 20px var(--red-glow);
 }
 
-/* Filas de datos del HUD (ID, ROL, ESTADO) */
 .avatar-stats {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
+
 .stat-row {
   display: flex;
-  gap: 0.8rem;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   border-left: 2px solid var(--red-dim);
   padding-left: 0.6rem;
 }
-.stat-label { color: var(--red);        min-width: 60px; }
+
+.stat-icon {
+  font-size: 0.9rem;
+  color: var(--red);
+  flex-shrink: 0;
+}
+
+.stat-label { color: var(--red); min-width: 55px; }
 .stat-val   { color: var(--grey-light); }
 
-/* Indicador de estado ONLINE — parpadea en verde */
 .blink-green {
   color: var(--online-green);
   animation: blink 1.2s step-end infinite;
 }
 
-/* Párrafos del texto "Sobre Mí" */
 .about-paragraph {
   font-size: 1rem;
   color: var(--grey-light);
@@ -845,7 +792,6 @@ body {
 }
 .about-paragraph strong { color: var(--white); }
 
-/* Línea de código decorativa estilo editor de código */
 .about-code-line {
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -855,9 +801,8 @@ body {
   background: rgba(0,0,0,0.2);
   margin-top: 1rem;
 }
-/* Colores semánticos del "código" decorativo */
-.code-kw  { color: var(--code-keyword); } /* palabras clave: rosa */
-.code-str { color: var(--code-string);  } /* strings: amarillo */
+.code-kw  { color: var(--code-keyword); }
+.code-str { color: var(--code-string); }
 
 
 /* =============================================
@@ -867,7 +812,7 @@ body {
   max-width: 600px;
   margin: 0 auto;
 }
-/* Caja del formulario con borde superior rojo */
+
 .contact-form-box {
   display: flex;
   flex-direction: column;
@@ -878,18 +823,23 @@ body {
   padding: 2.5rem;
 }
 
-/* Fila de campo del formulario */
 .form-row { display: flex; flex-direction: column; gap: 0.4rem; }
 
-/* Etiqueta estilo comentario de código */
 .form-label {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   color: var(--red);
   letter-spacing: 0.15em;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
-/* Input y Textarea: fondo negro con borde inferior rojo */
+.form-icon {
+  font-size: 0.85rem;
+  color: var(--red-bright);
+}
+
 .form-input,
 .form-textarea {
   background: var(--black-1);
@@ -909,14 +859,9 @@ body {
   box-shadow: 0 0 8px var(--red-glow);
 }
 .form-textarea { min-height: 130px; }
-
-/* Placeholder en gris */
 .form-input::placeholder,
-.form-textarea::placeholder {
-  color: var(--grey);
-}
+.form-textarea::placeholder { color: var(--grey); }
 
-/* Botón primario (mismo estilo que .glitch-btn) */
 .btn-primary {
   font-family: var(--font-hud);
   font-size: 0.8rem;
@@ -924,10 +869,12 @@ body {
   color: var(--white);
   background: transparent;
   border: 1px solid var(--red);
-  padding: 0.9rem 2rem;
+  padding: 0.75rem 1.8rem;
   cursor: pointer;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   overflow: hidden;
   position: relative;
   transition: color 0.3s, border-color 0.3s;
@@ -961,7 +908,6 @@ body {
   gap: 1.2rem;
 }
 
-/* Línea roja superior del footer (degradado) */
 .footer-line {
   width: 100%;
   height: 1px;
@@ -970,7 +916,6 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* Texto de copyright */
 .footer-copy {
   font-family: var(--font-hud);
   font-size: 0.8rem;
@@ -980,7 +925,6 @@ body {
 .footer-bracket { color: var(--grey); }
 .footer-poo     { color: var(--red-bright); }
 
-/* Contenedor de botones de redes sociales */
 .footer-socials {
   display: flex;
   gap: 1.5rem;
@@ -988,7 +932,6 @@ body {
   justify-content: center;
 }
 
-/* Botón social individual — fondo rojo oscuro aparece al hover */
 .social-btn {
   display: flex;
   align-items: center;
@@ -1021,13 +964,8 @@ body {
 }
 .social-btn > * { position: relative; z-index: 1; }
 
-/* Icono SVG del botón social */
-.social-icon {
-  width: 18px; height: 18px;
-  fill: currentColor;
-}
+.social-icon-ms { font-size: 1.1rem; }
 
-/* Texto inferior del footer */
 .footer-bottom {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -1037,19 +975,18 @@ body {
   align-items: center;
   gap: 0.4rem;
 }
-/* Icono de memoria que parpadea lentamente */
+
 .footer-icon {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--red-dim);
   animation: blink 2s step-end infinite;
 }
 
 
 /* =============================================
-   ANIMACIONES KEYFRAMES
+   KEYFRAMES
 ============================================= */
 
-/* Parpadeo de la P.O.O. — simula falla eléctrica */
 @keyframes flicker {
   0%,96%,100% { opacity: 1; }
   97%          { opacity: 0.4; }
@@ -1057,25 +994,21 @@ body {
   99%          { opacity: 0.2; }
 }
 
-/* Parpadeo on/off (cursor, ONLINE, footer icon) */
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
 
-/* Rebote del indicador de scroll */
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50%       { transform: translateX(-50%) translateY(8px); }
 }
 
-/* Rotación lenta del anillo del avatar */
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
 
-/* Glitch de texto — capa A (se mueve hacia la izquierda) */
 @keyframes glitch-a {
   0%,100% { clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); transform: translate(-2px,0); }
   25%      { clip-path: polygon(0 55%, 100% 55%, 100% 70%, 0 70%); transform: translate(2px,0); }
@@ -1083,14 +1016,12 @@ body {
   75%      { clip-path: polygon(0 80%, 100% 80%, 100% 95%, 0 95%); transform: translate(-1px,0); }
 }
 
-/* Glitch de texto — capa B (se mueve hacia la derecha) */
 @keyframes glitch-b {
   0%,100% { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: translate(2px,0); }
   33%      { clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%); transform: translate(-2px,0); }
   66%      { clip-path: polygon(0 70%, 100% 70%, 100% 85%, 0 85%); transform: translate(1px,0); }
 }
 
-/* Glitch del botón — clip-path aleatorio en hover */
 @keyframes glitch-clip {
   0%   { clip-path: polygon(0 10%, 100% 10%, 100% 30%, 0 30%); transform: translate(-3px); }
   25%  { clip-path: polygon(0 50%, 100% 50%, 100% 70%, 0 70%); transform: translate(3px); }
@@ -1099,73 +1030,39 @@ body {
   100% { clip-path: polygon(0 10%, 100% 10%, 100% 30%, 0 30%); transform: translate(0); }
 }
 
-/* Entrada fade-up genérica (para elementos que no usan mw2-reveal) */
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(30px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
 
 /* =============================================
-   RESPONSIVE — MOBILE (hasta 768px)
+   RESPONSIVE — MOBILE
 ============================================= */
 @media (max-width: 768px) {
+  .section { padding: 5rem 1.2rem 3rem; }
 
-  /* Secciones con menos padding lateral */
-  .section {
-    padding: 5rem 1.2rem 3rem;
-  }
-
-  /* Hero centrado en mobile */
-  .hero {
-    align-items: center;
-    text-align: center;
-  }
+  .hero { align-items: center; text-align: center; }
   .hero-role    { justify-content: center; }
   .code-rotator { max-width: 100%; }
 
-  /* Navbar: ocultar links, mostrar hamburguesa */
   .nav-links {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 100%;
-    left: 0; right: 0;
+    top: 100%; left: 0; right: 0;
     background: rgba(0,0,0,0.97);
     border-bottom: 1px solid var(--red-dim);
     padding: 1rem 0;
     gap: 1rem;
     align-items: center;
   }
-  /* JS agrega "open" al pulsar el botón hamburguesa */
   .nav-links.open { display: flex; }
   .nav-toggle     { display: flex; }
 
-  /* Sobre mí: una sola columna */
-  .about-wrap {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  /* Skills: 2 columnas */
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Proyectos: 1 columna */
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Footer: botones más compactos */
+  .about-wrap     { grid-template-columns: 1fr; gap: 2rem; }
+  .skills-grid    { grid-template-columns: repeat(2, 1fr); }
+  .projects-grid  { grid-template-columns: 1fr; }
   .footer-socials { gap: 0.8rem; }
   .social-btn     { padding: 0.5rem 0.8rem; }
-
-  /* Esquinas HUD más pequeñas en mobile */
-  .hud-corner { width: 20px; height: 20px; }
+  .hud-corner     { width: 20px; height: 20px; }
 }
 
-/* Tablet (769px – 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
   .section    { padding: 6rem 2rem 3rem; }
   .about-wrap { grid-template-columns: 220px 1fr; gap: 2rem; }
