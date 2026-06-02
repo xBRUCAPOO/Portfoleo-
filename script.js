@@ -331,10 +331,11 @@ document.querySelectorAll('a, button, .flip-card').forEach(el => {
    TYPING EFFECT (rol en el Hero)
 —————————————————————————————————————————— */
 const ROLES = [
-  'Frontend Developer',
-  'UI Enthusiast',
-  'Web Designer',
-  'x BRUCAP.O.O.',
+  'Programador',
+  'Editor',
+  'Diseñador Web',
+  'Programación Orientada a Objetos',
+  'Editor',
 ];
 
 const typingEl = document.getElementById('typing-role');
