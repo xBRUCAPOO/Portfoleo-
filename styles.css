@@ -24,7 +24,8 @@
 
   --code-keyword: #ff79c6;
   --code-string:  #f1fa8c;
-
+  --orange: #b77400;
+  --green: #009c22;
   --online-green: #00ff88;
 
   --font-mono:   'Share Tech Mono', monospace;
@@ -369,7 +370,7 @@ body {
 
 .code-block {
   font-family: var(--font-mono);
-  font-size: clamp(0.55rem, 1.2vw, 0.8rem);
+  font-size: 9px;
   color: var(--red-dim);
   line-height: 1.5;
   white-space: pre;
@@ -576,10 +577,44 @@ body {
   text-align: right;
 }
 
-.skill-level {
+.tipo_de_lenguaje {
   font-family: var(--font-mono);
   font-size: 0.6rem;
   color: var(--grey-light);
+  letter-spacing: 0.1em;
+  padding-top: 0.1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.skill-level_1 {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--grey);
+  padding-top: 0.4rem;
+  width: 100%;
+  text-align: center;
+}
+
+.skill-level_2 {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--orange);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--grey);
+  padding-top: 0.4rem;
+  width: 100%;
+  text-align: center;
+}
+
+.skill-level_3 {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--green);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border-top: 1px solid var(--grey);
@@ -981,8 +1016,7 @@ body {
   color: var(--red-dim);
   animation: blink 2s step-end infinite;
 }
-
-
+ 
 /* =============================================
    KEYFRAMES
 ============================================= */

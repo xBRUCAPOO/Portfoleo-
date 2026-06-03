@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>x BRUCAP.O.O. — Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+  <!-- Fondo animado de código cayendo -->
+  <canvas id="matrix-canvas"></canvas>
+  <!-- Efecto de líneas horizontales tipo CRT -->
+  <div class="scanlines"></div>
+
+  <!-- =============================================
+       NAVBAR
+  ============================================= -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <span class="nav-logo-text">x BRUCA<span class="nav-poo">P.O.O.</span></span>
+      <span class="nav-logo-text"> | </span>
+      <span class="nav-logo-text-small">PORTFOLIO</span>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menú">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="https://xbrucapoo.github.io/Portfoleo-/"      class="nav-link">INICIO</a></li>
+      <li><a href="https://xbrucapoo.github.io/Portfoleo-/"      class="nav-link">HABILIDADES</a></li>
+      <li><a href="https://xbrucapoo.github.io/Portfoleo-/"      class="nav-link">PROYECTOS</a></li>
+      <li><a href="https://xbrucapoo.github.io/Portfoleo-/-mi"   class="nav-link">SOBRE MÍ</a></li>
+      <li><a href="https://xbrucapoo.github.io/Portfoleo-/"      class="nav-link">CONTACTO</a></li>
+    </ul>
+  </nav>
+
+  <!-- =============================================
+       SECCIÓN REDES / HABILIDADES
+
+       CAMBIO PRINCIPAL: cada skill-card ahora es un
+       elemento <a> (anchor) en lugar de un <div>.
+       Esto lo convierte en un botón/link clickeable
+       sin cambiar nada de su estética visual.
+
+       Para agregar el link real de cada card:
+         → reemplazá href="#placeholder-nombre"
+           por la URL que corresponda.
+         → target="_blank" abre en nueva pestaña.
+         → rel="noopener noreferrer" es seguridad
+           estándar para links externos.
+  ============================================= -->
+  <section class="section" id="habilidades">
+
+    <div class="section-header">
+      <span class="section-tag mw2-reveal">// CONTACTS</span>
+      <h2 class="section-title mw2-reveal mw2-delay-1">Mis Redes</h2>
+      <div class="section-line mw2-reveal mw2-delay-2"></div>
+    </div>
+
+    <!-- skills-grid: ahora con justify-content:center para centrar las cards -->
+    <div class="skills-grid">
+
+      <!-- ——— Git ——— -->
+      <a class="skill-card mw2-reveal"
+         href="https://www.youtube.com/@xbrucapoo106"
+         target="_blank"
+         rel="noopener noreferrer"
+         data-percent="60"
+         data-level="Intermediate">
+        <div class="skill-icon-wrap">
+          <img class="leguaje_img" src="https://mas-seguidores.com.ar/assets/images/youtube_logotipo.webp" alt="Git">
+        </div>
+        <p class="skill-name">Git</p>
+        <span class="tipo_de_lenguaje">sistema de control de versiones</span>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-fill"></div></div>
+          <span class="skill-percent-label">60%</span>
+        </div>
+        <span class="skill-level_2">Intermediate</span>
+      </a>
+
+      <!-- ——— Git ——— -->
+      <a class="skill-card mw2-reveal"
+         href="https://www.youtube.com/@xbrucapoo106"
+         target="_blank"
+         rel="noopener noreferrer"
+         data-percent="60"
+         data-level="Intermediate">
+        <div class="skill-icon-wrap">
+          <img class="leguaje_img" src="https://mas-seguidores.com.ar/assets/images/youtube_logotipo.webp" alt="Git">
+        </div>
+        <p class="skill-name">Git</p>
+        <span class="tipo_de_lenguaje">sistema de control de versiones</span>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-fill"></div></div>
+          <span class="skill-percent-label">60%</span>
+        </div>
+        <span class="skill-level_2">Intermediate</span>
+      </a>
+
+      <!-- ——— Plantilla para futuras cards ———
+           Cuando agregues más, usá esta estructura:
+
+      <a class="skill-card mw2-reveal"
+         href="#placeholder-nombre"
+         target="_blank"
+         rel="noopener noreferrer"
+         data-percent="XX"
+         data-level="Nivel">
+        <div class="skill-icon-wrap">
+          <img class="leguaje_img" src="URL_DEL_ICONO" alt="Nombre">
+        </div>
+        <p class="skill-name">Nombre</p>
+        <span class="tipo_de_lenguaje">descripción</span>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-fill"></div></div>
+          <span class="skill-percent-label">XX%</span>
+        </div>
+        <span class="skill-level_2">Nivel</span>
+      </a>
+      -->
+
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
