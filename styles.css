@@ -41,10 +41,7 @@
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
+html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
   background-color: var(--black-1);
@@ -64,7 +61,7 @@ body {
   pointer-events: none;
 }
 
-/* ——— SCANLINES ——— */
+/* ——— SCANLINES (efecto CRT) ——— */
 .scanlines {
   position: fixed;
   top: 0; left: 0;
@@ -95,7 +92,23 @@ body {
 
 
 /* =============================================
+   SCROLLBAR PERSONALIZADA
+============================================= */
+/* Firefox */
+* { scrollbar-width: thin; scrollbar-color: var(--red) var(--black); }
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black-2); border-left: 1px solid var(--black-3); }
+::-webkit-scrollbar-thumb { background: var(--red-dim); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--red-bright); box-shadow: 0 0 8px var(--red-glow); }
+::-webkit-scrollbar-corner { background: var(--black); }
+
+
+/* =============================================
    ANIMACIÓN MW2-STYLE
+   visibility:hidden evita el flash de texto antes
+   de que JS active la clase mw2-active.
 ============================================= */
 .mw2-reveal {
   opacity: 0;
@@ -118,6 +131,8 @@ body {
 .decipher-char { color: var(--red-bright); opacity: 0.85; }
 .decipher-done { color: inherit; }
 
+/* Animación CSS pura para el H1 del hero (evita que decipherText
+   destruya los spans hijos .hero-x y .hero-poo) */
 .hero-name-animate {
   opacity: 0;
   transform: translateY(14px);
@@ -129,7 +144,10 @@ body {
 }
 
 
-/* ——— NAVBAR ——— */
+/* =============================================
+   NAVBAR — versión estándar (index.html)
+   Logo a la izquierda, links a la derecha.
+============================================= */
 .navbar {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -144,6 +162,7 @@ body {
   -webkit-backdrop-filter: blur(8px);
 }
 
+/* Logo del navbar */
 .nav-logo {
   font-family: var(--font-hud);
   font-size: 1rem;
@@ -183,6 +202,7 @@ body {
 .nav-link:hover { color: var(--red-bright); }
 .nav-link:hover::after { width: 100%; }
 
+/* Botón hamburguesa (mobile) */
 .nav-toggle {
   display: none;
   align-items: center;
@@ -198,6 +218,49 @@ body {
 .nav-toggle .material-symbols-outlined { font-size: 1.4rem; }
 
 
+/* =============================================
+   NAVBAR — botón "← VOLVER" (Redes.html)
+   Aparece a la izquierda del navbar en páginas
+   secundarias. Flecha + texto "VOLVER".
+============================================= */
+.nav-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: var(--grey-light);
+  font-family: var(--font-hud);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  border: 1px solid var(--red-dim);
+  padding: 0.35rem 0.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+/* Fondo rojo que sube al hacer hover */
+.nav-back-btn::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%; height: 0;
+  background: var(--red);
+  z-index: 0;
+  transition: height 0.3s ease;
+}
+
+.nav-back-btn:hover::before  { height: 100%; }
+.nav-back-btn:hover {
+  color: var(--black);
+  border-color: var(--red-bright);
+}
+
+.nav-back-btn > * { position: relative; z-index: 1; }
+.nav-back-icon { font-size: 1rem; }
+.nav-back-text { font-size: 0.65rem; }
+
+
 /* ——— SECCIONES ——— */
 .section {
   position: relative;
@@ -209,14 +272,8 @@ body {
 }
 
 /* ——— ENCABEZADO DE SECCIÓN ——— */
-.leguaje_img {
-  width: 30px;
-  height: 30px;
-}
-
-.skill-img-white {
-  filter: brightness(0) invert(1);
-}
+.leguaje_img { width: 30px; height: 30px; }
+.skill-img-white { filter: brightness(0) invert(1); }
 
 .section-header { margin-bottom: 3rem; text-align: center; }
 
@@ -277,13 +334,10 @@ body {
   margin-bottom: 1.2rem;
 }
 
-.hero-x   { color: var(--white); }
+.hero-x { color: var(--white); }
 .hero-poo {
   color: var(--red-bright);
-  text-shadow:
-    0 0 10px var(--red-bright),
-    0 0 30px var(--red-glow),
-    0 0 60px var(--red-glow);
+  text-shadow: 0 0 10px var(--red-bright), 0 0 30px var(--red-glow), 0 0 60px var(--red-glow);
   animation: flicker 4s infinite;
 }
 
@@ -298,10 +352,7 @@ body {
 }
 .role-prefix { color: var(--red); }
 
-.cursor-blink {
-  color: var(--red-bright);
-  animation: blink 1s step-end infinite;
-}
+.cursor-blink { color: var(--red-bright); animation: blink 1s step-end infinite; }
 
 .code-rotator { width: 100%; max-width: 700px; margin-bottom: 2.5rem; }
 
@@ -318,7 +369,6 @@ body {
   animation: code-fade-in 0.6s ease;
   max-height: 220px;
 }
-
 @keyframes code-fade-in {
   from { opacity: 0; transform: translateY(-8px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -408,7 +458,6 @@ body {
 /* =============================================
    HABILIDADES — SKILL CARDS
 ============================================= */
-
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -440,10 +489,7 @@ body {
   box-shadow: 0 0 10px var(--red-glow);
 }
 .skill-card:hover::before { transform: scaleX(1); }
-.skill-card:hover {
-  border-color: var(--red-dim);
-  transform: translateY(-4px);
-}
+.skill-card:hover { border-color: var(--red-dim); transform: translateY(-4px); }
 
 .skill-icon-wrap {
   width: 64px; height: 64px;
@@ -454,56 +500,22 @@ body {
   background: var(--black-1);
   transition: border-color 0.3s, box-shadow 0.3s;
 }
-.skill-card:hover .skill-icon-wrap {
-  border-color: var(--red);
-  box-shadow: 0 0 12px var(--red-glow);
-}
+.skill-card:hover .skill-icon-wrap { border-color: var(--red); box-shadow: 0 0 12px var(--red-glow); }
 
-/* Ícono Material Symbols usado como fallback (CapCut) */
-.skill-ms-icon {
-  font-size: 2rem;
-  color: var(--grey-light);
-  transition: color 0.3s;
-}
+.skill-ms-icon { font-size: 2rem; color: var(--grey-light); transition: color 0.3s; }
 .skill-card:hover .skill-ms-icon { color: var(--red-bright); }
 
-.skill-name {
-  font-family: var(--font-hud);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  color: var(--white);
-}
+.skill-name { font-family: var(--font-hud); font-size: 0.75rem; letter-spacing: 0.1em; color: var(--white); }
 
-.skill-bar-wrap {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.skill-bar {
-  flex: 1;
-  height: 4px;
-  background: var(--grey);
-  overflow: hidden;
-}
-
+.skill-bar-wrap { width: 100%; display: flex; align-items: center; gap: 0.5rem; }
+.skill-bar { flex: 1; height: 4px; background: var(--grey); overflow: hidden; }
 .skill-fill {
-  height: 100%;
-  width: 0;
+  height: 100%; width: 0;
   background: linear-gradient(to right, var(--red-dim), var(--red-bright));
   box-shadow: 0 0 6px var(--red-glow);
   transition: width 1.2s ease;
 }
-
-.skill-percent-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--red);
-  min-width: 2.5rem;
-  text-align: right;
-}
-
+.skill-percent-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--red); min-width: 2.5rem; text-align: right; }
 
 .tipo_de_lenguaje {
   font-family: var(--font-mono);
@@ -517,122 +529,74 @@ body {
 
 /* skill-level_1: rojo — nivel básico/junior */
 .skill-level_1 {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--red);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-top: 1px solid var(--grey);
-  padding-top: 0.4rem;
-  width: 100%;
-  text-align: center;
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--red);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-top: 1px solid var(--grey); padding-top: 0.4rem;
+  width: 100%; text-align: center;
 }
-
 /* skill-level_2: naranja — nivel intermedio */
 .skill-level_2 {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--orange);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-top: 1px solid var(--grey);
-  padding-top: 0.4rem;
-  width: 100%;
-  text-align: center;
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--orange);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-top: 1px solid var(--grey); padding-top: 0.4rem;
+  width: 100%; text-align: center;
 }
-
 /* skill-level_3: verde — nivel experto */
 .skill-level_3 {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--green);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  border-top: 1px solid var(--grey);
-  padding-top: 0.4rem;
-  width: 100%;
-  text-align: center;
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--green);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-top: 1px solid var(--grey); padding-top: 0.4rem;
+  width: 100%; text-align: center;
 }
 
 
 /* =============================================
    PROYECTOS — FLIP CARDS
 ============================================= */
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 2rem;
-}
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; }
 
 .flip-card { perspective: 1000px; height: 260px; cursor: pointer; }
 
 .flip-inner {
-  position: relative;
-  width: 100%; height: 100%;
+  position: relative; width: 100%; height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 .flip-card:hover .flip-inner { transform: rotateY(180deg); }
 
-.flip-front,
-.flip-back {
-  position: absolute;
-  width: 100%; height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+.flip-front, .flip-back {
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
   border: 1px solid var(--grey);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  gap: 0.7rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 1.5rem; gap: 0.7rem;
   background: linear-gradient(135deg, var(--black-2), var(--black-3));
 }
-
 .flip-front { border-top: 2px solid var(--red); }
 
-.project-icon {
-  font-size: 3rem;
-  color: var(--red);
-  filter: drop-shadow(0 0 8px var(--red-glow));
-}
-
+.project-icon { font-size: 3rem; color: var(--red); filter: drop-shadow(0 0 8px var(--red-glow)); }
 .project-title { font-family: var(--font-hud); font-size: 1rem; letter-spacing: 0.2em; color: var(--white); }
 .project-tag   { font-family: var(--font-mono); font-size: 0.7rem; color: var(--grey-light); }
 
 .flip-back {
   background: linear-gradient(135deg, var(--black-3), var(--black-4));
   border-top: 2px solid var(--red-bright);
-  transform: rotateY(180deg);
-  text-align: center;
-  gap: 0.8rem;
+  transform: rotateY(180deg); text-align: center; gap: 0.8rem;
 }
-
 .project-back-title { font-family: var(--font-hud); font-size: 0.85rem; letter-spacing: 0.2em; color: var(--red-bright); }
 .project-desc       { font-size: 0.85rem; color: var(--grey-light); line-height: 1.4; }
 
 .project-techs { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
-
 .tech-tag {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--red);
-  border: 1px solid var(--red-dim);
-  padding: 0.15rem 0.5rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--red);
+  border: 1px solid var(--red-dim); padding: 0.15rem 0.5rem; letter-spacing: 0.1em;
 }
 
 .btn-small {
-  font-family: var(--font-hud);
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  color: var(--red-bright);
-  text-decoration: none;
-  border: 1px solid var(--red-bright);
-  padding: 0.4rem 0.9rem;
-  transition: background 0.3s, color 0.3s;
-  margin-top: 0.3rem;
+  font-family: var(--font-hud); font-size: 0.65rem; letter-spacing: 0.15em;
+  color: var(--red-bright); text-decoration: none;
+  border: 1px solid var(--red-bright); padding: 0.4rem 0.9rem;
+  transition: background 0.3s, color 0.3s; margin-top: 0.3rem;
 }
 .btn-small:hover { background: var(--red-bright); color: var(--black); }
 
@@ -644,46 +608,32 @@ body {
 
 .avatar-ring-outer {
   width: 180px; height: 180px;
-  border: 2px solid var(--red-dim);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 2px solid var(--red-dim); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
   margin: 0 auto 1.5rem;
   animation: spin-slow 12s linear infinite;
   position: relative;
 }
 .avatar-ring-outer::before {
-  content: '';
-  position: absolute;
+  content: ''; position: absolute;
   top: -4px; left: 50%;
   width: 8px; height: 8px;
-  background: var(--red-bright);
-  border-radius: 50%;
+  background: var(--red-bright); border-radius: 50%;
   box-shadow: 0 0 10px var(--red-bright);
   transform: translateX(-50%);
 }
 .avatar-ring-inner {
   width: 140px; height: 140px;
-  border: 1px solid var(--grey);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid var(--grey); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
   background: var(--black-2);
 }
 .avatar-initials { font-family: var(--font-hud); font-size: 2.5rem; color: var(--red-bright); text-shadow: 0 0 20px var(--red-glow); }
-
 .avatar-stats { display: flex; flex-direction: column; gap: 0.5rem; }
-
 .stat-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  border-left: 2px solid var(--red-dim);
-  padding-left: 0.6rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-mono); font-size: 0.7rem;
+  border-left: 2px solid var(--red-dim); padding-left: 0.6rem;
 }
 .stat-icon  { font-size: 0.9rem; color: var(--red); flex-shrink: 0; }
 .stat-label { color: var(--red); min-width: 55px; }
@@ -695,91 +645,50 @@ body {
 .about-paragraph strong { color: var(--white); }
 
 .about-code-line {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--grey-light);
-  border-left: 2px solid var(--red);
-  padding: 0.5rem 1rem;
-  background: rgba(0,0,0,0.2);
-  margin-top: 1rem;
+  font-family: var(--font-mono); font-size: 0.85rem; color: var(--grey-light);
+  border-left: 2px solid var(--red); padding: 0.5rem 1rem;
+  background: rgba(0,0,0,0.2); margin-top: 1rem;
 }
 .code-kw  { color: var(--code-keyword); }
 .code-str { color: var(--code-string); }
 
 
 /* =============================================
-   CONTACTO
+   CONTACTO (formulario)
+   NOTA: esta sección conserva el nombre "contacto"
+   según indicación del usuario
 ============================================= */
 .contact-wrap { max-width: 600px; margin: 0 auto; }
-
 .contact-form-box {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: flex; flex-direction: column; gap: 1.5rem;
   background: linear-gradient(135deg, var(--black-2), var(--black-3));
-  border: 1px solid var(--grey);
-  border-top: 2px solid var(--red);
-  padding: 2.5rem;
+  border: 1px solid var(--grey); border-top: 2px solid var(--red); padding: 2.5rem;
 }
-
 .form-row { display: flex; flex-direction: column; gap: 0.4rem; }
-
 .form-label {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--red);
-  letter-spacing: 0.15em;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
+  font-family: var(--font-mono); font-size: 0.65rem; color: var(--red);
+  letter-spacing: 0.15em; display: flex; align-items: center; gap: 0.3rem;
 }
 .form-icon { font-size: 0.85rem; color: var(--red-bright); }
-
-.form-input,
-.form-textarea {
-  background: var(--black-1);
-  border: 1px solid var(--grey);
-  border-bottom: 1px solid var(--red-dim);
-  color: var(--white);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  padding: 0.7rem;
-  outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  resize: none;
+.form-input, .form-textarea {
+  background: var(--black-1); border: 1px solid var(--grey); border-bottom: 1px solid var(--red-dim);
+  color: var(--white); font-family: var(--font-mono); font-size: 0.85rem;
+  padding: 0.7rem; outline: none; transition: border-color 0.3s, box-shadow 0.3s; resize: none;
 }
-.form-input:focus,
-.form-textarea:focus { border-color: var(--red-bright); box-shadow: 0 0 8px var(--red-glow); }
+.form-input:focus, .form-textarea:focus { border-color: var(--red-bright); box-shadow: 0 0 8px var(--red-glow); }
 .form-textarea { min-height: 130px; }
-.form-input::placeholder,
-.form-textarea::placeholder { color: var(--grey); }
+.form-input::placeholder, .form-textarea::placeholder { color: var(--grey); }
 
 .btn-primary {
-  font-family: var(--font-hud);
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
-  color: var(--white);
-  background: transparent;
-  border: 1px solid var(--red);
-  padding: 0.75rem 1.8rem;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  overflow: hidden;
-  position: relative;
-  transition: color 0.3s, border-color 0.3s;
-  z-index: 0;
+  font-family: var(--font-hud); font-size: 0.8rem; letter-spacing: 0.2em;
+  color: var(--white); background: transparent; border: 1px solid var(--red);
+  padding: 0.75rem 1.8rem; cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  overflow: hidden; position: relative; transition: color 0.3s, border-color 0.3s; z-index: 0;
 }
 .btn-primary::before {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 0;
-  background: var(--red);
-  z-index: -1;
-  transition: height 0.3s ease;
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 0; background: var(--red); z-index: -1; transition: height 0.3s ease;
 }
 .btn-primary:hover::before { height: 100%; }
 .btn-primary:hover { color: var(--black); border-color: var(--red-bright); }
@@ -789,72 +698,187 @@ body {
    FOOTER
 ============================================= */
 .footer {
-  position: relative;
-  z-index: 2;
-  padding: 2.5rem 2rem 1.5rem;
-  text-align: center;
+  position: relative; z-index: 2;
+  padding: 2.5rem 2rem 1.5rem; text-align: center;
   background: var(--black);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
+  display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
 }
-
 .footer-line {
-  width: 100%;
-  height: 1px;
+  width: 100%; height: 1px;
   background: linear-gradient(to right, transparent, var(--red), transparent);
-  box-shadow: 0 0 12px var(--red-glow);
-  margin-bottom: 0.5rem;
+  box-shadow: 0 0 12px var(--red-glow); margin-bottom: 0.5rem;
 }
-
 .footer-copy { font-family: var(--font-hud); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--grey-light); }
 .footer-bracket { color: var(--grey); }
 .footer-poo     { color: var(--red-bright); }
-
 .footer-socials { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
-
 .social-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
-  border: 1px solid var(--grey);
-  color: var(--grey-light);
-  text-decoration: none;
-  font-family: var(--font-hud);
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
-  position: relative;
-  overflow: hidden;
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem;
+  border: 1px solid var(--grey); color: var(--grey-light); text-decoration: none;
+  font-family: var(--font-hud); font-size: 0.65rem; letter-spacing: 0.1em;
+  transition: border-color 0.3s, color 0.3s, box-shadow 0.3s; position: relative; overflow: hidden;
 }
 .social-btn::before {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 100%; height: 0;
-  background: var(--red-dim);
-  z-index: 0;
-  transition: height 0.3s;
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 0; background: var(--red-dim); z-index: 0; transition: height 0.3s;
 }
 .social-btn:hover::before { height: 100%; }
 .social-btn:hover { border-color: var(--red-bright); color: var(--white); box-shadow: 0 0 12px var(--red-glow); }
 .social-btn > * { position: relative; z-index: 1; }
-
 .social-icon-ms { font-size: 1.1rem; }
-
 .footer-bottom {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--grey);
-  letter-spacing: 0.2em;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  font-family: var(--font-mono); font-size: 0.6rem; color: var(--grey);
+  letter-spacing: 0.2em; display: flex; align-items: center; gap: 0.4rem;
 }
 .footer-icon { font-size: 0.9rem; color: var(--red-dim); animation: blink 2s step-end infinite; }
 
+
+/* =============================================
+   REDES.HTML — CARDS DE REDES SOCIALES
+   CAMBIO: todas las clases renombradas de
+   "contact-*" a "redes-*" para coherencia
+============================================= */
+
+/* Grilla de redes: flex centrado */
+.redes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* Card de red social principal — es un <a> */
+.redes-card {
+  text-decoration: none;
+  color: var(--white);
+  cursor: pointer;
+  width: 160px; /* ancho de las cards principales */
+
+  background: linear-gradient(135deg, var(--black-2), var(--black-3));
+  border: 1px solid var(--grey);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+/* Línea roja superior al hacer hover */
+.redes-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  box-shadow: 0 0 10px var(--red-glow);
+}
+.redes-card:hover::before { transform: scaleX(1); }
+.redes-card:hover { border-color: var(--red-dim); transform: translateY(-4px); }
+
+/* Contenedor del ícono de la red */
+.redes-icon-wrap {
+  width: 64px; height: 64px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--grey);
+  background: var(--black-1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.redes-card:hover .redes-icon-wrap { border-color: var(--red); box-shadow: 0 0 12px var(--red-glow); }
+
+/* Imagen del ícono de la red social */
+.img_red {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 6px;
+}
+
+/* Nombre de la red social */
+.redes-name {
+  font-family: var(--font-hud);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+}
+
+/* =============================================
+   REDES SECUNDARIAS — cards más pequeñas
+   CAMBIO NUEVO: modificador BEM "--secundaria"
+   que reduce el tamaño de las cards de redes
+   que "casi no se utilizan" (TikTok, Instagram)
+============================================= */
+
+/* La grilla secundaria tiene gap más chico */
+.redes-grid--secundaria {
+  gap: 1rem;
+}
+
+/* Card secundaria: más angosta y con menos padding */
+.redes-card--secundaria {
+  width: 120px;      /* 160px → 120px: 25% más chica */
+  padding: 1rem 0.7rem;
+  gap: 0.5rem;
+}
+
+/* Ícono secundario: más pequeño */
+.redes-icon-wrap--secundaria {
+  width: 48px;       /* 64px → 48px */
+  height: 48px;
+}
+
+/* Nombre en cards secundarias: tipografía levemente más chica */
+.redes-card--secundaria .redes-name {
+  font-size: 0.65rem;
+}
+
+/* tipo_de_lenguaje en cards secundarias: también más chico */
+.redes-card--secundaria .tipo_de_lenguaje {
+  font-size: 0.52rem;
+}
+
+
+/* Espaciado entre las dos grillas de redes */
+.spacer { height: 3rem; }
+
+/* Línea separadora animada entre secciones de redes */
+.linea-separacion {
+  width: 100%;
+  height: 2px;
+  background: var(--red-glow);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 20px 0;
+  position: relative;
+  animation: aparecer 1s ease 0.2s both;
+}
+
+/* Luz que viaja sobre la línea separadora */
+.linea-inner {
+  position: absolute;
+  height: 100%;
+  width: 55%;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  left: -55%;
+  animation: viajar 2.5s ease-in-out infinite;
+}
+
+/* Texto pequeño rojo debajo de la línea separadora */
+.texto_chico_rojo {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  padding-top: 0.1rem;
+  width: 100%;
+  text-align: center;
+}
 
 
 /* =============================================
@@ -896,10 +920,20 @@ body {
   75%  { clip-path: polygon(0 0,   100% 0,   100% 20%, 0 20%); transform: translate(2px); }
   100% { clip-path: polygon(0 10%, 100% 10%, 100% 30%, 0 30%); transform: translate(0); }
 }
+@keyframes viajar {
+  0%   { left: -55%;  opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { left: 100%;  opacity: 0; }
+}
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 
 /* =============================================
-   RESPONSIVE — MOBILE
+   RESPONSIVE — MOBILE (≤768px)
 ============================================= */
 @media (max-width: 768px) {
   .section { padding: 5rem 1.2rem 3rem; }
@@ -915,155 +949,139 @@ body {
     top: 100%; left: 0; right: 0;
     background: rgba(0,0,0,0.97);
     border-bottom: 1px solid var(--red-dim);
-    padding: 1rem 0;
-    gap: 1rem;
-    align-items: center;
+    padding: 1rem 0; gap: 1rem; align-items: center;
   }
   .nav-links.open { display: flex; }
   .nav-toggle     { display: flex; }
 
   .about-wrap    { grid-template-columns: 1fr; gap: 2rem; }
-  /* En mobile las cards ya están centradas por flex; solo reducimos el ancho mínimo */
   .skill-card    { width: 140px; }
+
+  /* En mobile las redes principales son un poco más chicas */
+  .redes-card    { width: 130px; }
+  /* Las secundarias también se reducen proporcionalmente */
+  .redes-card--secundaria { width: 100px; }
+  .redes-icon-wrap--secundaria { width: 40px; height: 40px; }
+
   .projects-grid { grid-template-columns: 1fr; }
   .footer-socials { gap: 0.8rem; }
   .social-btn     { padding: 0.5rem 0.8rem; }
   .hud-corner     { width: 20px; height: 20px; }
+
+  /* En mobile el texto "VOLVER" se oculta, queda solo el ícono */
+  .nav-back-text  { display: none; }
 }
 
+
+/* =============================================
+   RESPONSIVE — TABLET (769px – 1024px)
+============================================= */
 @media (min-width: 769px) and (max-width: 1024px) {
   .section    { padding: 6rem 2rem 3rem; }
   .about-wrap { grid-template-columns: 220px 1fr; gap: 2rem; }
 }
 
-/* CONTACTOS.HTML */
-.contact-grid {
-  display: flex;
-  flex-wrap: wrap;        /* permite que las cards bajen a la siguiente línea */
-  justify-content: center; /* centra las cards horizontalmente en el contenedor */
-  gap: 1.5rem;
+
+/* =============================================
+   RESPONSIVE — DESKTOP GRANDE (1440px – 1919px)
+   CAMBIO NUEVO: escala general para resoluciones
+   amplias donde el contenido quedaba pequeño.
+   Se agranda el max-width de la sección, los
+   tamaños de cards y la tipografía del hero.
+============================================= */
+@media (min-width: 1440px) {
+  /* Sección más ancha para aprovechar el espacio */
+  .section {
+    max-width: 1400px;
+    padding: 7rem 5rem 5rem;
+  }
+
+  /* Cards de habilidades más grandes */
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 2rem;
+  }
+  .skill-card { padding: 2rem 1.4rem; gap: 1rem; }
+  .skill-icon-wrap { width: 76px; height: 76px; }
+  .leguaje_img { width: 38px; height: 38px; }
+  .skill-name { font-size: 0.85rem; }
+  .tipo_de_lenguaje { font-size: 0.65rem; }
+  .skill-percent-label { font-size: 0.72rem; }
+
+  /* Cards de proyectos más grandes */
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2.5rem;
+  }
+  .flip-card { height: 300px; }
+  .project-icon { font-size: 3.5rem; }
+  .project-title { font-size: 1.1rem; }
+
+  /* Cards de redes principales más grandes */
+  .redes-card { width: 185px; padding: 1.8rem 1.2rem; }
+  .redes-icon-wrap { width: 76px; height: 76px; }
+  .redes-name { font-size: 0.85rem; }
+
+  /* Cards de redes secundarias más grandes (pero siguen siendo menores que las principales) */
+  .redes-card--secundaria { width: 140px; padding: 1.2rem 0.9rem; }
+  .redes-icon-wrap--secundaria { width: 56px; height: 56px; }
+
+  /* Hero con texto más grande */
+  .hero-role { font-size: 1.25rem; }
+  .hero-subname { font-size: 1rem; }
+
+  /* Sobre mí: columna izquierda más ancha */
+  .about-wrap { grid-template-columns: 320px 1fr; gap: 5rem; }
+  .avatar-ring-outer { width: 210px; height: 210px; }
+  .avatar-ring-inner { width: 165px; height: 165px; }
+  .avatar-initials { font-size: 3rem; }
+  .stat-row { font-size: 0.8rem; }
+  .about-paragraph { font-size: 1.1rem; }
+
+  /* Formulario de contacto más ancho */
+  .contact-wrap { max-width: 720px; }
 }
 
-/* CAMBIO: se agregaron text-decoration:none, color y cursor
-   para que el elemento funcione correctamente como <a> (link/botón)
-   manteniendo la misma estética visual del <div> original. */
-.contact-card {
-  /* Reset de estilos nativos del <a> */
-  text-decoration: none;  /* elimina el subrayado que tiene un <a> por defecto */
-  color: var(--white);    /* fuerza blanco; el <a> hereda azul por defecto */
-  cursor: pointer;        /* muestra la mano al pasar el mouse, indica clickeable */
 
-  /* Ancho fijo para que todas las cards sean del mismo tamaño */
-  width: 160px;
+/* =============================================
+   RESPONSIVE — DESKTOP MUY GRANDE (≥1920px)
+   CAMBIO NUEVO: resoluciones 1920px y superior
+   (Full HD, 2K, 4K). Escala adicional para que
+   nada quede diminuto en pantallas grandes.
+============================================= */
+@media (min-width: 1920px) {
+  html { font-size: 18px; } /* base más grande → todo escala proporcionalmente */
 
-  /* Estética original sin cambios */
-  background: linear-gradient(135deg, var(--black-2), var(--black-3));
-  border: 1px solid var(--grey);
-  padding: 1.5rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  position: relative;
-  overflow: hidden;
-  transition: border-color 0.3s, transform 0.3s;
-}
+  .section {
+    max-width: 1700px;
+    padding: 8rem 6rem 6rem;
+  }
 
-/* Línea roja superior que aparece al hacer hover */
-.contact-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 2px;
-  background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
-  box-shadow: 0 0 10px var(--red-glow);
-}
-.contact-card:hover::before { transform: scaleX(1); }
-.contact-card:hover {
-  border-color: var(--red-dim);
-  transform: translateY(-4px);
-}
+  /* Skills grid aún más amplio */
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 2.5rem;
+  }
+  .skill-card { padding: 2.2rem 1.6rem; }
+  .skill-icon-wrap { width: 84px; height: 84px; }
 
-.contact-icon-wrap {
-  width: 64px; height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid var(--grey);
-  background: var(--black-1);
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
-.contact-card:hover .contact-icon-wrap {
-  border-color: var(--red);
-  box-shadow: 0 0 12px var(--red-glow);
-}
+  /* Proyectos */
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 3rem;
+  }
+  .flip-card { height: 340px; }
 
-.contact-ms-icon {
-  font-size: 2rem;
-  color: var(--grey-light);
-  transition: color 0.3s;
-}
-.contact-card:hover .contact-ms-icon { color: var(--red-bright); }
+  /* Redes */
+  .redes-card { width: 210px; padding: 2rem 1.4rem; }
+  .redes-icon-wrap { width: 84px; height: 84px; }
+  .redes-card--secundaria { width: 160px; padding: 1.4rem 1rem; }
+  .redes-icon-wrap--secundaria { width: 64px; height: 64px; }
 
-.contact-name {
-  font-family: var(--font-hud);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  color: var(--white);
-}
+  /* Navbar links más visibles */
+  .nav-link { font-size: 0.8rem; }
+  .nav-logo  { font-size: 1.1rem; }
 
-.contact-bar-wrap { width: 100%; display: flex; align-items: center; gap: 0.5rem; }
-
-.contact-bar { flex: 1; height: 4px; background: var(--grey); overflow: hidden; }
-
-.img_comunication {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--grey-light);
-  letter-spacing: 0.1em;
-  padding-top: 0.1rem;
-  width: 100%;
-  text-align: center;
-}
-
-@keyframes viajar {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(300%); }
-}
-
-@keyframes aparecer {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.linea-separacion {
-  width: 100%;
-  height: 2px;
-  background: var(--red-glow); /* Usa un color temporal si var(--borde) no está definido */
-  border-radius: 2px;
-  overflow: hidden;
-  margin: 20px 0;
-  position: relative; /* Importante para que .linea-inner se posicione dentro */
-  animation: aparecer 1s ease 0.2s both;
-}
-
-.linea-inner {
-  position: absolute; /* Esto es clave para que la animación funcione */
-  height: 100%;
-  width: 55%; /* Cambiado a 100% para que la animación sea más visible */
-  background: linear-gradient(90deg, transparent, var(--red), transparent); 
-  animation: viajar 2.5s ease-in-out infinite;
-}
-
-.texto_chico_rojo {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--red);
-  letter-spacing: 0.1em;
-  padding-top: 0.1rem;
-  width: 100%;
-  text-align: center;
+  /* Formulario */
+  .contact-wrap { max-width: 860px; }
 }

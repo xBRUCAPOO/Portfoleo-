@@ -1,24 +1,10 @@
 /* =============================================
    script.js — Portfolio x BRUCAP.O.O.
-
-   FIXES EN ESTA VERSIÓN:
-   1. El texto ya no es visible antes de la animación:
-      El CSS usa visibility:hidden (no solo opacity:0),
-      y JS activa mw2-active en el mismo frame que
-      inicia el observer, sin delay previo que dejara
-      el elemento renderizado sin ocultar.
-   2. El P.O.O. ya no pierde su color rojo:
-      El <h1.hero-name> fue sacado del sistema mw2-reveal
-      en el HTML y usa una animación CSS pura. Por lo tanto
-      decipherText() nunca se ejecuta en él y los spans
-      .hero-x / .hero-poo conservan sus colores.
-   3. Íconos: reemplazados en el HTML por devicon vía CDN.
 ============================================= */
 
 
 /* ——————————————————————————————————————————
    CANVAS DE CÓDIGO (fondo)
-   Tokens de programación cayendo en columnas.
 —————————————————————————————————————————— */
 const canvas = document.getElementById('matrix-canvas');
 const ctx    = canvas.getContext('2d');
@@ -56,7 +42,6 @@ function drawCodeBackground() {
   ctx.fillStyle = 'rgba(0,0,0,0.05)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.font = FONT_SIZE + 'px Share Tech Mono';
-
   drops.forEach((y, i) => {
     const token = CODE_TOKENS[Math.floor(Math.random() * CODE_TOKENS.length)];
     const x     = i * (FONT_SIZE * 6);
@@ -71,6 +56,9 @@ setInterval(drawCodeBackground, 80);
 
 /* ——————————————————————————————————————————
    NAVBAR — scroll y hamburguesa
+   NOTA: navToggle y navLinks pueden no existir en
+   Redes.html (no tiene menú hamburguesa).
+   Se verifican antes de agregar listeners.
 —————————————————————————————————————————— */
 const navbar    = document.getElementById('navbar');
 const navToggle = document.getElementById('nav-toggle');
@@ -86,57 +74,25 @@ window.addEventListener('scroll', () => {
   }
 });
 
-navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-navLinks.querySelectorAll('.nav-link').forEach(link => {
-  link.addEventListener('click', () => navLinks.classList.remove('open'));
-});
+/* Solo agrega el listener si el botón hamburguesa existe en la página */
+if (navToggle && navLinks) {
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+}
 
 
 /* ——————————————————————————————————————————
    ANIMACIÓN MW2 — DESCIFRADO DE TEXTO
-   ——————————————————————————————————————————
-   Inspirada en Call of Duty: Modern Warfare 2 (2009).
-
-   FIX 1 — Texto visible antes de animarse:
-   El CSS ahora usa visibility:hidden en .mw2-reveal,
-   no solo opacity:0. Esto garantiza que el texto
-   NO se renderice visible en ningún frame antes de
-   que JS llame a classList.add('mw2-active').
-
-   FIX 2 — P.O.O. pierde color rojo:
-   El <h1 class="hero-name"> fue removido de mw2-reveal
-   en el HTML. Usa la clase hero-name-animate que aplica
-   una animación CSS pura (keyframe). Por lo tanto esta
-   función nunca procesa ese elemento y los <span> hijos
-   .hero-x / .hero-poo conservan sus colores CSS.
-
-   Regla general: decipherText() SOLO se llama en
-   elementos de texto simple (sin hijos con clases
-   de color propias). Si un elemento tiene hijos con
-   estilos de color, debe usar animación CSS directa.
 —————————————————————————————————————————— */
-
 const SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#@|01%$&~';
 const SCRAMBLE_DURATION = 380;
 const CHAR_DELAY = 38;
 
-/**
- * decipherText(element)
- *
- * Efecto de "descifrado" letra por letra.
- * IMPORTANTE: Solo llamar en elementos con texto plano directo,
- * sin hijos con estilos de color propios.
- * Si el elemento tiene hijos complejos (como <span class="hero-poo">),
- * el innerHTML se destruiría y los colores se perderían.
- */
 function decipherText(element) {
   const originalText = element.textContent.trim();
   if (!originalText || originalText.length === 0) return;
-
-  /* GUARD: si el elemento tiene hijos con clases propias de estilo,
-     no ejecutar el descifrado para no destruir sus estilos.
-     Esto es la segunda línea de defensa; la primera es no usar
-     mw2-reveal en el <h1> del hero directamente en el HTML. */
   if (element.querySelectorAll('[class]').length > 0) return;
 
   const finalText = originalText;
@@ -153,63 +109,45 @@ function decipherText(element) {
 
   chars.forEach((ch, i) => {
     if (ch === ' ') return;
-
     const span = element.querySelector(`[data-index="${i}"]`);
     if (!span) return;
-
     const startDelay = i * CHAR_DELAY;
     const finalChar  = ch;
-
     setTimeout(() => {
       span.style.opacity = '1';
       span.classList.add('decipher-char');
-
       const scrambleInterval = setInterval(() => {
-        span.textContent = SCRAMBLE_CHARS[
-          Math.floor(Math.random() * SCRAMBLE_CHARS.length)
-        ];
+        span.textContent = SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
       }, 40);
-
       setTimeout(() => {
         clearInterval(scrambleInterval);
         span.textContent = finalChar;
         span.classList.remove('decipher-char');
         span.classList.add('decipher-done');
       }, SCRAMBLE_DURATION);
-
     }, startDelay);
   });
 }
 
-/* IntersectionObserver: activa la animación al entrar en viewport */
 const mw2Observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
-
     const el = entry.target;
-
-    /* Activar visibilidad (CSS transition de opacity + visibility) */
     el.classList.add('mw2-active');
 
     const isTextElement = (
-      el.tagName === 'P'    ||
-      el.tagName === 'H1'   ||
-      el.tagName === 'H2'   ||
-      el.tagName === 'H3'   ||
-      el.tagName === 'SPAN' ||
-      el.tagName === 'A'    ||
+      el.tagName === 'P' || el.tagName === 'H1' || el.tagName === 'H2' ||
+      el.tagName === 'H3' || el.tagName === 'SPAN' || el.tagName === 'A' ||
       el.tagName === 'BUTTON'
     );
 
-    const cssDelay = parseFloat(
-      getComputedStyle(el).transitionDelay || '0'
-    ) * 1000;
+    const cssDelay = parseFloat(getComputedStyle(el).transitionDelay || '0') * 1000;
 
     if (isTextElement && el.textContent.trim().length > 0) {
       setTimeout(() => decipherText(el), cssDelay + 60);
     }
 
-    /* Animar barra de progreso si es skill card */
+    /* Animar barra de progreso si es skill-card */
     if (el.classList.contains('skill-card')) {
       const fill    = el.querySelector('.skill-fill');
       const percent = el.dataset.percent;
@@ -227,9 +165,13 @@ document.querySelectorAll('.mw2-reveal').forEach(el => mw2Observer.observe(el));
 
 /* ——————————————————————————————————————————
    ROTADOR DE CÓDIGO (Hero)
+   Solo se inicializa si el elemento existe en la página.
 —————————————————————————————————————————— */
-const CODE_BLOCKS = [
-  `// SISTEMA x BRUCAP.O.O. — INICIALIZANDO
+const codeDisplay = document.getElementById('code-display');
+
+if (codeDisplay) {
+  const CODE_BLOCKS = [
+    `// SISTEMA x BRUCAP.O.O. — INICIALIZANDO
 > Cargando módulos de interfaz...
 > Compilando assets visuales... [OK]
 > Conectando al servidor......  [OK]
@@ -244,7 +186,7 @@ class Portfolio {
 const app = new Portfolio('BRUCA');
 app.render(); // >> OPERACIONAL`,
 
-  `/* ANÁLISIS DE NÚCLEO — HABILIDADES */
+    `/* ANÁLISIS DE NÚCLEO — HABILIDADES */
 const skills = {
   HTML:       { level: 50, rank: 'INTER.'    },
   CSS:        { level: 50, rank: 'INTER.'    },
@@ -257,14 +199,13 @@ const skills = {
 };
 // >> Todos los módulos operativos <<`,
 
-  `/* PROTOCOLO_DE_CONTACTO — ABIERTO */
-// Escaneando canales disponibles...
-
-const channels = ['GitHub','YouTube','Steam','Gmail'];
-channels.forEach(ch => console.log(\`[\${ch}] ACTIVO\`));
+    `/* PROTOCOLO_DE_REDES — ABIERTO */
+/* CAMBIO: renombrado de CONTACTO a REDES */
+const redes = ['GitHub','YouTube','Steam','Gmail'];
+redes.forEach(r => console.log(\`[\${r}] ACTIVO\`));
 
 async function openComms(config) {
-  const conn = await fetch('/api/contact', {
+  const conn = await fetch('/api/redes', {
     method: 'POST',
     body: JSON.stringify(config),
   });
@@ -272,9 +213,7 @@ async function openComms(config) {
 }
 // >> LISTO PARA RECIBIR TRANSMISIÓN <<`,
 
-  `# ABSOLUTE_SOLVER — INSTANCIA ACTIVA
-# WARNING: Acceso no autorizado detectado.
-
+    `# ABSOLUTE_SOLVER — INSTANCIA ACTIVA
 def identify(entity: dict) -> str:
     alias  = entity.get('alias', 'UNKNOWN')
     role   = entity.get('role',  'None')
@@ -286,26 +225,24 @@ agent = { 'alias': 'x BRUCAP.O.O.',
           'friendly': True }
 print(identify(agent))
 # >> FIN_DE_TRANSMISIÓN`,
-];
+  ];
 
-const codeDisplay = document.getElementById('code-display');
-let codeIndex = 0;
-
-function showCode(index) {
-  codeDisplay.style.animation = 'none';
-  void codeDisplay.offsetWidth;
-  codeDisplay.textContent    = CODE_BLOCKS[index];
-  codeDisplay.style.animation = 'code-fade-in 0.6s ease';
+  let codeIndex = 0;
+  function showCode(index) {
+    codeDisplay.style.animation = 'none';
+    void codeDisplay.offsetWidth;
+    codeDisplay.textContent    = CODE_BLOCKS[index];
+    codeDisplay.style.animation = 'code-fade-in 0.6s ease';
+  }
+  showCode(0);
+  setInterval(() => { codeIndex = (codeIndex + 1) % CODE_BLOCKS.length; showCode(codeIndex); }, 5000);
 }
-showCode(0);
-setInterval(() => { codeIndex = (codeIndex + 1) % CODE_BLOCKS.length; showCode(codeIndex); }, 5000);
 
 
 /* ——————————————————————————————————————————
    SONIDO DE GLITCH EN HOVER
 —————————————————————————————————————————— */
 let audioCtx = null;
-
 function playGlitch() {
   try {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -319,58 +256,59 @@ function playGlitch() {
     filter.type = 'highpass'; filter.frequency.value = 1800;
     source.connect(filter); filter.connect(audioCtx.destination);
     source.start();
-  } catch (e) { /* navegador sin Web Audio */ }
+  } catch (e) {}
 }
-
-document.querySelectorAll('a, button, .flip-card').forEach(el => {
+/* CAMBIO: selector actualizado de ".contact-card" a ".redes-card" */
+document.querySelectorAll('a, button, .flip-card, .redes-card').forEach(el => {
   el.addEventListener('mouseenter', playGlitch);
 });
 
 
 /* ——————————————————————————————————————————
-   TYPING EFFECT (rol en el Hero)
+   TYPING EFFECT (Hero) — solo si existe el elemento
 —————————————————————————————————————————— */
-const ROLES = [
-  'Diseñador Web',
-  'Programación Orientada a Objeto',
-  'Editor de videos',
-  'Programador FULLSTACK',
-  'Prompter',
-];
-
 const typingEl = document.getElementById('typing-role');
-let roleIndex  = 0;
-let charIndex  = 0;
-let isDeleting = false;
 
-function typeRole() {
-  const currentRole = ROLES[roleIndex];
-  if (!isDeleting) {
-    typingEl.textContent = currentRole.slice(0, charIndex + 1);
-    charIndex++;
-    if (charIndex === currentRole.length) {
-      isDeleting = true;
-      setTimeout(typeRole, 1800);
-      return;
+if (typingEl) {
+  const ROLES = [
+    'Diseñador Web',
+    'Programación Orientada a Objeto',
+    'Editor de videos',
+    'Programador FULLSTACK',
+    'Prompter',
+  ];
+  let roleIndex  = 0;
+  let charIndex  = 0;
+  let isDeleting = false;
+
+  function typeRole() {
+    const currentRole = ROLES[roleIndex];
+    if (!isDeleting) {
+      typingEl.textContent = currentRole.slice(0, charIndex + 1);
+      charIndex++;
+      if (charIndex === currentRole.length) {
+        isDeleting = true;
+        setTimeout(typeRole, 1800);
+        return;
+      }
+    } else {
+      typingEl.textContent = currentRole.slice(0, charIndex - 1);
+      charIndex--;
+      if (charIndex === 0) {
+        isDeleting = false;
+        roleIndex  = (roleIndex + 1) % ROLES.length;
+      }
     }
-  } else {
-    typingEl.textContent = currentRole.slice(0, charIndex - 1);
-    charIndex--;
-    if (charIndex === 0) {
-      isDeleting = false;
-      roleIndex  = (roleIndex + 1) % ROLES.length;
-    }
+    setTimeout(typeRole, isDeleting ? 60 : 110);
   }
-  setTimeout(typeRole, isDeleting ? 60 : 110);
+  setTimeout(typeRole, 1000);
 }
-setTimeout(typeRole, 1000);
 
 
 /* ——————————————————————————————————————————
-   GLITCH ESPORÁDICO en "P.O.O."
+   GLITCH ESPORÁDICO en "P.O.O." — solo si existe
 —————————————————————————————————————————— */
 const heroPoo = document.querySelector('.hero-poo');
-
 function randomGlitch() {
   if (!heroPoo) return;
   heroPoo.style.transform = `translateX(${(Math.random() - 0.5) * 6}px)`;
@@ -378,7 +316,7 @@ function randomGlitch() {
   setTimeout(() => { heroPoo.style.transform = ''; heroPoo.style.filter = ''; }, 100);
   setTimeout(randomGlitch, 2000 + Math.random() * 5000);
 }
-setTimeout(randomGlitch, 3000);
+if (heroPoo) setTimeout(randomGlitch, 3000);
 
 
 /* ——————————————————————————————————————————
@@ -388,15 +326,13 @@ function createParticles() {
   for (let i = 0; i < 25; i++) {
     const p = document.createElement('div');
     Object.assign(p.style, {
-      position:       'fixed',
-      width:          Math.random() * 3 + 1 + 'px',
-      height:         Math.random() * 3 + 1 + 'px',
-      borderRadius:   '50%',
+      position: 'fixed', borderRadius: '50%',
+      width:  Math.random() * 3 + 1 + 'px',
+      height: Math.random() * 3 + 1 + 'px',
       background:     `rgba(230, 0, 18, ${Math.random() * 0.4 + 0.1})`,
       left:           Math.random() * 100 + 'vw',
       top:            Math.random() * 100 + 'vh',
-      zIndex:         '1',
-      pointerEvents:  'none',
+      zIndex:         '1', pointerEvents: 'none',
       boxShadow:      '0 0 4px rgba(230,0,18,0.5)',
       animation:      `float-particle ${6 + Math.random() * 10}s ease-in-out infinite`,
       animationDelay: `-${Math.random() * 10}s`,
@@ -404,7 +340,6 @@ function createParticles() {
     document.body.appendChild(p);
   }
 }
-
 const particleStyle = document.createElement('style');
 particleStyle.textContent = `
   @keyframes float-particle {
@@ -424,14 +359,13 @@ createParticles();
 —————————————————————————————————————————— */
 const scanLine = document.createElement('div');
 Object.assign(scanLine.style, {
-  position:      'fixed', top: '0', left: '0',
-  width:         '100%',  height: '2px',
-  background:    'linear-gradient(to right, transparent, rgba(230,0,18,0.4), transparent)',
-  zIndex:        '5', pointerEvents: 'none',
-  animation:     'scan-line 6s linear infinite',
+  position: 'fixed', top: '0', left: '0',
+  width: '100%', height: '2px',
+  background: 'linear-gradient(to right, transparent, rgba(230,0,18,0.4), transparent)',
+  zIndex: '5', pointerEvents: 'none',
+  animation: 'scan-line 6s linear infinite',
 });
 document.body.appendChild(scanLine);
-
 const scanStyle = document.createElement('style');
 scanStyle.textContent = `
   @keyframes scan-line {

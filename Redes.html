@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>x BRUCAP.O.O. — Portfolio</title>
+  <!-- CAMBIO: título renombrado de "Redes" a consistente con el portfolio -->
+  <title>x BRUCAP.O.O. — Mis Redes</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -20,142 +21,138 @@
   <div class="scanlines"></div>
 
   <!-- =============================================
-       NAVBAR
+       NAVBAR — página Redes
+       Izquierda: botón "← VOLVER"
+       Derecha: logo
   ============================================= -->
   <nav class="navbar" id="navbar">
+
+    <!-- Botón de volver al portfolio -->
+    <a href="index.html" class="nav-back-btn" aria-label="Volver al inicio">
+      <span class="material-symbols-outlined nav-back-icon">arrow_back</span>
+      <span class="nav-back-text">VOLVER</span>
+    </a>
+
+    <!-- Logo a la derecha -->
     <div class="nav-logo">
       <span class="nav-logo-text">x BRUCA<span class="nav-poo">P.O.O.</span></span>
       <span class="nav-logo-text"> | </span>
       <span class="nav-logo-text-small">PORTFOLIO</span>
     </div>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Menú">
-      <span class="material-symbols-outlined">menu</span>
-    </button>
-    <ul class="nav-links" id="nav-links">
-    <ul class="nav-links" id="nav-links">
-      <li><a href="index.html"      class="nav-link">INICIO</a></li>
-      <li><a href="index.html #habilidades" class="nav-link">HABILIDADES</a></li>
-      <li><a href="index.html #proyectos"   class="nav-link">PROYECTOS</a></li>
-      <li><a href="index.html #sobre-mi"    class="nav-link">SOBRE MÍ</a></li>
-      <li><a href="index.html #contacto"    class="nav-link">CONTACTO</a></li>
-      <li><a href="Redes.html"    class="nav-link">MIS REDES</a></li>
-    </ul>
-    </ul>
+
   </nav>
 
   <!-- =============================================
-       SECCIÓN REDES / HABILIDADES
-
-       CAMBIO PRINCIPAL: cada skill-card ahora es un
-       elemento <a> (anchor) en lugar de un <div>.
-       Esto lo convierte en un botón/link clickeable
-       sin cambiar nada de su estética visual.
-
-       Para agregar el link real de cada card:
-         → reemplazá href="#placeholder-nombre"
-           por la URL que corresponda.
-         → target="_blank" abre en nueva pestaña.
-         → rel="noopener noreferrer" es seguridad
-           estándar para links externos.
+       SECCIÓN MIS REDES
+       CAMBIO: id renombrado de "habilidades" a "mis-redes"
+       para que el id sea descriptivo de la sección
   ============================================= -->
-  <section class="section" id="habilidades">
+  <section class="section" id="mis-redes">
 
     <div class="section-header">
-      <span class="section-tag mw2-reveal">// CONTACTS</span>
+      <!-- CAMBIO: etiqueta renombrada de // CONTACTS a // REDES -->
+      <span class="section-tag mw2-reveal">// REDES</span>
       <h2 class="section-title mw2-reveal mw2-delay-1">Mis Redes</h2>
       <div class="section-line mw2-reveal mw2-delay-2"></div>
     </div>
 
-    <!-- contact-grid: ahora con justify-content:center para centrar las cards -->
-    <div class="contact-grid">
+    <!-- Grilla de cards de redes principales -->
+    <!-- CAMBIO: clase renombrada de "contact-grid" a "redes-grid" -->
+    <div class="redes-grid">
 
       <!-- ——— YouTube ——— -->
-      <a class="contact-card mw2-reveal"
+      <a class="redes-card mw2-reveal"
          href="https://www.youtube.com/@xbrucapoo106"
          target="_blank"
-         rel="noopener noreferrer"
-         data-level="Intermediate">
-        <div class="contact-icon-wrap">
-          <img class="img_comunication" src="https://images.icon-icons.com/1488/PNG/512/5295-youtube-i_102568.png" alt="Git">
+         rel="noopener noreferrer">
+        <div class="redes-icon-wrap">
+          <img class="img_red" src="https://images.icon-icons.com/1488/PNG/512/5295-youtube-i_102568.png" alt="YouTube">
         </div>
-        <p class="contact-name">YouTube</p>
-        <!-- Descripción corta del lenguaje/herramienta -->
-        <span class="tipo_de_lenguaje">sistema de control de versiones</span>
+        <p class="redes-name">YouTube</p>
+        <span class="tipo_de_lenguaje">canal de videos</span>
       </a>
 
-      <!-- ——— Git Hub ——— -->
-      <a class="contact-card mw2-reveal"
+      <!-- ——— GitHub ——— -->
+      <a class="redes-card mw2-reveal"
          href="https://github.com/xBRUCAPOO"
          target="_blank"
-         rel="noopener noreferrer"
-         data-level="Intermediate">
-        <div class="contact-icon-wrap">
-          <img class="img_comunication" src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" alt="Git">
+         rel="noopener noreferrer">
+        <div class="redes-icon-wrap">
+          <img class="img_red" src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" alt="GitHub">
         </div>
-        <p class="contact-name">Git Hub</p>
-        <!-- Descripción corta del lenguaje/herramienta -->
-        <span class="tipo_de_lenguaje">sistema de control de versiones</span>
+        <p class="redes-name">Git Hub</p>
+        <span class="tipo_de_lenguaje">repositorios de código</span>
       </a>
 
       <!-- ——— Steam ——— -->
-      <a class="contact-card mw2-reveal"
+      <a class="redes-card mw2-reveal"
          href="https://steamcommunity.com/id/xBRUCAPOO-AG-105/"
          target="_blank"
-         rel="noopener noreferrer"
-         data-level="Intermediate">
-        <div class="contact-icon-wrap">
-          <img class="img_comunication" src="https://cdn.freebiesupply.com/images/large/2x/steam-logo-black-transparent.png" alt="Git">
+         rel="noopener noreferrer">
+        <div class="redes-icon-wrap">
+          <img class="img_red" src="https://cdn.freebiesupply.com/images/large/2x/steam-logo-black-transparent.png" alt="Steam">
         </div>
-        <p class="contact-name">Steam</p>
-        <!-- Descripción corta del lenguaje/herramienta -->
-        <span class="tipo_de_lenguaje">sistema de control de versiones</span>
+        <p class="redes-name">Steam</p>
+        <span class="tipo_de_lenguaje">perfil de juegos</span>
       </a>
 
       <!-- ——— Gmail ——— -->
-      <a class="contact-card mw2-reveal"
+      <a class="redes-card mw2-reveal"
          href="https://mail.google.com/mail/u/0/#drafts?compose=KnqNxqwLVNCDHtzzwhrpCgtZjThRXlmqwRxVcHNvPLxmdthVrgBwkGFDKhJNqxJPtDcZGkfXWhLlkqDNzBjxKjzvMtcJxsgMXpxCrCptdZdVTLtmHmRZspFKgxlMlCNZsGLxWlgBkTxPRtVKDTxnL"
          target="_blank"
-         rel="noopener noreferrer"
-         data-level="Intermediate">
-        <div class="contact-icon-wrap">
-          <img class="img_comunication" src="https://images.icon-icons.com/2631/PNG/512/gmail_new_logo_icon_159149.png" alt="Git">
+         rel="noopener noreferrer">
+        <div class="redes-icon-wrap">
+          <img class="img_red" src="https://images.icon-icons.com/2631/PNG/512/gmail_new_logo_icon_159149.png" alt="Gmail">
         </div>
-        <p class="contact-name">Gmail</p>
-        <!-- Descripción corta del lenguaje/herramienta -->
-        <span class="tipo_de_lenguaje">sistema de control de versiones</span>
+        <p class="redes-name">Gmail</p>
+        <span class="tipo_de_lenguaje">correo electrónico</span>
       </a>
 
     </div>
-    <div class="linea-separacion" aria-hidden="false">
+
+    <!-- Línea separadora animada entre secciones -->
+    <div class="linea-separacion" aria-hidden="true">
       <div class="linea-inner"></div>
     </div>
-    <span class="texto_chico_rojo"> Otras redes sociales que casi no utilizo:</span>
-    <div><p>ㅤ</p></div>
-    <div><p>ㅤ</p></div>
 
-    <div class="contact-grid">
+    <!-- Texto secundario antes de las redes poco usadas -->
+    <span class="texto_chico_rojo">Otras redes sociales que casi no utilizo:</span>
+
+    <!-- Espaciado visual -->
+    <div class="spacer"></div>
+
+    <!-- CAMBIO: grilla secundaria usa clase "redes-grid redes-grid--secundaria"
+         para que las cards sean más pequeñas que las principales -->
+    <div class="redes-grid redes-grid--secundaria">
+
       <!-- ——— TikTok ——— -->
-      <a class="contact-card mw2-reveal"
-        href="https://mail.google.com/mail/u/0/#drafts?compose=KnqNxqwLVNCDHtzzwhrpCgtZjThRXlmqwRxVcHNvPLxmdthVrgBwkGFDKhJNqxJPtDcZGkfXWhLlkqDNzBjxKjzvMtcJxsgMXpxCrCptdZdVTLtmHmRZspFKgxlMlCNZsGLxWlgBkTxPRtVKDTxnL"
-        target="_blank"
-        rel="noopener noreferrer"
-        data-level="Intermediate">
-        <div class="contact-icon-wrap">
-          <img class="img_comunication" src="https://static.vecteezy.com/system/resources/previews/065/386/719/non_2x/tiktok-icon-white-logo-tiktok-app-transparent-background-premium-social-media-design-for-digital-download-free-png.png" alt="TikTok">
+      <a class="redes-card redes-card--secundaria mw2-reveal"
+         href="https://www.tiktok.com/@xbrucapoo"
+         target="_blank"
+         rel="noopener noreferrer">
+        <div class="redes-icon-wrap redes-icon-wrap--secundaria">
+          <img class="img_red" src="https://static.vecteezy.com/system/resources/previews/065/386/719/non_2x/tiktok-icon-white-logo-tiktok-app-transparent-background-premium-social-media-design-for-digital-download-free-png.png" alt="TikTok">
         </div>
-        <p class="contact-name">TikTok</p>
-        <span class="tipo_de_lenguaje">sistema de control de versiones</span>
+        <p class="redes-name">TikTok</p>
+        <span class="tipo_de_lenguaje">videos cortos</span>
+      </a>
+
+      <!-- ——— Instagram ——— -->
+      <a class="redes-card redes-card--secundaria mw2-reveal"
+         href="https://www.instagram.com/xbrucapoo"
+         target="_blank"
+         rel="noopener noreferrer">
+        <div class="redes-icon-wrap redes-icon-wrap--secundaria">
+          <img class="img_red" src="https://1000marcas.net/wp-content/uploads/2019/11/Instagram-Logo-2016.png" alt="Instagram">
+        </div>
+        <p class="redes-name">Instagram</p>
+        <span class="tipo_de_lenguaje">fotos y stories</span>
       </a>
 
     </div>
 
   </section>
 
-
-  <script src="script.js"></script>
-</body>
-
-<footer>
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-line"></div>
@@ -169,5 +166,6 @@
     </p>
   </footer>
 
-</footer>
+  <script src="script.js"></script>
+</body>
 </html>

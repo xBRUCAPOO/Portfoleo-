@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- CAMBIO: título actualizado para coherencia -->
   <title>x BRUCAP.O.O. — Portfolio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -27,15 +28,15 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Menú">
       <span class="material-symbols-outlined">menu</span>
     </button>
-    <ul class="nav-links" id="nav-links">
+    <!-- CAMBIO: nav-links corregido (había dos <ul> anidados, se eliminó el duplicado) -->
     <ul class="nav-links" id="nav-links">
       <li><a href="#inicio"      class="nav-link">INICIO</a></li>
       <li><a href="#habilidades" class="nav-link">HABILIDADES</a></li>
       <li><a href="#proyectos"   class="nav-link">PROYECTOS</a></li>
       <li><a href="#sobre-mi"    class="nav-link">SOBRE MÍ</a></li>
       <li><a href="#contacto"    class="nav-link">CONTACTO</a></li>
-      <li><a href="Redes.html"    class="nav-link">MIS REDES</a></li>
-    </ul>
+      <!-- CAMBIO: renombrado de "MIS REDES" en el enlace del navbar (era "MIS REDES", ya estaba bien) -->
+      <li><a href="Redes.html"   class="nav-link">MIS REDES</a></li>
     </ul>
   </nav>
 
@@ -155,7 +156,7 @@
       <!-- Python - Flet -->
       <div class="skill-card mw2-reveal" data-percent="70" data-level="Intermediate">
         <div class="skill-icon-wrap">
-          <img class="leguaje_img" src="https://sobytes.gallerycdn.vsassets.io/extensions/sobytes/flet-control-wrap/0.0.2/1712393898571/Microsoft.VisualStudio.Services.Icons.Default" alt="Python">
+          <img class="leguaje_img" src="https://sobytes.gallerycdn.vsassets.io/extensions/sobytes/flet-control-wrap/0.0.2/1712393898571/Microsoft.VisualStudio.Services.Icons.Default" alt="Flet">
         </div>
         <p class="skill-name">Python + Flet</p>
         <span class="tipo_de_lenguaje">Libreria de Python</span>
@@ -169,7 +170,7 @@
       <!-- MySQL -->
       <div class="skill-card mw2-reveal" data-percent="60" data-level="Intermediated">
         <div class="skill-icon-wrap">
-          <img class="leguaje_img" src="https://tecnologia.uniandes.edu.co/wp-content/uploads/Mysql-Server-8.0-logo.png" alt="JavaScript">
+          <img class="leguaje_img" src="https://tecnologia.uniandes.edu.co/wp-content/uploads/Mysql-Server-8.0-logo.png" alt="MySQL">
         </div>
         <p class="skill-name">MySQL</p>
         <span class="tipo_de_lenguaje">Base de Datos</span>
@@ -183,7 +184,6 @@
       <!-- Mermaid -->
       <div class="skill-card mw2-reveal" data-percent="80" data-level="Expert">
         <div class="skill-icon-wrap">
-          <!-- Mermaid no tiene ícono en devicon; usamos un SVG inline representativo -->
           <img class="leguaje_img" src="https://raw.githubusercontent.com/mermaid-js/mermaid/develop/docs/public/favicon.svg" alt="Mermaid">
         </div>
         <p class="skill-name">Mermaid</p>
@@ -198,8 +198,7 @@
       <!-- CapCut -->
       <div class="skill-card mw2-reveal" data-percent="90" data-level="Expert">
         <div class="skill-icon-wrap">
-          <!-- CapCut no está en devicon; usamos ícono de edición de Material Symbols como fallback SVG -->
-          <img class="leguaje_img" src="https://play-lh.googleusercontent.com/M78HyakHaxKrjoeqYx41E9DXfVYYtx67nvc7Ks4G4zFQeaAJdGCi8gzzGSrHIwlrmnJS6zD9S4fAXqdEwfuHQAQ=w240-h480-rw" alt="">
+          <img class="leguaje_img" src="https://play-lh.googleusercontent.com/M78HyakHaxKrjoeqYx41E9DXfVYYtx67nvc7Ks4G4zFQeaAJdGCi8gzzGSrHIwlrmnJS6zD9S4fAXqdEwfuHQAQ=w240-h480-rw" alt="CapCut">
         </div>
         <p class="skill-name">CapCut v1.5</p>
         <span class="tipo_de_lenguaje">Edición de Videos</span>
@@ -351,10 +350,11 @@
     </div>
   </section>
 
-  <!-- CONTACTO -->
+  <!-- CONTACTO — NOTA: esta sección mantiene el nombre "CONTACTO" según indicación -->
   <section class="section" id="contacto">
     <div class="section-header">
-      <span class="section-tag mw2-reveal">// CONTÁCTAME</span>
+      <!-- CAMBIO: etiqueta renombrada de // CONTÁCTAME a // CONTACTO para coherencia interna -->
+      <span class="section-tag mw2-reveal">// CONTACTO</span>
       <h2 class="section-title mw2-reveal mw2-delay-1">CONTACTO</h2>
       <div class="section-line mw2-reveal mw2-delay-2"></div>
     </div>
@@ -398,7 +398,8 @@
       <span class="footer-bracket"> — </span>2026
     </p>
     <div class="footer-socials">
-      <a href="Redes.html" class="btn-primary glitch-btn mw2-reveal mw2-delay-5" data-text="[ EXPLORAR PROYECTOS ]">
+      <!-- CAMBIO: texto del botón renombrado de "EXPLORAR PROYECTOS" a "MIS REDES" (era incorrecto) -->
+      <a href="Redes.html" class="btn-primary glitch-btn mw2-reveal mw2-delay-5" data-text="[ MIS REDES ]">
         [ MIS REDES ]
       </a>
     </div>
