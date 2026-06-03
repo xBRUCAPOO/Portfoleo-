@@ -91,86 +91,41 @@ body {
   line-height: 1;
   user-select: none;
   align-content: end;
-  
 }
 
 
 /* =============================================
-   ANIMACIÓN MW2-STYLE (descifrado de caracteres)
-   ——————————————————————————————————————————
-   FIX: Se usa visibility:hidden + opacity:0 para
-   evitar que el texto sea visible antes de que JS
-   active la animación. Solo opacity:0 no era
-   suficiente porque el elemento seguía ocupando
-   espacio con el texto renderizado visiblemente
-   durante el primer frame de carga.
+   ANIMACIÓN MW2-STYLE
 ============================================= */
-
-/* Estado inicial: COMPLETAMENTE INVISIBLE
-   visibility:hidden oculta el contenido del elemento
-   sin afectar el layout (el espacio se preserva).
-   Esto elimina el flash de texto antes de la animación. */
 .mw2-reveal {
   opacity: 0;
   visibility: hidden;
   transform: translateY(14px);
-  /* La transición de visibility debe ser instantánea
-     para que al activar mw2-active se muestre de inmediato
-     y luego se aplique la transición de opacity/transform */
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
 }
-
-/* Al activar: primero visibility:visible (instantáneo),
-   luego fade-in de opacity y slide de transform */
 .mw2-reveal.mw2-active {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
-  /* visibility se activa sin delay para que la transición
-     de opacity sea visible desde el principio */
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0s;
 }
-
-/* Delays escalonados para cascade en el hero */
 .mw2-delay-1 { transition-delay: 0.08s; }
 .mw2-delay-2 { transition-delay: 0.18s; }
 .mw2-delay-3 { transition-delay: 0.30s; }
 .mw2-delay-4 { transition-delay: 0.44s; }
 .mw2-delay-5 { transition-delay: 0.58s; }
 
-/* Carácter "ruido" durante el descifrado — rojo brillante */
-.decipher-char {
-  color: var(--red-bright);
-  opacity: 0.85;
-}
+.decipher-char { color: var(--red-bright); opacity: 0.85; }
+.decipher-done { color: inherit; }
 
-/* Carácter ya descifrado — hereda color del padre */
-.decipher-done {
-  color: inherit;
-}
-
-
-/* ——— ANIMACIÓN ESPECIAL para el H1 del hero ———
-   El <h1> NO usa mw2-reveal porque contiene spans
-   hijos con colores propios (.hero-x, .hero-poo).
-   En su lugar usa una animación CSS pura de fade+slide
-   para evitar que decipherText() destruya los spans internos
-   y pierda los colores (el bug del P.O.O. blanco). */
 .hero-name-animate {
   opacity: 0;
   transform: translateY(14px);
   animation: heroNameReveal 0.4s ease 0.13s forwards;
 }
-
 @keyframes heroNameReveal {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 
@@ -205,11 +160,7 @@ body {
   vertical-align: middle;
 }
 
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 2rem;
-}
+.nav-links { list-style: none; display: flex; gap: 2rem; }
 
 .nav-link {
   font-family: var(--font-hud);
@@ -243,13 +194,8 @@ body {
   padding: 4px 6px;
   transition: border-color 0.3s, color 0.3s;
 }
-.nav-toggle:hover {
-  border-color: var(--red-bright);
-  color: var(--red-bright);
-}
-.nav-toggle .material-symbols-outlined {
-  font-size: 1.4rem;
-}
+.nav-toggle:hover { border-color: var(--red-bright); color: var(--red-bright); }
+.nav-toggle .material-symbols-outlined { font-size: 1.4rem; }
 
 
 /* ——— SECCIONES ——— */
@@ -268,16 +214,11 @@ body {
   height: 30px;
 }
 
-/* Íconos de devicon que son coloridos por defecto —
-   se filtran a blanco para mantener la estética monocromática */
 .skill-img-white {
   filter: brightness(0) invert(1);
 }
 
-.section-header {
-  margin-bottom: 3rem;
-  text-align: center;
-}
+.section-header { margin-bottom: 3rem; text-align: center; }
 
 .section-tag {
   font-family: var(--font-mono);
@@ -362,11 +303,7 @@ body {
   animation: blink 1s step-end infinite;
 }
 
-.code-rotator {
-  width: 100%;
-  max-width: 700px;
-  margin-bottom: 2.5rem;
-}
+.code-rotator { width: 100%; max-width: 700px; margin-bottom: 2.5rem; }
 
 .code-block {
   font-family: var(--font-mono);
@@ -387,7 +324,6 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Botón primario / glitch */
 .glitch-btn {
   position: relative;
   font-family: var(--font-hud);
@@ -428,9 +364,7 @@ body {
   color: var(--red-bright);
   clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 }
-.glitch-btn:hover::after {
-  animation: glitch-clip 0.4s steps(1) infinite;
-}
+.glitch-btn:hover::after { animation: glitch-clip 0.4s steps(1) infinite; }
 
 .btn-icon { font-size: 1rem; }
 
@@ -442,22 +376,14 @@ body {
   color: var(--red);
   animation: bounce 2s infinite;
 }
-.scroll-indicator .material-symbols-outlined {
-  font-size: 2rem;
-}
+.scroll-indicator .material-symbols-outlined { font-size: 2rem; }
 
-.hud-corner {
-  position: absolute;
-  width: 40px; height: 40px;
-  pointer-events: none;
-  z-index: 1;
-}
+.hud-corner { position: absolute; width: 40px; height: 40px; pointer-events: none; z-index: 1; }
 .hud-tl { top: 5rem;    left: 1rem;  border-top: 2px solid var(--red); border-left: 2px solid var(--red); }
 .hud-tr { top: 5rem;    right: 1rem; border-top: 2px solid var(--red); border-right: 2px solid var(--red); }
 .hud-bl { bottom: 1rem; left: 1rem;  border-bottom: 2px solid var(--red); border-left: 2px solid var(--red); }
 .hud-br { bottom: 1rem; right: 1rem; border-bottom: 2px solid var(--red); border-right: 2px solid var(--red); }
 
-/* ——— GLITCH TEXT ——— */
 .glitch-text { position: relative; display: inline-block; }
 .glitch-text::before {
   content: attr(data-text);
@@ -482,6 +408,7 @@ body {
 /* =============================================
    HABILIDADES — SKILL CARDS
 ============================================= */
+
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -577,6 +504,7 @@ body {
   text-align: right;
 }
 
+
 .tipo_de_lenguaje {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -587,6 +515,7 @@ body {
   text-align: center;
 }
 
+/* skill-level_1: rojo — nivel básico/junior */
 .skill-level_1 {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -599,6 +528,7 @@ body {
   text-align: center;
 }
 
+/* skill-level_2: naranja — nivel intermedio */
 .skill-level_2 {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -611,6 +541,7 @@ body {
   text-align: center;
 }
 
+/* skill-level_3: verde — nivel experto */
 .skill-level_3 {
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -633,11 +564,7 @@ body {
   gap: 2rem;
 }
 
-.flip-card {
-  perspective: 1000px;
-  height: 260px;
-  cursor: pointer;
-}
+.flip-card { perspective: 1000px; height: 260px; cursor: pointer; }
 
 .flip-inner {
   position: relative;
@@ -645,7 +572,6 @@ body {
   transform-style: preserve-3d;
   transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
-
 .flip-card:hover .flip-inner { transform: rotateY(180deg); }
 
 .flip-front,
@@ -672,18 +598,8 @@ body {
   filter: drop-shadow(0 0 8px var(--red-glow));
 }
 
-.project-title {
-  font-family: var(--font-hud);
-  font-size: 1rem;
-  letter-spacing: 0.2em;
-  color: var(--white);
-}
-
-.project-tag {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--grey-light);
-}
+.project-title { font-family: var(--font-hud); font-size: 1rem; letter-spacing: 0.2em; color: var(--white); }
+.project-tag   { font-family: var(--font-mono); font-size: 0.7rem; color: var(--grey-light); }
 
 .flip-back {
   background: linear-gradient(135deg, var(--black-3), var(--black-4));
@@ -693,25 +609,10 @@ body {
   gap: 0.8rem;
 }
 
-.project-back-title {
-  font-family: var(--font-hud);
-  font-size: 0.85rem;
-  letter-spacing: 0.2em;
-  color: var(--red-bright);
-}
+.project-back-title { font-family: var(--font-hud); font-size: 0.85rem; letter-spacing: 0.2em; color: var(--red-bright); }
+.project-desc       { font-size: 0.85rem; color: var(--grey-light); line-height: 1.4; }
 
-.project-desc {
-  font-size: 0.85rem;
-  color: var(--grey-light);
-  line-height: 1.4;
-}
-
-.project-techs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  justify-content: center;
-}
+.project-techs { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
 
 .tech-tag {
   font-family: var(--font-mono);
@@ -733,21 +634,13 @@ body {
   transition: background 0.3s, color 0.3s;
   margin-top: 0.3rem;
 }
-.btn-small:hover {
-  background: var(--red-bright);
-  color: var(--black);
-}
+.btn-small:hover { background: var(--red-bright); color: var(--black); }
 
 
 /* =============================================
    SOBRE MÍ
 ============================================= */
-.about-wrap {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 4rem;
-  align-items: start;
-}
+.about-wrap { display: grid; grid-template-columns: 280px 1fr; gap: 4rem; align-items: start; }
 
 .avatar-ring-outer {
   width: 180px; height: 180px;
@@ -770,7 +663,6 @@ body {
   box-shadow: 0 0 10px var(--red-bright);
   transform: translateX(-50%);
 }
-
 .avatar-ring-inner {
   width: 140px; height: 140px;
   border: 1px solid var(--grey);
@@ -780,19 +672,9 @@ body {
   justify-content: center;
   background: var(--black-2);
 }
+.avatar-initials { font-family: var(--font-hud); font-size: 2.5rem; color: var(--red-bright); text-shadow: 0 0 20px var(--red-glow); }
 
-.avatar-initials {
-  font-family: var(--font-hud);
-  font-size: 2.5rem;
-  color: var(--red-bright);
-  text-shadow: 0 0 20px var(--red-glow);
-}
-
-.avatar-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+.avatar-stats { display: flex; flex-direction: column; gap: 0.5rem; }
 
 .stat-row {
   display: flex;
@@ -803,28 +685,13 @@ body {
   border-left: 2px solid var(--red-dim);
   padding-left: 0.6rem;
 }
-
-.stat-icon {
-  font-size: 0.9rem;
-  color: var(--red);
-  flex-shrink: 0;
-}
-
+.stat-icon  { font-size: 0.9rem; color: var(--red); flex-shrink: 0; }
 .stat-label { color: var(--red); min-width: 55px; }
 .stat-val   { color: var(--grey-light); }
 
-.blink-green {
-  color: var(--online-green);
-  animation: blink 1.2s step-end infinite;
-}
+.blink-green { color: var(--online-green); animation: blink 1.2s step-end infinite; }
 
-.about-paragraph {
-  font-size: 1rem;
-  color: var(--grey-light);
-  line-height: 1.8;
-  margin-bottom: 1.2rem;
-  font-family: var(--font-body);
-}
+.about-paragraph { font-size: 1rem; color: var(--grey-light); line-height: 1.8; margin-bottom: 1.2rem; font-family: var(--font-body); }
 .about-paragraph strong { color: var(--white); }
 
 .about-code-line {
@@ -843,10 +710,7 @@ body {
 /* =============================================
    CONTACTO
 ============================================= */
-.contact-wrap {
-  max-width: 600px;
-  margin: 0 auto;
-}
+.contact-wrap { max-width: 600px; margin: 0 auto; }
 
 .contact-form-box {
   display: flex;
@@ -869,11 +733,7 @@ body {
   align-items: center;
   gap: 0.3rem;
 }
-
-.form-icon {
-  font-size: 0.85rem;
-  color: var(--red-bright);
-}
+.form-icon { font-size: 0.85rem; color: var(--red-bright); }
 
 .form-input,
 .form-textarea {
@@ -889,10 +749,7 @@ body {
   resize: none;
 }
 .form-input:focus,
-.form-textarea:focus {
-  border-color: var(--red-bright);
-  box-shadow: 0 0 8px var(--red-glow);
-}
+.form-textarea:focus { border-color: var(--red-bright); box-shadow: 0 0 8px var(--red-glow); }
 .form-textarea { min-height: 130px; }
 .form-input::placeholder,
 .form-textarea::placeholder { color: var(--grey); }
@@ -951,21 +808,11 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.footer-copy {
-  font-family: var(--font-hud);
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
-  color: var(--grey-light);
-}
+.footer-copy { font-family: var(--font-hud); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--grey-light); }
 .footer-bracket { color: var(--grey); }
 .footer-poo     { color: var(--red-bright); }
 
-.footer-socials {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+.footer-socials { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
 
 .social-btn {
   display: flex;
@@ -992,11 +839,7 @@ body {
   transition: height 0.3s;
 }
 .social-btn:hover::before { height: 100%; }
-.social-btn:hover {
-  border-color: var(--red-bright);
-  color: var(--white);
-  box-shadow: 0 0 12px var(--red-glow);
-}
+.social-btn:hover { border-color: var(--red-bright); color: var(--white); box-shadow: 0 0 12px var(--red-glow); }
 .social-btn > * { position: relative; z-index: 1; }
 
 .social-icon-ms { font-size: 1.1rem; }
@@ -1010,52 +853,42 @@ body {
   align-items: center;
   gap: 0.4rem;
 }
+.footer-icon { font-size: 0.9rem; color: var(--red-dim); animation: blink 2s step-end infinite; }
 
-.footer-icon {
-  font-size: 0.9rem;
-  color: var(--red-dim);
-  animation: blink 2s step-end infinite;
-}
- 
+
+
 /* =============================================
    KEYFRAMES
 ============================================= */
-
 @keyframes flicker {
   0%,96%,100% { opacity: 1; }
   97%          { opacity: 0.4; }
   98%          { opacity: 1; }
   99%          { opacity: 0.2; }
 }
-
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
-
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50%       { transform: translateX(-50%) translateY(8px); }
 }
-
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
-
 @keyframes glitch-a {
   0%,100% { clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); transform: translate(-2px,0); }
   25%      { clip-path: polygon(0 55%, 100% 55%, 100% 70%, 0 70%); transform: translate(2px,0); }
   50%      { clip-path: polygon(0  5%, 100%  5%, 100% 15%, 0 15%); transform: translate(0,0); }
   75%      { clip-path: polygon(0 80%, 100% 80%, 100% 95%, 0 95%); transform: translate(-1px,0); }
 }
-
 @keyframes glitch-b {
   0%,100% { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: translate(2px,0); }
   33%      { clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%); transform: translate(-2px,0); }
   66%      { clip-path: polygon(0 70%, 100% 70%, 100% 85%, 0 85%); transform: translate(1px,0); }
 }
-
 @keyframes glitch-clip {
   0%   { clip-path: polygon(0 10%, 100% 10%, 100% 30%, 0 30%); transform: translate(-3px); }
   25%  { clip-path: polygon(0 50%, 100% 50%, 100% 70%, 0 70%); transform: translate(3px); }
@@ -1089,9 +922,10 @@ body {
   .nav-links.open { display: flex; }
   .nav-toggle     { display: flex; }
 
-  .about-wrap     { grid-template-columns: 1fr; gap: 2rem; }
-  .skills-grid    { grid-template-columns: repeat(2, 1fr); }
-  .projects-grid  { grid-template-columns: 1fr; }
+  .about-wrap    { grid-template-columns: 1fr; gap: 2rem; }
+  /* En mobile las cards ya están centradas por flex; solo reducimos el ancho mínimo */
+  .skill-card    { width: 140px; }
+  .projects-grid { grid-template-columns: 1fr; }
   .footer-socials { gap: 0.8rem; }
   .social-btn     { padding: 0.5rem 0.8rem; }
   .hud-corner     { width: 20px; height: 20px; }
@@ -1100,4 +934,97 @@ body {
 @media (min-width: 769px) and (max-width: 1024px) {
   .section    { padding: 6rem 2rem 3rem; }
   .about-wrap { grid-template-columns: 220px 1fr; gap: 2rem; }
+}
+
+/* CONTACTOS.HTML */
+.contact-grid {
+  display: flex;
+  flex-wrap: wrap;        /* permite que las cards bajen a la siguiente línea */
+  justify-content: center; /* centra las cards horizontalmente en el contenedor */
+  gap: 1.5rem;
+}
+
+/* CAMBIO: se agregaron text-decoration:none, color y cursor
+   para que el elemento funcione correctamente como <a> (link/botón)
+   manteniendo la misma estética visual del <div> original. */
+.contact-card {
+  /* Reset de estilos nativos del <a> */
+  text-decoration: none;  /* elimina el subrayado que tiene un <a> por defecto */
+  color: var(--white);    /* fuerza blanco; el <a> hereda azul por defecto */
+  cursor: pointer;        /* muestra la mano al pasar el mouse, indica clickeable */
+
+  /* Ancho fijo para que todas las cards sean del mismo tamaño */
+  width: 160px;
+
+  /* Estética original sin cambios */
+  background: linear-gradient(135deg, var(--black-2), var(--black-3));
+  border: 1px solid var(--grey);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+/* Línea roja superior que aparece al hacer hover */
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+  box-shadow: 0 0 10px var(--red-glow);
+}
+.contact-card:hover::before { transform: scaleX(1); }
+.contact-card:hover {
+  border-color: var(--red-dim);
+  transform: translateY(-4px);
+}
+
+.contact-icon-wrap {
+  width: 64px; height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--grey);
+  background: var(--black-1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.contact-card:hover .contact-icon-wrap {
+  border-color: var(--red);
+  box-shadow: 0 0 12px var(--red-glow);
+}
+
+.contact-ms-icon {
+  font-size: 2rem;
+  color: var(--grey-light);
+  transition: color 0.3s;
+}
+.contact-card:hover .contact-ms-icon { color: var(--red-bright); }
+
+.contact-name {
+  font-family: var(--font-hud);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+}
+
+.contact-bar-wrap { width: 100%; display: flex; align-items: center; gap: 0.5rem; }
+
+.contact-bar { flex: 1; height: 4px; background: var(--grey); overflow: hidden; }
+
+.img_comunication {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--grey-light);
+  letter-spacing: 0.1em;
+  padding-top: 0.1rem;
+  width: 100%;
+  text-align: center;
 }
