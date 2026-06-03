@@ -1028,3 +1028,42 @@ body {
   width: 100%;
   text-align: center;
 }
+
+@keyframes viajar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.linea-separacion {
+  width: 100%;
+  height: 2px;
+  background: var(--red-glow); /* Usa un color temporal si var(--borde) no está definido */
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 20px 0;
+  position: relative; /* Importante para que .linea-inner se posicione dentro */
+  animation: aparecer 1s ease 0.2s both;
+}
+
+.linea-inner {
+  position: absolute; /* Esto es clave para que la animación funcione */
+  height: 100%;
+  width: 55%; /* Cambiado a 100% para que la animación sea más visible */
+  background: linear-gradient(90deg, transparent, var(--red), transparent); 
+  animation: viajar 2.5s ease-in-out infinite;
+}
+
+.texto_chico_rojo {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  padding-top: 0.1rem;
+  width: 100%;
+  text-align: center;
+}
