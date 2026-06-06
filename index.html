@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <!-- CAMBIO: título actualizado para coherencia -->
   <title>x BRUCAP.O.O. — Portfolio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -28,14 +27,12 @@
     <button class="nav-toggle" id="nav-toggle" aria-label="Menú">
       <span class="material-symbols-outlined">menu</span>
     </button>
-    <!-- CAMBIO: nav-links corregido (había dos <ul> anidados, se eliminó el duplicado) -->
     <ul class="nav-links" id="nav-links">
       <li><a href="#inicio"      class="nav-link">INICIO</a></li>
       <li><a href="#habilidades" class="nav-link">HABILIDADES</a></li>
       <li><a href="#proyectos"   class="nav-link">PROYECTOS</a></li>
       <li><a href="#sobre-mi"    class="nav-link">SOBRE MÍ</a></li>
       <li><a href="#contacto"    class="nav-link">CONTACTO</a></li>
-      <!-- CAMBIO: renombrado de "MIS REDES" en el enlace del navbar (era "MIS REDES", ya estaba bien) -->
       <li><a href="Redes.html"   class="nav-link">MIS REDES</a></li>
     </ul>
   </nav>
@@ -49,7 +46,6 @@
 
     <p class="hero-subname glitch-text mw2-reveal mw2-delay-1" data-text="BRUNO VALAROLO">BяџN0 V4L4я0L0</p>
 
-    <!-- ⚠ NO tiene clase mw2-reveal porque contiene spans hijos con color propio -->
     <h1 class="hero-name hero-name-animate">
       <span class="hero-x">x BRUCA</span><span class="hero-poo">P.O.O.</span>
     </h1>
@@ -222,81 +218,145 @@
 
     <div class="projects-grid">
 
-      <div class="flip-card mw2-reveal">
+      <!--
+        flip-card--p1 aplica el color del Proyecto 1 (ÉLIX).
+        Para cambiar el color de toda la tarjeta, editá
+        --project-1-color en :root dentro de styles.css.
+      -->
+      <div class="flip-card flip-card--p1 mw2-reveal">
         <div class="flip-inner">
+
+          <!-- FRENTE: logo grande + nombre + tag -->
           <div class="flip-front">
-            <span class="material-symbols-outlined project-icon">terminal</span>
-            <h3 class="project-title">PROJECT_01</h3>
-            <p class="project-tag">[ Web App ]</p>
+            <img class="project-logo" src="https://i.postimg.cc/yxWP5HmN/ELIX-logo.png" alt="ÉLIX">
+            <h3 class="project-title">ÉLIX</h3>
+            <p class="project-tag">[ Red Social ]</p>
           </div>
-          <div class="flip-back">
-            <h3 class="project-back-title">PROJECT_01</h3>
-            <p class="project-desc">Descripción del proyecto. Tecnologías usadas, objetivo y resultado.</p>
+
+          <!-- DORSO: descripción + techs con logos + botón -->
+          <div class="flip-back" href="#habilidades">
+            <h3 class="project-back-title">ÉLIX</h3>
+            <p class="project-desc">Una mini red social que programé con Python Flet junto 2 amigos para una feria de ciencias.</p>
+
             <div class="project-techs">
-              <span class="tech-tag">HTML</span>
-              <span class="tech-tag">CSS</span>
-              <span class="tech-tag">JS</span>
+
+              <!-- Python -->
+              <a class="tech-tag" href="#habilidades">
+                <img class="tech-logo"
+                     src="https://cdn.iconscout.com/icon/free/png-256/free-python-logo-icon-svg-download-png-2945099.png?f=webp&w=128"
+                     alt="Python">
+                Python
+              </a>
+
+              <!-- Flet - Python -->
+              <a class="tech-tag" href="#habilidades">
+                <img class="tech-logo"
+                     src="https://sobytes.gallerycdn.vsassets.io/extensions/sobytes/flet-control-wrap/0.0.2/1712393898571/Microsoft.VisualStudio.Services.Icons.Default"
+                     alt="Python - Flet">
+                Python - Flet
+              </a>
+
+              <!-- MySQL -->
+              <a class="tech-tag" href="#habilidades">
+                <img class="tech-logo"
+                     src="https://tecnologia.uniandes.edu.co/wp-content/uploads/Mysql-Server-8.0-logo.png"
+                     alt="MySQL">
+                MySQL
+              </a>
+
             </div>
-            <a href="#" class="btn-small">[ VER MÁS ]</a>
+
+            <a href="Proyectos.html" class="btn-small">[ VER MÁS ]</a>
           </div>
+
         </div>
       </div>
 
-      <div class="flip-card mw2-reveal">
+            <div class="flip-card flip-card--p1 mw2-reveal">
         <div class="flip-inner">
+
+          <!-- FRENTE: logo grande + nombre + tag -->
           <div class="flip-front">
-            <span class="material-symbols-outlined project-icon">integration_instructions</span>
-            <h3 class="project-title">PROJECT_02</h3>
-            <p class="project-tag">[ Script ]</p>
+            <img class="project-logo" src="https://i.postimg.cc/yxWP5HmN/ELIX-logo.png" alt="ÉLIX">
+            <h3 class="project-title">ÉLIX</h3>
+            <p class="project-tag">[ Red Social ]</p>
           </div>
-          <div class="flip-back">
-            <h3 class="project-back-title">PROJECT_02</h3>
-            <p class="project-desc">Descripción del proyecto. Tecnologías usadas, objetivo y resultado.</p>
+
+          <!-- DORSO: descripción + techs con logos + botón -->
+          <div class="flip-back" href="#habilidades">
+            <h3 class="project-back-title">ÉLIX</h3>
+            <p class="project-desc">Una mini red social que programé con Python Flet junto 2 amigos para una feria de ciencias.</p>
+
             <div class="project-techs">
-              <span class="tech-tag">Python</span>
-              <span class="tech-tag">Git</span>
+
+              <!-- Python -->
+              <a class="tech-tag" href="#habilidades">
+                <img class="tech-logo"
+                     src="https://cdn.iconscout.com/icon/free/png-256/free-python-logo-icon-svg-download-png-2945099.png?f=webp&w=128"
+                     alt="Python">
+                Python
+              </a>
+
+              <!-- Flet - Python -->
+              <a class="tech-tag" href="#habilidades">
+                <img class="tech-logo"
+                     src="https://sobytes.gallerycdn.vsassets.io/extensions/sobytes/flet-control-wrap/0.0.2/1712393898571/Microsoft.VisualStudio.Services.Icons.Default"
+                     alt="Python - Flet">
+                Python - Flet
+              </a>
+
+              <!-- MySQL -->
+              <a class="tech-tag" href="#habilidades">
+                <img class="tech-logo"
+                     src="https://tecnologia.uniandes.edu.co/wp-content/uploads/Mysql-Server-8.0-logo.png"
+                     alt="MySQL">
+                MySQL
+              </a>
+
             </div>
-            <a href="#" class="btn-small">[ VER MÁS ]</a>
+
+            <a href="Proyectos.html" class="btn-small">[ VER MÁS ]</a>
           </div>
+
         </div>
       </div>
 
-      <div class="flip-card mw2-reveal">
+            <div class="flip-card flip-card--p1 mw2-reveal">
         <div class="flip-inner">
+
+          <!-- FRENTE: logo grande + nombre + tag -->
           <div class="flip-front">
-            <span class="material-symbols-outlined project-icon">palette</span>
-            <h3 class="project-title">PROJECT_03</h3>
-            <p class="project-tag">[ UI Design ]</p>
+            <img class="project-logo" src="https://static.wikia.nocookie.net/fortnite/images/e/e6/Creative_-_Logo_-_Fortnite.png/revision/latest/scale-to-width/360?cb=20240407004918" alt="ÉLIX">
+            <h3 class="project-title">MAPAS</h3>
+            <p class="project-tag">[ Fortnite - Modo Creativo ]</p>
           </div>
-          <div class="flip-back">
-            <h3 class="project-back-title">PROJECT_03</h3>
-            <p class="project-desc">Descripción del proyecto. Tecnologías usadas, objetivo y resultado.</p>
+
+          <!-- DORSO: descripción + techs con logos + botón -->
+          <div class="flip-back" href="#habilidades">
+            <h3 class="project-back-title">ÉLIX</h3>
+            <p class="project-desc">Una mini red social que programé con Python Flet junto 2 amigos para una feria de ciencias.</p>
+
             <div class="project-techs">
-              <span class="tech-tag">CSS</span>
-              <span class="tech-tag">CapCut</span>
+
+              <!-- Fortnite - Creativo -->
+              <a class="tech-tag">
+                <img class="tech-logo"
+                     src="https://img.icons8.com/ios11/512/FFFFFF/fortnite.png"
+                     alt="Fortnite - Creativo">
+                Fortnite - Creativo
+              </a>
+
             </div>
-            <a href="#" class="btn-small">[ VER MÁS ]</a>
+
+            <a href="Proyectos.html" class="btn-small">[ VER MÁS ]</a>
           </div>
+
         </div>
       </div>
 
-      <div class="flip-card mw2-reveal">
-        <div class="flip-inner">
-          <div class="flip-front">
-            <span class="material-symbols-outlined project-icon">smart_display</span>
-            <h3 class="project-title">PROJECT_04</h3>
-            <p class="project-tag">[ Video ]</p>
-          </div>
-          <div class="flip-back">
-            <h3 class="project-back-title">PROJECT_04</h3>
-            <p class="project-desc">Descripción del proyecto. Tecnologías usadas, objetivo y resultado.</p>
-            <div class="project-techs">
-              <span class="tech-tag">CapCut</span>
-            </div>
-            <a href="#" class="btn-small">[ VER MÁS ]</a>
-          </div>
-        </div>
-      </div>
+      <!-- Para agregar más proyectos, copiar el bloque .flip-card
+           y cambiar la clase a flip-card--p2, flip-card--p3, etc.
+           Luego definir --project-2-color y demás en :root de styles.css -->
 
     </div>
   </section>
@@ -350,10 +410,9 @@
     </div>
   </section>
 
-  <!-- CONTACTO — NOTA: esta sección mantiene el nombre "CONTACTO" según indicación -->
+  <!-- CONTACTO -->
   <section class="section" id="contacto">
     <div class="section-header">
-      <!-- CAMBIO: etiqueta renombrada de // CONTÁCTAME a // CONTACTO para coherencia interna -->
       <span class="section-tag mw2-reveal">// CONTACTO</span>
       <h2 class="section-title mw2-reveal mw2-delay-1">CONTACTO</h2>
       <div class="section-line mw2-reveal mw2-delay-2"></div>
@@ -398,7 +457,6 @@
       <span class="footer-bracket"> — </span>2026
     </p>
     <div class="footer-socials">
-      <!-- CAMBIO: texto del botón renombrado de "EXPLORAR PROYECTOS" a "MIS REDES" (era incorrecto) -->
       <a href="Redes.html" class="btn-primary glitch-btn mw2-reveal mw2-delay-5" data-text="[ MIS REDES ]">
         [ MIS REDES ]
       </a>

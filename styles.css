@@ -31,7 +31,47 @@
   --font-mono:   'Share Tech Mono', monospace;
   --font-hud:    'Orbitron', sans-serif;
   --font-body:   'Rajdhani', sans-serif;
+
+  /* =============================================
+     COLORES DE TARJETAS DE PROYECTOS
+     Cada proyecto tiene su propio color temático.
+     Cambiar SOLO estas variables modifica toda
+     la apariencia de la tarjeta correspondiente.
+  ============================================= */
+
+  /* PROYECTO 1 — ÉLIX (red social) */
+  --project-1-color:  #ff00e1;
+  --project-1-bright: #ff00e1;
+  --project-1-dim:    #ff00e1;
+  --project-1-glow:   rgba(255, 0, 204, 0.35);
+
+  /* PROYECTO 2 — */
+  --project-2-color:  #ffa600;
+  --project-2-bright: #ffa600;
+  --project-2-dim:    #ffa600;
+  --project-2-glow:   rgba(255, 170, 0, 0.35);
+
+  /* PROYECTO 1 — ÉLIX (red social) */
+  --project-1-color:  #ff00e1;
+  --project-1-bright: #ff00e1;
+  --project-1-dim:    #ff00e1;
+  --project-1-glow:   rgba(255, 0, 204, 0.35);
+
+  /* PROYECTO 2 — (próximo proyecto) */
+  /* --project-2-color:  #a855f7;   */
+  /* --project-2-bright: #c084fc;   */
+  /* --project-2-dim:    #581c87;   */
+  /* --project-2-glow:   rgba(168,85,247,0.35); */
 }
+
+/* Modificador de color por proyecto — aplicar al .flip-card */
+.flip-card--p1 {
+  --proj-color:  var(--project-1-color);
+  --proj-bright: var(--project-1-bright);
+  --proj-dim:    var(--project-1-dim);
+  --proj-glow:   var(--project-1-glow);
+}
+/* .flip-card--p2 { --proj-color: var(--project-2-color); ... } */
 
 
 /* ——— RESET Y BASE ——— */
@@ -94,10 +134,8 @@ body {
 /* =============================================
    SCROLLBAR PERSONALIZADA
 ============================================= */
-/* Firefox */
 * { scrollbar-width: thin; scrollbar-color: var(--red) var(--black); }
 
-/* Chrome, Edge, Safari */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--black-2); border-left: 1px solid var(--black-3); }
 ::-webkit-scrollbar-thumb { background: var(--red-dim); border-radius: 0; }
@@ -107,8 +145,6 @@ body {
 
 /* =============================================
    ANIMACIÓN MW2-STYLE
-   visibility:hidden evita el flash de texto antes
-   de que JS active la clase mw2-active.
 ============================================= */
 .mw2-reveal {
   opacity: 0;
@@ -131,8 +167,6 @@ body {
 .decipher-char { color: var(--red-bright); opacity: 0.85; }
 .decipher-done { color: inherit; }
 
-/* Animación CSS pura para el H1 del hero (evita que decipherText
-   destruya los spans hijos .hero-x y .hero-poo) */
 .hero-name-animate {
   opacity: 0;
   transform: translateY(14px);
@@ -145,8 +179,7 @@ body {
 
 
 /* =============================================
-   NAVBAR — versión estándar (index.html)
-   Logo a la izquierda, links a la derecha.
+   NAVBAR
 ============================================= */
 .navbar {
   position: fixed;
@@ -162,7 +195,6 @@ body {
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Logo del navbar */
 .nav-logo {
   font-family: var(--font-hud);
   font-size: 1rem;
@@ -202,7 +234,6 @@ body {
 .nav-link:hover { color: var(--red-bright); }
 .nav-link:hover::after { width: 100%; }
 
-/* Botón hamburguesa (mobile) */
 .nav-toggle {
   display: none;
   align-items: center;
@@ -217,18 +248,12 @@ body {
 .nav-toggle:hover { border-color: var(--red-bright); color: var(--red-bright); }
 .nav-toggle .material-symbols-outlined { font-size: 1.4rem; }
 
-
-/* =============================================
-   NAVBAR — botón "← VOLVER" (Redes.html)
-   Aparece a la izquierda del navbar en páginas
-   secundarias. Flecha + texto "VOLVER".
-============================================= */
 .nav-back-btn {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   text-decoration: none;
-  color: var(--grey-light);
+  color: var(--white);
   font-family: var(--font-hud);
   font-size: 0.7rem;
   letter-spacing: 0.15em;
@@ -238,8 +263,6 @@ body {
   overflow: hidden;
   transition: color 0.3s, border-color 0.3s;
 }
-
-/* Fondo rojo que sube al hacer hover */
 .nav-back-btn::before {
   content: '';
   position: absolute;
@@ -249,13 +272,11 @@ body {
   z-index: 0;
   transition: height 0.3s ease;
 }
-
 .nav-back-btn:hover::before  { height: 100%; }
 .nav-back-btn:hover {
   color: var(--black);
   border-color: var(--red-bright);
 }
-
 .nav-back-btn > * { position: relative; z-index: 1; }
 .nav-back-icon { font-size: 1rem; }
 .nav-back-text { font-size: 0.65rem; }
@@ -527,21 +548,18 @@ body {
   text-align: center;
 }
 
-/* skill-level_1: rojo — nivel básico/junior */
 .skill-level_1 {
   font-family: var(--font-mono); font-size: 0.6rem; color: var(--red);
   letter-spacing: 0.1em; text-transform: uppercase;
   border-top: 1px solid var(--grey); padding-top: 0.4rem;
   width: 100%; text-align: center;
 }
-/* skill-level_2: naranja — nivel intermedio */
 .skill-level_2 {
   font-family: var(--font-mono); font-size: 0.6rem; color: var(--orange);
   letter-spacing: 0.1em; text-transform: uppercase;
   border-top: 1px solid var(--grey); padding-top: 0.4rem;
   width: 100%; text-align: center;
 }
-/* skill-level_3: verde — nivel experto */
 .skill-level_3 {
   font-family: var(--font-mono); font-size: 0.6rem; color: var(--green);
   letter-spacing: 0.1em; text-transform: uppercase;
@@ -552,10 +570,13 @@ body {
 
 /* =============================================
    PROYECTOS — FLIP CARDS
+   El color de cada tarjeta se controla con la
+   variable --proj-color (definida en .flip-card--pN).
+   Por defecto cae en rojo si no hay modificador.
 ============================================= */
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2rem; }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; }
 
-.flip-card { perspective: 1000px; height: 260px; cursor: pointer; }
+.flip-card { perspective: 1000px; height: 320px; cursor: pointer; }
 
 .flip-inner {
   position: relative; width: 100%; height: 100%;
@@ -569,36 +590,99 @@ body {
   backface-visibility: hidden; -webkit-backface-visibility: hidden;
   border: 1px solid var(--grey);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 1.5rem; gap: 0.7rem;
+  padding: 1.5rem; gap: 0.6rem;
   background: linear-gradient(135deg, var(--black-2), var(--black-3));
 }
-.flip-front { border-top: 2px solid var(--red); }
 
-.project-icon { font-size: 3rem; color: var(--red); filter: drop-shadow(0 0 8px var(--red-glow)); }
-.project-title { font-family: var(--font-hud); font-size: 1rem; letter-spacing: 0.2em; color: var(--white); }
-.project-tag   { font-family: var(--font-mono); font-size: 0.7rem; color: var(--grey-light); }
+/* Borde superior usa el color del proyecto */
+.flip-front {
+  border-top: 2px solid var(--proj-color, var(--red));
+}
+
+/* Logo del proyecto — ahora mucho más grande */
+.flip-front .project-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px var(--proj-glow, var(--red-glow)));
+  transition: filter 0.3s, transform 0.3s;
+}
+.flip-card:hover .project-logo {
+  filter: drop-shadow(0 0 18px var(--proj-glow, var(--red-glow)));
+  transform: scale(1.05);
+}
+
+.project-icon {
+  font-size: 3rem;
+  color: var(--proj-color, var(--red));
+  filter: drop-shadow(0 0 8px var(--proj-glow, var(--red-glow)));
+}
+.project-title {
+  font-family: var(--font-hud);
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  color: var(--white);
+}
+.project-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--grey-light);
+}
 
 .flip-back {
   background: linear-gradient(135deg, var(--black-3), var(--black-4));
-  border-top: 2px solid var(--red-bright);
+  border-top: 2px solid var(--proj-bright, var(--red-bright));
   transform: rotateY(180deg); text-align: center; gap: 0.8rem;
 }
-.project-back-title { font-family: var(--font-hud); font-size: 0.85rem; letter-spacing: 0.2em; color: var(--red-bright); }
-.project-desc       { font-size: 0.85rem; color: var(--grey-light); line-height: 1.4; }
+.project-back-title {
+  font-family: var(--font-hud);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  color: var(--proj-bright, var(--red-bright));
+  text-shadow: 0 0 8px var(--proj-glow, var(--red-glow));
+}
+.project-desc {
+  font-size: 0.85rem;
+  color: var(--grey-light);
+  line-height: 1.4;
+}
 
+/* Tags de tecnologías con mini logo */
 .project-techs { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+
 .tech-tag {
-  font-family: var(--font-mono); font-size: 0.6rem; color: var(--red);
-  border: 1px solid var(--red-dim); padding: 0.15rem 0.5rem; letter-spacing: 0.1em;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--grey-light);           /* blanco/gris claro — NO usa color del proyecto */
+  border: 1px solid var(--grey);
+  padding: 0.2rem 0.6rem;
+  letter-spacing: 0.1em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: border-color 0.3s, color 0.3s;
+}
+.tech-tag:hover {
+  border-color: var(--proj-color, var(--red));
+  color: var(--white);
+}
+
+/* Mini logo dentro de tech-tag */
+.tech-logo {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
+  vertical-align: middle;
 }
 
 .btn-small {
   font-family: var(--font-hud); font-size: 0.65rem; letter-spacing: 0.15em;
-  color: var(--red-bright); text-decoration: none;
-  border: 1px solid var(--red-bright); padding: 0.4rem 0.9rem;
+  color: var(--proj-bright, var(--red-bright)); text-decoration: none;
+  border: 1px solid var(--proj-bright, var(--red-bright)); padding: 0.4rem 0.9rem;
   transition: background 0.3s, color 0.3s; margin-top: 0.3rem;
 }
-.btn-small:hover { background: var(--red-bright); color: var(--black); }
+.btn-small:hover { background: var(--proj-bright, var(--red-bright)); color: var(--black); }
 
 
 /* =============================================
@@ -654,9 +738,7 @@ body {
 
 
 /* =============================================
-   CONTACTO (formulario)
-   NOTA: esta sección conserva el nombre "contacto"
-   según indicación del usuario
+   CONTACTO
 ============================================= */
 .contact-wrap { max-width: 600px; margin: 0 auto; }
 .contact-form-box {
@@ -735,11 +817,7 @@ body {
 
 /* =============================================
    REDES.HTML — CARDS DE REDES SOCIALES
-   CAMBIO: todas las clases renombradas de
-   "contact-*" a "redes-*" para coherencia
 ============================================= */
-
-/* Grilla de redes: flex centrado */
 .redes-grid {
   display: flex;
   flex-wrap: wrap;
@@ -747,13 +825,11 @@ body {
   gap: 1.5rem;
 }
 
-/* Card de red social principal — es un <a> */
 .redes-card {
   text-decoration: none;
   color: var(--white);
   cursor: pointer;
-  width: 160px; /* ancho de las cards principales */
-
+  width: 160px;
   background: linear-gradient(135deg, var(--black-2), var(--black-3));
   border: 1px solid var(--grey);
   padding: 1.5rem 1rem;
@@ -765,8 +841,6 @@ body {
   overflow: hidden;
   transition: border-color 0.3s, transform 0.3s;
 }
-
-/* Línea roja superior al hacer hover */
 .redes-card::before {
   content: '';
   position: absolute;
@@ -781,7 +855,6 @@ body {
 .redes-card:hover::before { transform: scaleX(1); }
 .redes-card:hover { border-color: var(--red-dim); transform: translateY(-4px); }
 
-/* Contenedor del ícono de la red */
 .redes-icon-wrap {
   width: 64px; height: 64px;
   display: flex; align-items: center; justify-content: center;
@@ -791,7 +864,6 @@ body {
 }
 .redes-card:hover .redes-icon-wrap { border-color: var(--red); box-shadow: 0 0 12px var(--red-glow); }
 
-/* Imagen del ícono de la red social */
 .img_red {
   width: 100%;
   height: 100%;
@@ -799,7 +871,6 @@ body {
   padding: 6px;
 }
 
-/* Nombre de la red social */
 .redes-name {
   font-family: var(--font-hud);
   font-size: 0.75rem;
@@ -807,46 +878,21 @@ body {
   color: var(--white);
 }
 
-/* =============================================
-   REDES SECUNDARIAS — cards más pequeñas
-   CAMBIO NUEVO: modificador BEM "--secundaria"
-   que reduce el tamaño de las cards de redes
-   que "casi no se utilizan" (TikTok, Instagram)
-============================================= */
-
-/* La grilla secundaria tiene gap más chico */
-.redes-grid--secundaria {
-  gap: 1rem;
-}
-
-/* Card secundaria: más angosta y con menos padding */
+.redes-grid--secundaria { gap: 1rem; }
 .redes-card--secundaria {
-  width: 120px;      /* 160px → 120px: 25% más chica */
+  width: 120px;
   padding: 1rem 0.7rem;
   gap: 0.5rem;
 }
-
-/* Ícono secundario: más pequeño */
 .redes-icon-wrap--secundaria {
-  width: 48px;       /* 64px → 48px */
+  width: 48px;
   height: 48px;
 }
+.redes-card--secundaria .redes-name { font-size: 0.65rem; }
+.redes-card--secundaria .tipo_de_lenguaje { font-size: 0.52rem; }
 
-/* Nombre en cards secundarias: tipografía levemente más chica */
-.redes-card--secundaria .redes-name {
-  font-size: 0.65rem;
-}
-
-/* tipo_de_lenguaje en cards secundarias: también más chico */
-.redes-card--secundaria .tipo_de_lenguaje {
-  font-size: 0.52rem;
-}
-
-
-/* Espaciado entre las dos grillas de redes */
 .spacer { height: 3rem; }
 
-/* Línea separadora animada entre secciones de redes */
 .linea-separacion {
   width: 100%;
   height: 2px;
@@ -857,8 +903,6 @@ body {
   position: relative;
   animation: aparecer 1s ease 0.2s both;
 }
-
-/* Luz que viaja sobre la línea separadora */
 .linea-inner {
   position: absolute;
   height: 100%;
@@ -867,8 +911,6 @@ body {
   left: -55%;
   animation: viajar 2.5s ease-in-out infinite;
 }
-
-/* Texto pequeño rojo debajo de la línea separadora */
 .texto_chico_rojo {
   display: block;
   font-family: var(--font-mono);
@@ -956,19 +998,17 @@ body {
 
   .about-wrap    { grid-template-columns: 1fr; gap: 2rem; }
   .skill-card    { width: 140px; }
-
-  /* En mobile las redes principales son un poco más chicas */
   .redes-card    { width: 130px; }
-  /* Las secundarias también se reducen proporcionalmente */
   .redes-card--secundaria { width: 100px; }
   .redes-icon-wrap--secundaria { width: 40px; height: 40px; }
 
   .projects-grid { grid-template-columns: 1fr; }
+  .flip-card { height: 290px; }
+  .flip-front .project-logo { width: 72px; height: 72px; }
+
   .footer-socials { gap: 0.8rem; }
   .social-btn     { padding: 0.5rem 0.8rem; }
   .hud-corner     { width: 20px; height: 20px; }
-
-  /* En mobile el texto "VOLVER" se oculta, queda solo el ícono */
   .nav-back-text  { display: none; }
 }
 
@@ -984,19 +1024,13 @@ body {
 
 /* =============================================
    RESPONSIVE — DESKTOP GRANDE (1440px – 1919px)
-   CAMBIO NUEVO: escala general para resoluciones
-   amplias donde el contenido quedaba pequeño.
-   Se agranda el max-width de la sección, los
-   tamaños de cards y la tipografía del hero.
 ============================================= */
 @media (min-width: 1440px) {
-  /* Sección más ancha para aprovechar el espacio */
   .section {
     max-width: 1400px;
     padding: 7rem 5rem 5rem;
   }
 
-  /* Cards de habilidades más grandes */
   .skills-grid {
     grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     gap: 2rem;
@@ -1008,29 +1042,24 @@ body {
   .tipo_de_lenguaje { font-size: 0.65rem; }
   .skill-percent-label { font-size: 0.72rem; }
 
-  /* Cards de proyectos más grandes */
   .projects-grid {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2.5rem;
   }
-  .flip-card { height: 300px; }
+  .flip-card { height: 340px; }
+  .flip-front .project-logo { width: 110px; height: 110px; }
   .project-icon { font-size: 3.5rem; }
   .project-title { font-size: 1.1rem; }
 
-  /* Cards de redes principales más grandes */
   .redes-card { width: 185px; padding: 1.8rem 1.2rem; }
   .redes-icon-wrap { width: 76px; height: 76px; }
   .redes-name { font-size: 0.85rem; }
-
-  /* Cards de redes secundarias más grandes (pero siguen siendo menores que las principales) */
   .redes-card--secundaria { width: 140px; padding: 1.2rem 0.9rem; }
   .redes-icon-wrap--secundaria { width: 56px; height: 56px; }
 
-  /* Hero con texto más grande */
   .hero-role { font-size: 1.25rem; }
   .hero-subname { font-size: 1rem; }
 
-  /* Sobre mí: columna izquierda más ancha */
   .about-wrap { grid-template-columns: 320px 1fr; gap: 5rem; }
   .avatar-ring-outer { width: 210px; height: 210px; }
   .avatar-ring-inner { width: 165px; height: 165px; }
@@ -1038,26 +1067,21 @@ body {
   .stat-row { font-size: 0.8rem; }
   .about-paragraph { font-size: 1.1rem; }
 
-  /* Formulario de contacto más ancho */
   .contact-wrap { max-width: 720px; }
 }
 
 
 /* =============================================
    RESPONSIVE — DESKTOP MUY GRANDE (≥1920px)
-   CAMBIO NUEVO: resoluciones 1920px y superior
-   (Full HD, 2K, 4K). Escala adicional para que
-   nada quede diminuto en pantallas grandes.
 ============================================= */
 @media (min-width: 1920px) {
-  html { font-size: 18px; } /* base más grande → todo escala proporcionalmente */
+  html { font-size: 18px; }
 
   .section {
     max-width: 1700px;
     padding: 8rem 6rem 6rem;
   }
 
-  /* Skills grid aún más amplio */
   .skills-grid {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     gap: 2.5rem;
@@ -1065,23 +1089,20 @@ body {
   .skill-card { padding: 2.2rem 1.6rem; }
   .skill-icon-wrap { width: 84px; height: 84px; }
 
-  /* Proyectos */
   .projects-grid {
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 3rem;
   }
-  .flip-card { height: 340px; }
+  .flip-card { height: 380px; }
+  .flip-front .project-logo { width: 130px; height: 130px; }
 
-  /* Redes */
   .redes-card { width: 210px; padding: 2rem 1.4rem; }
   .redes-icon-wrap { width: 84px; height: 84px; }
   .redes-card--secundaria { width: 160px; padding: 1.4rem 1rem; }
   .redes-icon-wrap--secundaria { width: 64px; height: 64px; }
 
-  /* Navbar links más visibles */
   .nav-link { font-size: 0.8rem; }
   .nav-logo  { font-size: 1.1rem; }
 
-  /* Formulario */
   .contact-wrap { max-width: 860px; }
 }
