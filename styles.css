@@ -45,23 +45,35 @@
   --project-1-dim:    #ff00e1;
   --project-1-glow:   rgba(255, 0, 204, 0.35);
 
-  /* PROYECTO 2 — */
-  --project-2-color:  #ffa600;
-  --project-2-bright: #ffa600;
-  --project-2-dim:    #ffa600;
-  --project-2-glow:   rgba(255, 170, 0, 0.35);
+  /* PROYECTO 2 — MeDebe*/
+  --project-2-color:  #6ABF50;
+  --project-2-bright: #82d468;
+  --project-2-dim:    #6ABF50;
+  --project-2-glow:   rgba(130, 212, 104,);
 
-  /* PROYECTO 1 — ÉLIX (red social) */
-  --project-1-color:  #ff00e1;
-  --project-1-bright: #ff00e1;
-  --project-1-dim:    #ff00e1;
-  --project-1-glow:   rgba(255, 0, 204, 0.35);
+  /* PROYECTO 3 — Mapas Creativo*/
+  --project-3-color:  #ae00ff;
+  --project-3-bright: #ae00ff;
+  --project-3-dim:    #ae00ff;
+  --project-3-glow:   rgb(174, 0, 255, 0.35);
 
-  /* PROYECTO 2 — (próximo proyecto) */
-  /* --project-2-color:  #a855f7;   */
-  /* --project-2-bright: #c084fc;   */
-  /* --project-2-dim:    #581c87;   */
-  /* --project-2-glow:   rgba(168,85,247,0.35); */
+  /* PROYECTO 4 — Mapas Creativo*/
+  --project-4-color:  #0077ff;
+  --project-4-bright: #0077ff;
+  --project-4-dim:    #0077ff;
+  --project-4-glow:   rgb(0, 119, 255, 0.35);
+
+  /* PROYECTO 5 — Mapas Creativo*/
+  --project-5-color:  #ffa600;
+  --project-5-bright: #ffa600;
+  --project-5-dim:    #ffa600;
+  --project-5-glow:   rgba(255, 170, 0, 0.35);
+
+  /* PROYECTO 6 — Mapas Creativo*/
+  --project-6-color:  #ffa600;
+  --project-6-bright: #ffa600;
+  --project-6-dim:    #ffa600;
+  --project-6-glow:   rgba(255, 170, 0, 0.35);
 }
 
 /* Modificador de color por proyecto — aplicar al .flip-card */
@@ -71,8 +83,41 @@
   --proj-dim:    var(--project-1-dim);
   --proj-glow:   var(--project-1-glow);
 }
-/* .flip-card--p2 { --proj-color: var(--project-2-color); ... } */
 
+.flip-card--p2 {
+  --proj-color:  var(--project-2-color);
+  --proj-bright: var(--project-2-bright);
+  --proj-dim:    var(--project-2-dim);
+  --proj-glow:   var(--project-2-glow);
+}
+
+.flip-card--p3 {
+  --proj-color:  var(--project-3-color);
+  --proj-bright: var(--project-3-bright);
+  --proj-dim:    var(--project-3-dim);
+  --proj-glow:   var(--project-3-glow);
+}
+
+.flip-card--p4 {
+  --proj-color:  var(--project-4-color);
+  --proj-bright: var(--project-4-bright);
+  --proj-dim:    var(--project-4-dim);
+  --proj-glow:   var(--project-4-glow);
+}
+
+.flip-card--p5 {
+  --proj-color:  var(--project-5-color);
+  --proj-bright: var(--project-5-bright);
+  --proj-dim:    var(--project-5-dim);
+  --proj-glow:   var(--project-5-glow);
+}
+
+.flip-card--p6 {
+  --proj-color:  var(--project-6-color);
+  --proj-bright: var(--project-6-bright);
+  --proj-dim:    var(--project-6-dim);
+  --proj-glow:   var(--project-6-glow);
+}
 
 /* ——— RESET Y BASE ——— */
 *, *::before, *::after {
@@ -661,6 +706,7 @@ body {
   align-items: center;
   gap: 0.3rem;
   transition: border-color 0.3s, color 0.3s;
+  text-decoration: none;
 }
 .tech-tag:hover {
   border-color: var(--proj-color, var(--red));
