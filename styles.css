@@ -49,25 +49,25 @@
   --project-2-color:  #6ABF50;
   --project-2-bright: #82d468;
   --project-2-dim:    #6ABF50;
-  --project-2-glow:   rgba(130, 212, 104,);
+  --project-2-glow:   rgba(130, 212, 104, 0.35);
 
-  /* PROYECTO 3 — Mapas Creativo*/
+  /* PROYECTO 3 — Aafrán Meditarráneo*/
   --project-3-color:  #ae00ff;
   --project-3-bright: #ae00ff;
   --project-3-dim:    #ae00ff;
   --project-3-glow:   rgb(174, 0, 255, 0.35);
 
-  /* PROYECTO 4 — Mapas Creativo*/
-  --project-4-color:  #0077ff;
-  --project-4-bright: #0077ff;
-  --project-4-dim:    #0077ff;
-  --project-4-glow:   rgb(0, 119, 255, 0.35);
+  /* PROYECTO 4 — CuantoFalta?*/
+  --project-4-color:  #0095ff;
+  --project-4-bright: #0095ff;
+  --project-4-dim:    #0095ff;
+  --project-4-glow:   rgba(129, 198, 2550.35);
 
-  /* PROYECTO 5 — Mapas Creativo*/
-  --project-5-color:  #ffa600;
-  --project-5-bright: #ffa600;
-  --project-5-dim:    #ffa600;
-  --project-5-glow:   rgba(255, 170, 0, 0.35);
+  /* PROYECTO 5 — Booking*/
+  --project-5-color:  #1D4A3E;
+  --project-5-bright: #FF7A00;
+  --project-5-dim:    #FF7A00;
+  --project-5-glow:   rgba(255, 146, 46, 0.35);
 
   /* PROYECTO 6 — Mapas Creativo*/
   --project-6-color:  #ffa600;
@@ -744,14 +744,6 @@ body {
   animation: spin-slow 12s linear infinite;
   position: relative;
 }
-.avatar-ring-outer::before {
-  content: ''; position: absolute;
-  top: -4px; left: 50%;
-  width: 8px; height: 8px;
-  background: var(--red-bright); border-radius: 50%;
-  box-shadow: 0 0 10px var(--red-bright);
-  transform: translateX(-50%);
-}
 .avatar-ring-inner {
   width: 140px; height: 140px;
   border: 1px solid var(--grey); border-radius: 50%;
@@ -821,6 +813,13 @@ body {
 .btn-primary:hover::before { height: 100%; }
 .btn-primary:hover { color: var(--black); border-color: var(--red-bright); }
 
+
+.text-icon  { font-size: 0.7rem; flex-shrink: 0; }
+
+.solver {
+   width: 250px; 
+   height: 150px;
+}
 
 /* =============================================
    FOOTER
