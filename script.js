@@ -376,3 +376,20 @@ scanStyle.textContent = `
   }
 `;
 document.head.appendChild(scanStyle);
+
+/* ——————————————————————————————————————————
+Botones
+—————————————————————————————————————————— */
+function Boton_Enviar_Correo() {
+
+  let nombre= document.getElementById("Nombre").value;
+
+  if (nombre == "") {
+    alert("Actualmente esta función se encuentra en desarrollo, lamento los inconvenientes, si precisa contactarme puede hacerlo por las mis redes que puede encontrar debajo en ´Mis Redes ´")
+  }
+  if (nombre !== ""){
+    alert("Hola "+ nombre + ", actualmente esta función se encuentra en desarrollo, lamento los inconvenientes, si precisa contactarme puede hacerlo por las mis redes que puede encontrar debajo en ´Mis Redes ´");
+  }
+
+
+}
