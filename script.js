@@ -378,7 +378,7 @@ scanStyle.textContent = `
 document.head.appendChild(scanStyle);
 
 /* ——————————————————————————————————————————
-Botones
+    Botones
 —————————————————————————————————————————— */
 function Boton_Enviar_Correo() {
 
